@@ -149,6 +149,30 @@ void TestBigNumberMultiplyBy10() {
     }
 }
 
+/* Tests the Add function for correctly adding two BigNumbers. */
+void TestBigNumberAdd() {
+    try {
+        BigNumber num1("123");  /* First number. */
+        BigNumber num2("456");  /* Second number. */
+        BigNumber result = num1.Add(num2);  /* Perform addition. */
+
+        std::string expected = "579";  /* Expected result: 123 + 456 = 579. */
+
+        std::cout << "BigNumber Add Debugging:" << std::endl;
+        std::cout << "  Num1: " << num1.ToString() << std::endl;
+        std::cout << "  Num2: " << num2.ToString() << std::endl;
+        std::cout << "  Result: " << result.ToString() << std::endl;
+        std::cout << "  Expected: " << expected << std::endl;
+
+        assert(result.ToString() == expected);  /* Verify the result matches the expected value. */
+        std::cout << "TestBigNumberAdd passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberAdd failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberAdd failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
