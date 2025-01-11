@@ -74,3 +74,12 @@ void BigNumber::AppendDigit(int digit) {
         digits_.insert(digits_.begin(), digit);
     }
 }
+
+/* Multiplies the BigNumber by 10 (shifts digits left). */
+void BigNumber::MultiplyBy10() {
+    if (digits_.size() == 1 && digits_[0] == 0) {
+        return;  // Multiplying zero by 10 is still zero.
+    }
+
+    digits_.insert(digits_.begin(), 0);  // Shift all digits left by inserting 0 at the beginning.
+}
