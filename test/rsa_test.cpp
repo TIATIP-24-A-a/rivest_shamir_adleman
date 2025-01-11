@@ -118,5 +118,6 @@ int main() {
     TestGenerateKeyPair();
     TestEncryptDecrypt();
     TestStringToInt();
+    TestIntToString();
     return 0;
 }
