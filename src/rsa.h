@@ -3,39 +3,42 @@
 
 namespace RSA {
 
-    /* Represents an RSA public key with modulus and exponent. */
     struct PublicKey {
         int n;  // Modulus
         int e;  // Public exponent
     };
 
-    /* Represents an RSA private key with modulus and private exponent. */
     struct PrivateKey {
         int n;  // Modulus
         int d;  // Private exponent
     };
 
-    /* Represents an RSA key pair, consisting of a public key and a private key. */
     struct KeyPair {
         PublicKey public_key;
         PrivateKey private_key;
     };
 
-    /* Generates an RSA public-private key pair.
-     *
-     * This function generates two distinct prime numbers (p and q) within the
-     * specified range, computes the modulus (n), Euler's totient (phi_n), and
-     * finds the public (e) and private (d) exponents.
+    KeyPair GenerateKeyPair(int min, int max);
+
+    /* Encrypts a message using the RSA public key.
      *
      * Args:
-     *   min: The minimum value for prime generation (inclusive).
-     *   max: The maximum value for prime generation (inclusive).
+     *   message: The message to encrypt.
+     *   public_key: The RSA public key.
      * Returns:
-     *   A KeyPair structure containing the public and private keys.
-     * Throws:
-     *   std::invalid_argument if the range is invalid or no primes are found.
+     *   The encrypted message (ciphertext).
      */
-    KeyPair GenerateKeyPair(int min, int max);
+    int Encrypt(int message, const PublicKey& public_key);
+
+    /* Decrypts a ciphertext using the RSA private key.
+     *
+     * Args:
+     *   ciphertext: The encrypted message to decrypt.
+     *   private_key: The RSA private key.
+     * Returns:
+     *   The decrypted message (plaintext).
+     */
+    int Decrypt(int ciphertext, const PrivateKey& private_key);
 
 }  // namespace RSA
 
