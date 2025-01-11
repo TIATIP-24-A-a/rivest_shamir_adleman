@@ -121,6 +121,23 @@ void TestBigNumberConstructor() {
         std::cerr << "TestBigNumberConstructor failed with an unknown exception!" << std::endl;
     }
 }
+
+/* Tests the AppendDigit function for appending single digits to BigNumber. */
+void TestBigNumberAppendDigit() {
+    try {
+        BigNumber num("123");  /* Start with the number 123. */
+        num.AppendDigit(4);    /* Append the digit 4. */
+        std::string expected = "1234";  /* The result should be 1234. */
+
+        assert(num.ToString() == expected);
+        std::cout << "TestBigNumberAppendDigit passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberAppendDigit failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberAppendDigit failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
@@ -129,5 +146,6 @@ int main() {
     TestStringToInt();
     TestIntToString();
     TestBigNumberConstructor();
+    TestBigNumberAppendDigit();
     return 0;
 }
