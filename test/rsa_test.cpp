@@ -97,11 +97,6 @@ void TestIntToString() {
         /* Expected result: Original message. */
         std::string expected = "fortnite";
 
-        std::cout << "IntToString Debugging:" << std::endl;
-        std::cout << "  Input integer string: " << input << std::endl;
-        std::cout << "  Result: " << result << std::endl;
-        std::cout << "  Expected: " << expected << std::endl;
-
         /* Verify the result matches the expected value. */
         assert(result == expected);
         std::cout << "TestIntToString passed!" << std::endl;
