@@ -27,8 +27,22 @@ void TestGeneratePrime() {
     }
 }
 
+/* Tests whether the RSA key pair is generated correctly.
+ * Ensures that the keys satisfy the RSA requirements.
+ */
+void TestGenerateKeyPair() {
+    RSA::KeyPair key_pair = RSA::GenerateKeyPair(50, 100); /* Small range for testing. */
+    assert(key_pair.public_key.n > 0);                     /* n must be positive. */
+    assert(key_pair.private_key.d > 0);                   /* d must be positive. */
+    assert(key_pair.public_key.e > 0);                    /* e must be positive. */
+    assert(key_pair.public_key.e < key_pair.public_key.n); /* e must be less than n. */
+
+    std::cout << "TestGenerateKeyPair passed!" << std::endl;
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
+    TestGenerateKeyPair();
     return 0;
 }
