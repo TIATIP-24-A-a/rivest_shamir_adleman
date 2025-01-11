@@ -37,6 +37,12 @@ public:
      */
     void AppendDigit(int digit);
 
+    /* Multiplies the BigNumber by 10.
+     *
+     * This effectively shifts the digits left by one place.
+     */
+    void MultiplyBy10();
+
 private:
     std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
     bool is_negative_;         // Sign of the number (true if negative).
