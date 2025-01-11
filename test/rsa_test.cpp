@@ -85,6 +85,33 @@ void TestStringToInt() {
     }
 }
 
+/* Tests the IntToString function for correct conversion of a concatenated ASCII string to the original message. */
+void TestIntToString() {
+    try {
+        /* Input integer string: ASCII values concatenated. */
+        std::string input = "102111114116110105116101"; // Represents "fortnite"
+
+        /* Call the function to convert back to a string message. */
+        std::string result = RSA::IntToString(input);
+
+        /* Expected result: Original message. */
+        std::string expected = "fortnite";
+
+        std::cout << "IntToString Debugging:" << std::endl;
+        std::cout << "  Input integer string: " << input << std::endl;
+        std::cout << "  Result: " << result << std::endl;
+        std::cout << "  Expected: " << expected << std::endl;
+
+        /* Verify the result matches the expected value. */
+        assert(result == expected);
+        std::cout << "TestIntToString passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestIntToString failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestIntToString failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
