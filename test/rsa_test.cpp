@@ -62,10 +62,29 @@ void TestEncryptDecrypt() {
     }
 }
 
+/* Tests the StringToInt function for correct conversion of a string to an integer. */
+void TestStringToInt() {
+    try {
+        std::string message = "Hello"; /* Input string message. */
+        int result = RSA::StringToInt(message);
+
+        /* Expected result: ASCII values concatenated into a single integer. */
+        int expected = 72101108108; /* ASCII: H=72, e=101, l=108, l=108, o=111. */
+
+        assert(result == expected); /* The result should match the expected value. */
+        std::cout << "TestStringToInt passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestStringToInt failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestStringToInt failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
     TestGenerateKeyPair();
     TestEncryptDecrypt();
+    TestStringToInt();
     return 0;
 }
