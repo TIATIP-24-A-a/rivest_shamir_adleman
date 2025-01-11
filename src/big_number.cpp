@@ -59,3 +59,18 @@ std::string BigNumber::ToString() const {
 
     return result;
 }
+
+/* Appends a single digit to the BigNumber. */
+void BigNumber::AppendDigit(int digit) {
+    if (digit < 0 || digit > 9) {
+        throw std::invalid_argument("BigNumber: Digit must be in range 0-9.");
+    }
+
+    if (digits_.size() == 1 && digits_[0] == 0) {
+        // Replace leading zero with the digit.
+        digits_[0] = digit;
+    } else {
+        // Append the digit to the end.
+        digits_.insert(digits_.begin(), digit);
+    }
+}
