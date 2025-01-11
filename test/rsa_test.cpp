@@ -63,43 +63,29 @@ void TestEncryptDecrypt() {
     }
 }
 
-/* Tests the StringToInt function for correct conversion of a string to an integer. */
-void TestStringToInt() {
+/* Tests the StringToBigNumber function. */
+void TestStringToBigNumber() {
     try {
-        std::string message = "fortnite"; /* Input string message. */
-        std::string result = RSA::StringToInt(message);
-
-        /* Expected result: f=102, o=111, r=114, t=116, n=110, i=105, t=116, e=101 */
-        std::string expected = "102111114116110105116101"; /* ASCII concatenation as string. */
-
-        assert(result == expected); /* The result should match the expected value. */
-        std::cout << "TestStringToInt passed!" << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "TestStringToInt failed with exception: " << e.what() << std::endl;
+        std::string message = "fortnite";
+        BigNumber result = RSA::StringToBigNumber(message);
+        std::string expected = "102111114116110105116101";
+        assert(result.ToString() == expected);
+        std::cout << "TestStringToBigNumber passed!" << std::endl;
     } catch (...) {
-        std::cerr << "TestStringToInt failed with an unknown exception!" << std::endl;
+        std::cerr << "TestStringToBigNumber failed!" << std::endl;
     }
 }
 
-/* Tests the IntToString function for correct conversion of a concatenated ASCII string to the original message. */
-void TestIntToString() {
+/* Tests the BigNumberToString function. */
+void TestBigNumberToString() {
     try {
-        /* Input integer string: ASCII values concatenated. */
-        std::string input = "102111114116110105116101"; // Represents "fortnite"
-
-        /* Call the function to convert back to a string message. */
-        std::string result = RSA::IntToString(input);
-
-        /* Expected result: Original message. */
+        BigNumber input("102111114116110105116101");
+        std::string result = RSA::BigNumberToString(input);
         std::string expected = "fortnite";
-
-        /* Verify the result matches the expected value. */
         assert(result == expected);
-        std::cout << "TestIntToString passed!" << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "TestIntToString failed with exception: " << e.what() << std::endl;
+        std::cout << "TestBigNumberToString passed!" << std::endl;
     } catch (...) {
-        std::cerr << "TestIntToString failed with an unknown exception!" << std::endl;
+        std::cerr << "TestBigNumberToString failed!" << std::endl;
     }
 }
 
