@@ -183,5 +183,6 @@ int main() {
     TestBigNumberConstructor();
     TestBigNumberAppendDigit();
     TestBigNumberMultiplyBy10();
+    TestBigNumberAdd();
     return 0;
 }
