@@ -52,6 +52,16 @@ public:
      */
     BigNumber Add(const BigNumber& other) const;
 
+    /* Subtracts another BigNumber from this one.
+     *
+     * Args:
+     *   other: Another BigNumber to subtract.
+     * Returns:
+     *   A new BigNumber representing the difference.
+     */
+    BigNumber Subtract(const BigNumber& other) const;
+
+
 private:
     std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
     bool is_negative_;         // Sign of the number (true if negative).
