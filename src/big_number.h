@@ -61,6 +61,22 @@ public:
      */
     BigNumber Subtract(const BigNumber& other) const;
 
+    /* Returns a new BigNumber that is the negation of this number.
+     *
+     * Returns:
+     *   A BigNumber with the same magnitude but opposite sign.
+     */
+    BigNumber Negate() const;
+
+    /* Checks if this BigNumber is less than another.
+     *
+     * Args:
+     *   other: The BigNumber to compare with.
+     * Returns:
+     *   True if this number is less than the other, false otherwise.
+     */
+    bool operator<(const BigNumber& other) const;
+
 
 private:
     std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
