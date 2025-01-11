@@ -13,6 +13,7 @@ add_executable(rsa_program
         src/main.cpp
         src/prime_utils.cpp
         src/rsa.cpp
+        src/big_number.cpp
 )
 
 # Test executable
@@ -20,6 +21,7 @@ add_executable(rsa_tests
         test/rsa_test.cpp
         src/prime_utils.cpp
         src/rsa.cpp
+        src/big_number.cpp
 )
 
 # Enable testing
