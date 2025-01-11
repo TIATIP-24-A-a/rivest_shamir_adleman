@@ -50,6 +50,15 @@ namespace RSA {
      */
     std::string StringToInt(const std::string& message);
 
+    /* Converts a concatenated ASCII string representation back to the original string.
+     *
+     * Args:
+     *   ascii_representation: The concatenated ASCII values as a string.
+     * Returns:
+     *   The original string message.
+     */
+    std::string IntToString(const std::string& ascii_representation);
+
 }  // namespace RSA
 
 #endif  // RSA_H_
