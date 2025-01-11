@@ -66,10 +66,10 @@ void TestEncryptDecrypt() {
 void TestStringToInt() {
     try {
         std::string message = "Hello"; /* Input string message. */
-        int result = RSA::StringToInt(message);
+        long long result = RSA::StringToInt(message);
 
         /* Expected result: ASCII values concatenated into a single integer. */
-        int expected = 72101108108; /* ASCII: H=72, e=101, l=108, l=108, o=111. */
+        long long expected = 72101108108LL;
 
         assert(result == expected); /* The result should match the expected value. */
         std::cout << "TestStringToInt passed!" << std::endl;
