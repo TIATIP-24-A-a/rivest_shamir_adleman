@@ -117,3 +117,90 @@ BigNumber BigNumber::Add(const BigNumber& other) const {
     return result;
 }
 
+/* Subtracts another BigNumber. */
+BigNumber BigNumber::Subtract(const BigNumber& other) const {
+    // Handle signs
+    if (is_negative_ && !other.is_negative_) {
+        BigNumber result = Add(other);  // -A - B = -(A + B)
+        result.is_negative_ = true;
+        return result;
+    } else if (!is_negative_ && other.is_negative_) {
+        return Add(other);  // A - (-B) = A + B
+    } else if (is_negative_ && other.is_negative_) {
+        return other.Negate().Subtract(this->Negate());  // -A - (-B) = B - A
+    }
+
+    // Handle same-sign subtraction
+    bool result_negative = false;
+    const BigNumber* larger = this;
+    const BigNumber* smaller = &other;
+
+    // Determine which number is larger in absolute value
+    if (*this < other) {
+        result_negative = true;  // Result will be negative
+        larger = &other;
+        smaller = this;
+    }
+
+    std::vector<int> result_digits;
+    int borrow = 0;
+
+    for (size_t i = 0; i < larger->digits_.size(); ++i) {
+        int digit1 = larger->digits_[i];
+        int digit2 = (i < smaller->digits_.size()) ? smaller->digits_[i] : 0;
+
+        int diff = digit1 - digit2 - borrow;
+        if (diff < 0) {
+            diff += 10;  // Borrow from the next digit
+            borrow = 1;
+        } else {
+            borrow = 0;
+        }
+
+        result_digits.push_back(diff);
+    }
+
+    BigNumber result;
+    result.digits_ = result_digits;
+    result.is_negative_ = result_negative;
+    result.Normalize();  // Remove leading zeros if any
+
+    return result;
+}
+
+/* Returns the negation of this BigNumber. */
+BigNumber BigNumber::Negate() const {
+    BigNumber result = *this;
+    result.is_negative_ = !is_negative_;  // Flip the sign.
+    return result;
+}
+
+/* Checks if this BigNumber is less than another. */
+bool BigNumber::operator<(const BigNumber& other) const {
+    // Compare signs first
+    if (is_negative_ != other.is_negative_) {
+        return is_negative_;  // Negative numbers are always less than positive ones
+    }
+
+    // Compare absolute magnitudes
+    if (digits_.size() != other.digits_.size()) {
+        // For positive numbers: fewer digits means smaller
+        // For negative numbers: fewer digits means larger
+        return is_negative_ ?
+               (digits_.size() > other.digits_.size()) :
+               (digits_.size() < other.digits_.size());
+    }
+
+    // Same number of digits, compare from most significant digit
+    for (int i = digits_.size() - 1; i >= 0; --i) {
+        if (digits_[i] != other.digits_[i]) {
+            // For positive numbers: smaller digit means smaller number
+            // For negative numbers: smaller digit means larger number
+            return is_negative_ ?
+                   (digits_[i] > other.digits_[i]) :
+                   (digits_[i] < other.digits_[i]);
+        }
+    }
+
+    return false;  // Numbers are equal
+}
