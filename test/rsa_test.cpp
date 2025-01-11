@@ -72,11 +72,6 @@ void TestStringToInt() {
         /* Expected result: f=102, o=111, r=114, t=116, n=110, i=105, t=116, e=101 */
         std::string expected = "102111114116110105116101"; /* ASCII concatenation as string. */
 
-        std::cout << "StringToInt Debugging:" << std::endl;
-        std::cout << "  Input message: " << message << std::endl;
-        std::cout << "  Result: " << result << std::endl;
-        std::cout << "  Expected: " << expected << std::endl;
-
         assert(result == expected); /* The result should match the expected value. */
         std::cout << "TestStringToInt passed!" << std::endl;
     } catch (const std::exception& e) {
