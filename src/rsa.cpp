@@ -95,13 +95,12 @@ namespace RSA {
  * Returns:
  *   The integer representation of the string.
  */
-    long long StringToInt(const std::string& message) {
-        std::stringstream ss;
+    std::string StringToInt(const std::string& message) {
+        std::string result;
         for (char c : message) {
-            ss << static_cast<int>(c); /* Convert each character to ASCII and concatenate. */
+            result += std::to_string(static_cast<int>(c)); /* Convert each character to ASCII and concatenate. */
         }
-        std::string ascii_string = ss.str(); // Store the concatenated string
-        return std::stoll(ascii_string); /* Convert the concatenated ASCII values to a long long integer. */
+        return result; /* Return the concatenated ASCII values as a string. */
     }
 
 }  // namespace RSA

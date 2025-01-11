@@ -48,7 +48,7 @@ namespace RSA {
      * Returns:
      *   The integer representation of the string.
      */
-    long long StringToInt(const std::string& message);
+    std::string StringToInt(const std::string& message);
 
 }  // namespace RSA
 

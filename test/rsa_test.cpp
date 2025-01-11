@@ -65,11 +65,16 @@ void TestEncryptDecrypt() {
 /* Tests the StringToInt function for correct conversion of a string to an integer. */
 void TestStringToInt() {
     try {
-        std::string message = "Hello"; /* Input string message. */
-        long long result = RSA::StringToInt(message);
+        std::string message = "fortnite"; /* Input string message. */
+        std::string result = RSA::StringToInt(message);
 
-        /* Correct expected result: H=72, e=101, l=108, l=108, o=111. */
-        long long expected = 72101108108111LL;
+        /* Expected result: f=102, o=111, r=114, t=116, n=110, i=105, t=116, e=101 */
+        std::string expected = "102111114116110105116101"; /* ASCII concatenation as string. */
+
+        std::cout << "StringToInt Debugging:" << std::endl;
+        std::cout << "  Input message: " << message << std::endl;
+        std::cout << "  Result: " << result << std::endl;
+        std::cout << "  Expected: " << expected << std::endl;
 
         assert(result == expected); /* The result should match the expected value. */
         std::cout << "TestStringToInt passed!" << std::endl;
