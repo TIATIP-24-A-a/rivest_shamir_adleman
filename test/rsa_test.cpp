@@ -173,6 +173,30 @@ void TestBigNumberAdd() {
     }
 }
 
+/* Tests the Subtract function for correctly subtracting two BigNumbers. */
+void TestBigNumberSubtract() {
+    try {
+        BigNumber num1("579");  /* First number. */
+        BigNumber num2("456");  /* Second number. */
+        BigNumber result = num1.Subtract(num2);  /* Perform subtraction. */
+
+        std::string expected = "123";  /* Expected result: 579 - 456 = 123. */
+
+        std::cout << "BigNumber Subtract Debugging:" << std::endl;
+        std::cout << "  Num1: " << num1.ToString() << std::endl;
+        std::cout << "  Num2: " << num2.ToString() << std::endl;
+        std::cout << "  Result: " << result.ToString() << std::endl;
+        std::cout << "  Expected: " << expected << std::endl;
+
+        assert(result.ToString() == expected);  // Verify the result matches the expected value.
+        std::cout << "TestBigNumberSubtract passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberSubtract failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberSubtract failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
