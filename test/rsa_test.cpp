@@ -208,5 +208,6 @@ int main() {
     TestBigNumberAppendDigit();
     TestBigNumberMultiplyBy10();
     TestBigNumberAdd();
+    TestBigNumberSubtract();
     return 0;
 }
