@@ -1,7 +1,8 @@
 #include "rsa.h"
 #include "prime_utils.h"
 #include <stdexcept>
-#include <numeric>  // For std::gcd
+#include <numeric>
+#include <sstream>
 
 namespace RSA {
 
@@ -85,6 +86,22 @@ namespace RSA {
  */
     int Decrypt(int ciphertext, const PrivateKey& private_key) {
         return ModularExponentiation(ciphertext, private_key.d, private_key.n);
+    }
+
+/* Converts a string to an integer representation by concatenating ASCII values.
+ *
+ * Args:
+ *   message: The string message to convert.
+ * Returns:
+ *   The integer representation of the string.
+ */
+    long long StringToInt(const std::string& message) {
+        std::stringstream ss;
+        for (char c : message) {
+            ss << static_cast<int>(c); /* Convert each character to ASCII and concatenate. */
+        }
+        std::string ascii_string = ss.str(); // Store the concatenated string
+        return std::stoll(ascii_string); /* Convert the concatenated ASCII values to a long long integer. */
     }
 
 }  // namespace RSA
