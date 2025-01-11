@@ -1,5 +1,6 @@
 #ifndef RSA_H_
 #define RSA_H_
+#include <string>
 
 namespace RSA {
 
@@ -39,6 +40,15 @@ namespace RSA {
      *   The decrypted message (plaintext).
      */
     int Decrypt(int ciphertext, const PrivateKey& private_key);
+
+    /* Converts a string to an integer representation.
+     *
+     * Args:
+     *   message: The string message to convert.
+     * Returns:
+     *   The integer representation of the string.
+     */
+    long long StringToInt(const std::string& message);
 
 }  // namespace RSA
 
