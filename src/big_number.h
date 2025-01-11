@@ -18,6 +18,13 @@ public:
      */
     explicit BigNumber(const std::string& value);
 
+    /* Constructs BigNumber from an integer value.
+ *
+ * Args:
+ *   value: Integer value to initialize the BigNumber.
+ */
+    explicit BigNumber(int value);
+
     /* Copy constructor. */
     BigNumber(const BigNumber& other);
 
@@ -76,6 +83,15 @@ public:
      *   True if this number is less than the other, false otherwise.
      */
     bool operator<(const BigNumber& other) const;
+
+    /* Multiplies this BigNumber by another BigNumber.
+     *
+     * Args:
+     *   other: The BigNumber to multiply with.
+     * Returns:
+     *   A new BigNumber representing the product.
+     */
+    BigNumber Multiply(const BigNumber& other) const;
 
 
 private:
