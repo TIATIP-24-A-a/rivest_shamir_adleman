@@ -103,4 +103,26 @@ namespace RSA {
         return result; /* Return the concatenated ASCII values as a string. */
     }
 
+/* Converts a concatenated ASCII string representation back to the original string.
+ *
+ * Args:
+ *   ascii_representation: The concatenated ASCII values as a string.
+ * Returns:
+ *   The original string message.
+ */
+    std::string IntToString(const std::string& ascii_representation) {
+        std::string result;
+        for (size_t i = 0; i < ascii_representation.length(); i += 3) {
+            /* Extract a substring of 3 characters (one ASCII value). */
+            std::string ascii_str = ascii_representation.substr(i, 3);
+
+            /* Convert the substring to a character. */
+            char c = static_cast<char>(std::stoi(ascii_str));
+
+            /* Append the character to the result string. */
+            result.push_back(c);
+        }
+        return result;
+    }
+
 }  // namespace RSA
