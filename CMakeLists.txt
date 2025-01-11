@@ -12,12 +12,14 @@ include_directories(src)
 add_executable(rsa_program
         src/main.cpp
         src/prime_utils.cpp
+        src/rsa.cpp
 )
 
 # Test executable
 add_executable(rsa_tests
         test/rsa_test.cpp
         src/prime_utils.cpp
+        src/rsa.cpp
 )
 
 # Enable testing
