@@ -28,6 +28,15 @@ public:
      */
     std::string ToString() const;
 
+    /* Appends a single digit to the BigNumber.
+     *
+     * Args:
+     *   digit: A single integer digit (0-9) to append.
+     * Throws:
+     *   std::invalid_argument if the digit is out of range.
+     */
+    void AppendDigit(int digit);
+
 private:
     std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
     bool is_negative_;         // Sign of the number (true if negative).
