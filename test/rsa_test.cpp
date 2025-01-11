@@ -107,6 +107,26 @@ void TestIntToString() {
     }
 }
 
+/* Tests the BigNumber constructor for very large numbers. */
+void TestBigNumberConstructor() {
+    try {
+        // Define a very large number as a string
+        std::string large_number = "1234567890123456789012345678901234567890";
+
+        // Construct a BigNumber
+        BigNumber num(large_number);
+
+        // Verify that the number is stored and converted back to the correct string
+        assert(num.ToString() == large_number);
+
+        std::cout << "TestBigNumberConstructor passed for large number!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberConstructor failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberConstructor failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
@@ -114,5 +134,6 @@ int main() {
     TestEncryptDecrypt();
     TestStringToInt();
     TestIntToString();
+    TestBigNumberConstructor;
     return 0;
 }
