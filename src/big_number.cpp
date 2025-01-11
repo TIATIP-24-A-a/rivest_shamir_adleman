@@ -7,6 +7,24 @@ BigNumber::BigNumber() : is_negative_(false) {
     digits_.push_back(0);  // Initialize to zero.
 }
 
+/* Constructs BigNumber from an integer value. */
+BigNumber::BigNumber(int value) : is_negative_(false) {
+    if (value == 0) {
+        digits_.push_back(0);
+        return;
+    }
+
+    if (value < 0) {
+        is_negative_ = true;
+        value = -value;  // Make the value positive for digit extraction.
+    }
+
+    while (value > 0) {
+        digits_.push_back(value % 10);  // Extract least significant digit.
+        value /= 10;                   // Remove the least significant digit.
+    }
+}
+
 /* Constructs BigNumber from a string representation of a number. */
 BigNumber::BigNumber(const std::string& value) : is_negative_(false) {
     if (value.empty()) {
@@ -203,4 +221,30 @@ bool BigNumber::operator<(const BigNumber& other) const {
     }
 
     return false;  // Numbers are equal
+}
+
+/* Multiplies this BigNumber by another BigNumber. */
+BigNumber BigNumber::Multiply(const BigNumber& other) const {
+    BigNumber result("0");  // Initialize result to zero.
+
+    // Perform multiplication using the standard algorithm.
+    for (size_t i = 0; i < other.digits_.size(); ++i) {
+        BigNumber temp_result;
+        temp_result.digits_.resize(i, 0);  // Shift left by `i` positions.
+
+        int carry = 0;
+        for (size_t j = 0; j < digits_.size() || carry; ++j) {
+            int digit1 = (j < digits_.size()) ? digits_[j] : 0;
+            int product = digit1 * other.digits_[i] + carry;
+            temp_result.digits_.push_back(product % 10);  // Store remainder.
+            carry = product / 10;  // Calculate carry.
+        }
+
+        result = result.Add(temp_result);  // Accumulate the partial result.
+    }
+
+    // Adjust the sign of the result.
+    result.is_negative_ = is_negative_ != other.is_negative_;
+    result.Normalize();  // Remove leading zeros.
+    return result;
 }
