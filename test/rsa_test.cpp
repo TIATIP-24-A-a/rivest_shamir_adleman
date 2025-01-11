@@ -188,8 +188,8 @@ int main() {
     TestGeneratePrime();
     TestGenerateKeyPair();
     TestEncryptDecrypt();
-    TestStringToInt();
-    TestIntToString();
+    TestStringToBigNumber();
+    TestBigNumberToString();
     TestBigNumberConstructor();
     TestBigNumberAppendDigit();
     TestBigNumberMultiplyBy10();
