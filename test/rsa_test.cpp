@@ -68,8 +68,8 @@ void TestStringToInt() {
         std::string message = "Hello"; /* Input string message. */
         long long result = RSA::StringToInt(message);
 
-        /* Expected result: ASCII values concatenated into a single integer. */
-        long long expected = 72101108108LL;
+        /* Correct expected result: H=72, e=101, l=108, l=108, o=111. */
+        long long expected = 72101108108111LL;
 
         assert(result == expected); /* The result should match the expected value. */
         std::cout << "TestStringToInt passed!" << std::endl;
