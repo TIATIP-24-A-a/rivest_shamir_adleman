@@ -133,6 +133,22 @@ void TestBigNumberAppendDigit() {
     }
 }
 
+/* Tests the MultiplyBy10 function for shifting digits left by one place. */
+void TestBigNumberMultiplyBy10() {
+    try {
+        BigNumber num("123");  /* Start with the number 123. */
+        num.MultiplyBy10();    /* Multiply by 10 (shift digits left). */
+        std::string expected = "1230";  /* The result should be 1230. */
+
+        assert(num.ToString() == expected);
+        std::cout << "TestBigNumberMultiplyBy10 passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberMultiplyBy10 failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberMultiplyBy10 failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
@@ -142,5 +158,6 @@ int main() {
     TestIntToString();
     TestBigNumberConstructor();
     TestBigNumberAppendDigit();
+    TestBigNumberMultiplyBy10();
     return 0;
 }
