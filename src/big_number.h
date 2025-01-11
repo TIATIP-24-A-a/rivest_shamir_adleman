@@ -43,6 +43,15 @@ public:
      */
     void MultiplyBy10();
 
+    /* Adds two BigNumbers.
+     *
+     * Args:
+     *   other: Another BigNumber to add.
+     * Returns:
+     *   A new BigNumber representing the sum of the two numbers.
+     */
+    BigNumber Add(const BigNumber& other) const;
+
 private:
     std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
     bool is_negative_;         // Sign of the number (true if negative).
