@@ -135,6 +135,8 @@ public:
      */
     BigNumber Abs() const;
 
+    BigNumber Pow(int exponent) const;
+
     /* Compares if two BigNumbers are equal.
      *
      * Args:

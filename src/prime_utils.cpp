@@ -63,12 +63,14 @@ namespace PrimeUtils
     }
 
     BigNumber GeneratePrimeWithBitLength(int bitLength) {
-        if (bitLength < 8) {  // Arbitrary minimum for safety
+        if (bitLength < 8) {
             throw std::invalid_argument("Bit length too small");
         }
 
-        BigNumber min = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength - 1)), BigNumber("1"));
-        BigNumber max = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength)), BigNumber("1")) - BigNumber("1");
+        // Instead of using "ModularExponentiation(..., BigNumber("1"))",
+        // use a normal power-of-two function. For example:
+        BigNumber min = BigNumber("1") << (bitLength - 1);  // 2^(bitLength-1)
+        BigNumber max = (BigNumber("1") << bitLength) - BigNumber("1"); // 2^bitLength - 1
 
         return GeneratePrime(min, max);
     }
