@@ -245,32 +245,24 @@ BigNumber BigNumber::Modulo(const BigNumber& other) const {
     return Subtract(product);  // Remainder = this - (quotient * other)
 }
 
-/* Performs modular exponentiation: (base^exponent) % modulus.
- *
- * Efficiently computes the result of raising the base to the power of the
- * exponent and taking the modulo, using the method of "exponentiation by squaring."
- *
- * Args:
- *   exponent: The BigNumber exponent.
- *   modulus: The BigNumber modulus.
- * Returns:
- *   The result of (this^exponent) % modulus as a BigNumber.
- */
 BigNumber BigNumber::ModularExponentiation(const BigNumber& exponent, const BigNumber& modulus) const {
     if (modulus == BigNumber("0")) {
-        throw std::invalid_argument("BigNumber::ModularExponentiation: Modulus cannot be zero.");
+        throw std::invalid_argument("Modulus cannot be zero");
     }
+    static const BigNumber ZERO(0);
+    static const BigNumber ONE(1);
+    static const BigNumber TWO(2);
 
-    BigNumber base = *this % modulus;  // Initial base modulo the modulus.
-    BigNumber result("1");            // Initialize the result to 1.
-    BigNumber exp = exponent;         // Copy the exponent for manipulation.
+    BigNumber base = *this % modulus;  // Initial base modulo
+    BigNumber result = ONE;           // Start with 1
+    BigNumber exp = exponent;         // Copy for manipulation
 
-    while (exp > BigNumber("0")) {
-        if (exp % BigNumber("2") == BigNumber("1")) {  // If exponent is odd.
-            result = (result * base) % modulus;       // Multiply and take modulo.
+    while (exp > ZERO) {
+        if (exp % TWO == ONE) {
+            result = (result * base) % modulus;
         }
-        base = (base * base) % modulus;              // Square the base and take modulo.
-        exp = exp / BigNumber("2");                  // Divide the exponent by 2.
+        base = (base * base) % modulus;
+        exp = exp / TWO;
     }
 
     return result;
