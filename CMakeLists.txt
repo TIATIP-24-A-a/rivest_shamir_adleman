@@ -14,6 +14,7 @@ add_executable(rsa_program
         src/prime_utils.cpp
         src/rsa.cpp
         src/big_number.cpp
+        src/secure_random.h
 )
 
 # Test executable
