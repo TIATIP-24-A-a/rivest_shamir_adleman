@@ -286,8 +286,10 @@ BigNumber BigNumber::Abs() const {
 }
 
 int BigNumber::to_int() const {
-    if (digits_.size() > 10 || *this > BigNumber(std::to_string(INT_MAX))) {
-        throw std::overflow_error("BigNumber is too large to convert to int.");
+    static const BigNumber MAX_INT(INT_MAX);
+
+    if (digits_.size() > 10 || *this > MAX_INT) {
+        throw std::overflow_error("BigNumber too large for int");
     }
 
     int result = 0;
