@@ -122,6 +122,103 @@ void TestBigNumberMultiply() {
     }
 }
 
+void TestBigNumberDividePositiveNumbers() {
+    try {
+        assert(BigNumber("10").Divide(BigNumber("2")) == BigNumber("5"));
+        std::cout << "TestBigNumberDividePositiveNumbers passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberDividePositiveNumbers failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberDivideNegativeNumbers() {
+    try {
+        assert(BigNumber("-10").Divide(BigNumber("-2")) == BigNumber("5"));
+        std::cout << "TestBigNumberDivideNegativeNumbers passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberDivideNegativeNumbers failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberDividePositiveByNegative() {
+    try {
+        assert(BigNumber("10").Divide(BigNumber("-2")) == BigNumber("-5"));
+        std::cout << "TestBigNumberDividePositiveByNegative passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberDividePositiveByNegative failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberDivideByZero() {
+    try {
+        BigNumber("10").Divide(BigNumber("0"));
+        std::cerr << "TestBigNumberDivideByZero failed! Division by zero did not throw." << std::endl;
+    } catch (const std::invalid_argument&) {
+        std::cout << "TestBigNumberDivideByZero passed!" << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberDivideByZero failed with unknown exception!" << std::endl;
+    }
+}
+
+void TestBigNumberModuloPositiveNumbers() {
+    try {
+        assert(BigNumber("10").Modulo(BigNumber("3")) == BigNumber("1"));
+        std::cout << "TestBigNumberModuloPositiveNumbers passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberModuloPositiveNumbers failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberModuloNegativeNumbers() {
+    try {
+        assert(BigNumber("-10").Modulo(BigNumber("-3")) == BigNumber("-1"));
+        std::cout << "TestBigNumberModuloNegativeNumbers passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberModuloNegativeNumbers failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberModuloByZero() {
+    try {
+        BigNumber("10").Modulo(BigNumber("0"));
+        std::cerr << "TestBigNumberModuloByZero failed! Modulo by zero did not throw." << std::endl;
+    } catch (const std::invalid_argument&) {
+        std::cout << "TestBigNumberModuloByZero passed!" << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberModuloByZero failed with unknown exception!" << std::endl;
+    }
+}
+
+void TestBigNumberModularExponentiationSimple() {
+    try {
+        assert(BigNumber("2").ModularExponentiation(BigNumber("3"), BigNumber("5")) == BigNumber("3"));
+        std::cout << "TestBigNumberModularExponentiationSimple passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberModularExponentiationSimple failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberModularExponentiationLargeExponent() {
+    try {
+        assert(BigNumber("2").ModularExponentiation(BigNumber("10"), BigNumber("1000")) == BigNumber("24"));
+        std::cout << "TestBigNumberModularExponentiationLargeExponent passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberModularExponentiationLargeExponent failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBigNumberModularExponentiationByZero() {
+    try {
+        BigNumber("2").ModularExponentiation(BigNumber("3"), BigNumber("0"));
+        std::cerr << "TestBigNumberModularExponentiationByZero failed! Modulus zero did not throw." << std::endl;
+    } catch (const std::invalid_argument&) {
+        std::cout << "TestBigNumberModularExponentiationByZero passed!" << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberModularExponentiationByZero failed with unknown exception!" << std::endl;
+    }
+}
+
+
 void TestBigNumberLessThanDifferentSigns() {
     try {
         assert(BigNumber("-1") < BigNumber("1"));
@@ -298,6 +395,16 @@ void TestBigNumberEdgeCaseZeros() {
 }
 
 int main() {
+    TestBigNumberDividePositiveNumbers();
+    TestBigNumberDivideNegativeNumbers();
+    TestBigNumberDividePositiveByNegative();
+    TestBigNumberDivideByZero();
+    TestBigNumberModuloPositiveNumbers();
+    TestBigNumberModuloNegativeNumbers();
+    TestBigNumberModuloByZero();
+    TestBigNumberModularExponentiationSimple();
+    TestBigNumberModularExponentiationLargeExponent();
+    TestBigNumberModularExponentiationByZero();
     TestBigNumberLessThanDifferentSigns();
     TestBigNumberLessThanDifferentLengths();
     TestBigNumberLessThanSameLength();

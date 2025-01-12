@@ -210,27 +210,31 @@ BigNumber BigNumber::Multiply(const BigNumber& other) const {
 }
 
 /* Divides this BigNumber by another BigNumber. */
-BigNumber BigNumber::Divide(const BigNumber& other) const {
-    if (other == BigNumber("0")) {
+BigNumber BigNumber::Divide(const BigNumber& divisor) const {
+    if (divisor == BigNumber("0")) {
         throw std::invalid_argument("Division by zero");
     }
 
+    bool isResultNegative = (is_negative_ != divisor.is_negative_);
+    BigNumber dividendAbsolute = this->Abs();
+    BigNumber divisorAbsolute  = divisor.Abs();
     BigNumber quotient;
     BigNumber remainder;
 
-    for (int i = digits_.size() - 1; i >= 0; i--) {
+    for (int i = dividendAbsolute.digits_.size() - 1; i >= 0; i--) {
         remainder.MultiplyBy10();
-        remainder.digits_[0] = digits_[i];  // Add new digit directly
+        remainder.digits_[0] = dividendAbsolute.digits_[i];
 
-        int q = 0;
-        while (remainder.Abs() >= other.Abs()) {
-            remainder = remainder.Subtract(other);
-            q++;
+        int digitQuotient = 0;
+        while (remainder >= divisorAbsolute) {
+            remainder = remainder.Subtract(divisorAbsolute);
+            ++digitQuotient;
         }
-        quotient.digits_.insert(quotient.digits_.begin(), q);
+
+        quotient.digits_.insert(quotient.digits_.begin(), digitQuotient);
     }
 
-    quotient.is_negative_ = is_negative_ != other.is_negative_;
+    quotient.is_negative_ = isResultNegative;
     quotient.Normalize();
     return quotient;
 }
