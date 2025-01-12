@@ -1,6 +1,8 @@
 #include "prime_utils.h"
 #include <cmath>
 
+#include "secure_random.h"
+
 namespace PrimeUtils
 {
     bool IsPrime(const BigNumber& n)
@@ -44,5 +46,19 @@ namespace PrimeUtils
         }
 
         return true;
+    }
+
+    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max) {
+        if (min > max || min < BigNumber("2")) {
+            throw std::invalid_argument("Invalid range for prime generation");
+        }
+
+        SecureRandom random;
+        while (true) {
+            BigNumber candidate(random.GetRange(min.ToInt(), max.ToInt()));
+            if (IsPrime(candidate)) {
+                return candidate;
+            }
+        }
     }
 } // namespace PrimeUtils
