@@ -15,6 +15,15 @@ void TestMillerRabinKnownPrimes() {
     }
 }
 
+void TestMillerRabinKnownComposites() {
+    try {
+        assert(PrimeUtils::IsPrime(BigNumber("24")) == false);
+        assert(PrimeUtils::IsPrime(BigNumber("100")) == false);
+        std::cout << "TestMillerRabinKnownComposites passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestMillerRabinKnownComposites failed with exception: " << e.what() << std::endl;
+    }
+}
 
 int main() {
     TestMillerRabinKnownPrimes();
