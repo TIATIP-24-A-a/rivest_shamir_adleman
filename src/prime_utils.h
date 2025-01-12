@@ -5,11 +5,7 @@
 #include <random>
 
 namespace PrimeUtils {
-
-    bool IsPrime(const BigNumber& number, int rounds = 64);
-
-    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
-
+    bool IsPrime(const BigNumber& number);
 }
 
 #endif  // PRIME_UTILS_H_
