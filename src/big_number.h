@@ -162,7 +162,6 @@ public:
      */
     bool operator>(const BigNumber& other) const;
 
-
     /* Checks if this BigNumber is less than another.
      *
      * Args:
@@ -171,6 +170,15 @@ public:
      *   True if this number is less than the other, false otherwise.
      */
     bool operator<(const BigNumber& other) const;
+
+    /* Checks if this BigNumber is less than or equal as another.
+     *
+     * Args:
+     *   other: The BigNumber to compare with.
+     * Returns:
+     *   True if this number is less than the other, false otherwise.
+     */
+    bool operator<=(const BigNumber& other) const;
 
     /* Checks if this BigNumber is greater than or equal to another.
      *

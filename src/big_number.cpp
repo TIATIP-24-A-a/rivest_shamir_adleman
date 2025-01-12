@@ -355,6 +355,10 @@ bool BigNumber::operator!=(const BigNumber& other) const {
     return !(*this == other);
 }
 
+bool BigNumber::operator<=(const BigNumber& other) const {
+    return (*this < other) || (*this == other);
+}
+
 bool BigNumber::operator>(const BigNumber& other) const {
     // Compare signs
     if (is_negative_ != other.is_negative_) {
