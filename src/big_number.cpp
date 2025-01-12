@@ -360,28 +360,7 @@ bool BigNumber::operator<=(const BigNumber& other) const {
 }
 
 bool BigNumber::operator>(const BigNumber& other) const {
-    // Compare signs
-    if (is_negative_ != other.is_negative_) {
-        return other.is_negative_;  // Positive is always greater than negative.
-    }
-
-    // Compare absolute magnitudes
-    bool abs_greater = false;
-    if (digits_.size() != other.digits_.size()) {
-        abs_greater = digits_.size() > other.digits_.size();
-    } else {
-        for (size_t i = digits_.size(); i-- > 0;) {  // Compare digits from most significant
-            if (digits_[i] != other.digits_[i]) {
-                abs_greater = digits_[i] > other.digits_[i];
-                break;
-            }
-        }
-    }
-
-    // If both numbers have the same sign:
-    // - For positive numbers, return `abs_greater`.
-    // - For negative numbers, flip the result (`greater magnitude means smaller value`).
-    return is_negative_ ? !abs_greater : abs_greater;
+    return !(*this <= other);
 }
 
 bool BigNumber::operator>=(const BigNumber& other) const {
