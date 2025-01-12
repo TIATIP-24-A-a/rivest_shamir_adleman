@@ -45,16 +45,28 @@ void TestGenerateKeyPair() {
     }
 }
 
-/* Tests encryption and decryption using RSA keys. */
+/* Tests encryption and decryption using RSA keys.
+ *
+ * Ensures that a message encrypted using the public key can be
+ * successfully decrypted back to the original message using the private key.
+ */
 void TestEncryptDecrypt() {
     try {
+        // Generate RSA key pair
         RSA::KeyPair key_pair = RSA::GenerateKeyPair(50, 100);
-        int message = 42; /* Message to encrypt and decrypt. */
 
-        int encrypted = RSA::Encrypt(message, key_pair.public_key);
-        int decrypted = RSA::Decrypt(encrypted, key_pair.private_key);
+        // Define the message as a BigNumber
+        BigNumber message("42");  // Message to encrypt and decrypt
 
-        assert(decrypted == message); /* The decrypted message should match the original. */
+        // Encrypt the message using the public key
+        BigNumber encrypted = RSA::Encrypt(message, key_pair.public_key);
+
+        // Decrypt the encrypted message using the private key
+        BigNumber decrypted = RSA::Decrypt(encrypted, key_pair.private_key);
+
+        // Verify that the decrypted message matches the original message
+        assert(decrypted.ToString() == message.ToString());
+
         std::cout << "TestEncryptDecrypt passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestEncryptDecrypt failed with exception: " << e.what() << std::endl;
@@ -183,6 +195,31 @@ void TestBigNumberSubtract() {
     }
 }
 
+/* Tests the Multiply method of BigNumber for correct multiplication. */
+void TestBigNumberMultiply() {
+    try {
+        BigNumber num1("123");
+        BigNumber num2("456");
+
+        BigNumber result = num1.Multiply(num2);
+
+        std::string expected = "56088";  // 123 * 456 = 56088.
+
+        std::cout << "BigNumber Multiply Debugging:" << std::endl;
+        std::cout << "  Num1: " << num1.ToString() << std::endl;
+        std::cout << "  Num2: " << num2.ToString() << std::endl;
+        std::cout << "  Result: " << result.ToString() << std::endl;
+        std::cout << "  Expected: " << expected << std::endl;
+
+        assert(result.ToString() == expected);
+        std::cout << "TestBigNumberMultiply passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberMultiply failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberMultiply failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestIsPrime();
     TestGeneratePrime();
@@ -195,5 +232,6 @@ int main() {
     TestBigNumberMultiplyBy10();
     TestBigNumberAdd();
     TestBigNumberSubtract();
+    TestBigNumberMultiply();
     return 0;
 }
