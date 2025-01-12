@@ -25,7 +25,17 @@ void TestMillerRabinKnownComposites() {
     }
 }
 
+void TestMillerRabinCarmichaelNumber() {
+    try {
+        assert(PrimeUtils::IsPrime(BigNumber("561")) == false);  // Carmichael number
+        std::cout << "TestMillerRabinCarmichaelNumber passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestMillerRabinCarmichaelNumber failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestMillerRabinKnownPrimes();
+    TestMillerRabinKnownComposites();
     return 0;
 }
