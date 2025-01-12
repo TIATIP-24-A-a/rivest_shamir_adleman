@@ -135,6 +135,30 @@ BigNumber BigNumber::Add(const BigNumber& other) const {
     return result;
 }
 
+/* Adds two BigNumbers with no checks. */
+BigNumber BigNumber::AddRaw(const BigNumber& other) const {
+    std::vector<int> result;
+    int carry = 0;
+    size_t max_size = std::max(digits_.size(), other.digits_.size());
+
+    // Add digits one by one, handling carry
+    for (size_t i = 0; i < max_size || carry; ++i) {
+        int sum = carry;
+        if (i < digits_.size()) {
+            sum += digits_[i];
+        }
+        if (i < other.digits_.size()) {
+            sum += other.digits_[i];
+        }
+        result.push_back(sum % 10);  // Store current digit
+        carry = sum / 10;            // Calculate carry for next iteration
+    }
+
+    BigNumber temp;
+    temp.digits_ = result;
+    return temp;
+}
+
 /* Subtracts another BigNumber. */
 BigNumber BigNumber::Subtract(const BigNumber& other) const {
     // Handle signs

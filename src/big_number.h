@@ -4,7 +4,8 @@
 #include <string>
 #include <vector>
 
-class BigNumber {
+class BigNumber
+{
 public:
     /* Default constructor. Initializes to zero. */
     BigNumber();
@@ -216,10 +217,18 @@ public:
      */
     BigNumber operator%(const BigNumber& other) const;
 
-
 private:
-    std::vector<int> digits_;  // Digits stored in reverse order for easier arithmetic.
-    bool is_negative_;         // Sign of the number (true if negative).
+    std::vector<int> digits_; // Digits stored in reverse order for easier arithmetic.
+    bool is_negative_; // Sign of the number (true if negative).
+
+    /**
+    * Performs raw addition of two BigNumbers without sign handling.
+    * Assumes both numbers are positive and handles only the digit addition.
+    *
+    * @param other The BigNumber to add to this one
+    * @return A new BigNumber containing the sum of digits
+    */
+    BigNumber AddRaw(const BigNumber& other) const;
 
     /* Removes leading zeros and normalizes the number.
      * Ensures that zero is always represented as a single digit.
