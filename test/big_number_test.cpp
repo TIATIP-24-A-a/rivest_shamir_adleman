@@ -394,6 +394,80 @@ void TestBigNumberEdgeCaseZeros() {
     }
 }
 
+/* Tests the behavior of Pow() with exponent = 0 (e.g., 2^0 = 1). */
+void TestBigNumberPowZeroExponent() {
+    try {
+        BigNumber base("2");
+        BigNumber result = base.Pow(0);  // 2^0 should be 1
+        assert(result.ToString() == "1");
+        std::cout << "TestBigNumberPowZeroExponent passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberPowZeroExponent failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberPowZeroExponent failed with an unknown exception!" << std::endl;
+    }
+}
+
+/* Tests the behavior of Pow() with exponent = 1 (e.g., 2^1 = 2). */
+void TestBigNumberPowExponentOne() {
+    try {
+        BigNumber base("2");
+        BigNumber result = base.Pow(1);  // 2^1 should be 2
+        assert(result.ToString() == "2");
+        std::cout << "TestBigNumberPowExponentOne passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberPowExponentOne failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberPowExponentOne failed with an unknown exception!" << std::endl;
+    }
+}
+
+/* Tests the behavior of Pow() with a slightly larger exponent (e.g., 2^10 = 1024). */
+void TestBigNumberPowTen() {
+    try {
+        BigNumber base("2");
+        BigNumber result = base.Pow(10);  // 2^10 should be 1024
+        assert(result.ToString() == "1024");
+        std::cout << "TestBigNumberPowTen passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberPowTen failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberPowTen failed with an unknown exception!" << std::endl;
+    }
+}
+
+/* Tests Pow() with a different base (e.g., 3^5 = 243). */
+void TestBigNumberPowBaseThree() {
+    try {
+        BigNumber base("3");
+        BigNumber result = base.Pow(5);  // 3^5 should be 243
+        assert(result.ToString() == "243");
+        std::cout << "TestBigNumberPowBaseThree passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberPowBaseThree failed with exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberPowBaseThree failed with an unknown exception!" << std::endl;
+    }
+}
+
+/* Tests that Pow() throws an exception for negative exponents. */
+void TestBigNumberPowNegativeExponent() {
+    try {
+        BigNumber base("2");
+        // This should throw std::invalid_argument (if implemented as such)
+        BigNumber result = base.Pow(-1);
+        // If we get here, something is wrong, so force a test failure
+        assert(false && "Expected an exception for negative exponent, but none was thrown!");
+    } catch (const std::invalid_argument&) {
+        // This is the expected path
+        std::cout << "TestBigNumberPowNegativeExponent passed (exception caught)!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBigNumberPowNegativeExponent failed with unexpected exception: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "TestBigNumberPowNegativeExponent failed with an unknown exception!" << std::endl;
+    }
+}
+
 int main() {
     TestBigNumberDividePositiveNumbers();
     TestBigNumberDivideNegativeNumbers();
@@ -426,5 +500,10 @@ int main() {
     TestBigNumberAdd();
     TestBigNumberSubtract();
     TestBigNumberMultiply();
+    TestBigNumberPowZeroExponent();
+    TestBigNumberPowExponentOne();
+    TestBigNumberPowTen();
+    TestBigNumberPowBaseThree();
+    TestBigNumberPowNegativeExponent();
     return 0;
 }

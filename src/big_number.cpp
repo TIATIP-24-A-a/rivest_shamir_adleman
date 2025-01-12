@@ -289,6 +289,38 @@ BigNumber BigNumber::Abs() const {
     return result;                 // Return the absolute value.
 }
 
+BigNumber BigNumber::Pow(int exponent) const
+{
+    // Disallow negative exponents (2^-1, etc. doesn't make sense for BigNumber).
+    if (exponent < 0) {
+        throw std::invalid_argument("Pow exponent must be non-negative.");
+    }
+
+    // Special case: 0^0, 0^n, etc.
+    if (*this == BigNumber("0")) {
+        // By convention 0^0 can be defined as 1, but you could also choose to throw.
+        return (exponent == 0) ? BigNumber("1") : BigNumber("0");
+    }
+
+    // Exponent-by-squaring
+    BigNumber result("1");
+    BigNumber base = *this;  // We'll repeatedly square 'base'
+    int e = exponent;        // Copy so we can modify it
+
+    while (e > 0) {
+        // If the current exponent bit is set, multiply into result
+        if (e & 1) {
+            result = result.Multiply(base);
+        }
+        // Square the base for the next bit
+        base = base.Multiply(base);
+        // Shift exponent right by 1 bit (integer division by 2)
+        e >>= 1;
+    }
+
+    return result;
+}
+
 int BigNumber::ToInt() const {
     static const BigNumber MAX_INT(INT_MAX);
 
