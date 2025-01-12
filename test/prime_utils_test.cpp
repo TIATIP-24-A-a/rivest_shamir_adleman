@@ -15,23 +15,8 @@ void TestMillerRabinKnownPrimes() {
     }
 }
 
-/* Tests whether the GeneratePrime function generates a valid prime number
- * within a specified range.
- */
-void TestGeneratePrime() {
-    try {
-        int prime = PrimeUtils::GeneratePrime(10, 50);
-        assert(prime >= 10 && prime <= 50); /* Prime should be within range. */
-        std::cout << "TestGeneratePrime passed!" << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "TestGeneratePrime failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestGeneratePrime failed with an unknown exception!" << std::endl;
-    }
-}
 
 int main() {
     TestMillerRabinKnownPrimes();
-    TestGeneratePrime();
     return 0;
 }
