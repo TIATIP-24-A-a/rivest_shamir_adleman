@@ -64,20 +64,6 @@ void BigNumber::Normalize() {
     }
 }
 
-/* Converts BigNumber to its string representation. */
-std::string BigNumber::ToString() const {
-    if (digits_.empty()) {
-        return "0";
-    }
-
-    std::string result = is_negative_ ? "-" : "";
-    for (auto it = digits_.rbegin(); it != digits_.rend(); ++it) {
-        result += std::to_string(*it);
-    }
-
-    return result;
-}
-
 /* Appends a single digit to the BigNumber. */
 void BigNumber::AppendDigit(int digit) {
     if (digit < 0 || digit > 9) {
@@ -259,6 +245,84 @@ BigNumber BigNumber::Modulo(const BigNumber& other) const {
     return Subtract(product);  // Remainder = this - (quotient * other)
 }
 
+/* Performs modular exponentiation: (base^exponent) % modulus.
+ *
+ * Efficiently computes the result of raising the base to the power of the
+ * exponent and taking the modulo, using the method of "exponentiation by squaring."
+ *
+ * Args:
+ *   exponent: The BigNumber exponent.
+ *   modulus: The BigNumber modulus.
+ * Returns:
+ *   The result of (this^exponent) % modulus as a BigNumber.
+ */
+BigNumber BigNumber::ModularExponentiation(const BigNumber& exponent, const BigNumber& modulus) const {
+    if (modulus == BigNumber("0")) {
+        throw std::invalid_argument("BigNumber::ModularExponentiation: Modulus cannot be zero.");
+    }
+
+    BigNumber base = *this % modulus;  // Initial base modulo the modulus.
+    BigNumber result("1");            // Initialize the result to 1.
+    BigNumber exp = exponent;         // Copy the exponent for manipulation.
+
+    while (exp > BigNumber("0")) {
+        if (exp % BigNumber("2") == BigNumber("1")) {  // If exponent is odd.
+            result = (result * base) % modulus;       // Multiply and take modulo.
+        }
+        base = (base * base) % modulus;              // Square the base and take modulo.
+        exp = exp / BigNumber("2");                  // Divide the exponent by 2.
+    }
+
+    return result;
+}
+
+/* Multiplies the BigNumber by 10^power. */
+void BigNumber::MultiplyByPowerOf10(int power) {
+    if (power < 0) {
+        throw std::invalid_argument("BigNumber::MultiplyByPowerOf10: Power must be non-negative.");
+    }
+
+    // Append `power` number of zeros to the digit vector.
+    digits_.insert(digits_.begin(), power, 0);
+}
+
+/* Returns the absolute value of this BigNumber. */
+BigNumber BigNumber::Abs() const {
+    BigNumber result = *this;       // Create a copy of the current number.
+    result.is_negative_ = false;   // Set the sign to positive.
+    return result;                 // Return the absolute value.
+}
+
+int BigNumber::to_int() const {
+    if (digits_.size() > 10 || *this > BigNumber(std::to_string(INT_MAX))) {
+        throw std::overflow_error("BigNumber is too large to convert to int.");
+    }
+
+    int result = 0;
+    int multiplier = 1;
+
+    for (int digit : digits_) {
+        result += digit * multiplier;
+        multiplier *= 10;
+    }
+
+    return is_negative_ ? -result : result;
+}
+
+/* Converts BigNumber to its string representation. */
+std::string BigNumber::to_string() const {
+    if (digits_.empty()) {
+        return "0";
+    }
+
+    std::string result = is_negative_ ? "-" : "";
+    for (auto it = digits_.rbegin(); it != digits_.rend(); ++it) {
+        result += std::to_string(*it);
+    }
+
+    return result;
+}
+
 /* Checks if this BigNumber is less than another. */
 bool BigNumber::operator<(const BigNumber& other) const {
     // Compare signs first
@@ -336,66 +400,9 @@ bool BigNumber::operator>(const BigNumber& other) const {
     return is_negative_ ? !abs_greater : abs_greater;
 }
 
-int BigNumber::ToInt() const {
-    if (digits_.size() > 10 || *this > BigNumber(std::to_string(INT_MAX))) {
-        throw std::overflow_error("BigNumber is too large to convert to int.");
-    }
-
-    int result = 0;
-    int multiplier = 1;
-
-    for (int digit : digits_) {
-        result += digit * multiplier;
-        multiplier *= 10;
-    }
-
-    return is_negative_ ? -result : result;
-}
-
 bool BigNumber::operator>=(const BigNumber& other) const {
     // A number is greater than or equal if it is either greater than or equal to the other number.
     return (*this > other) || (*this == other);
-}
-
-/* Performs modular exponentiation: (base^exponent) % modulus.
- *
- * Efficiently computes the result of raising the base to the power of the
- * exponent and taking the modulo, using the method of "exponentiation by squaring."
- *
- * Args:
- *   exponent: The BigNumber exponent.
- *   modulus: The BigNumber modulus.
- * Returns:
- *   The result of (this^exponent) % modulus as a BigNumber.
- */
-BigNumber BigNumber::ModularExponentiation(const BigNumber& exponent, const BigNumber& modulus) const {
-    if (modulus == BigNumber("0")) {
-        throw std::invalid_argument("BigNumber::ModularExponentiation: Modulus cannot be zero.");
-    }
-
-    BigNumber base = *this % modulus;  // Initial base modulo the modulus.
-    BigNumber result("1");            // Initialize the result to 1.
-    BigNumber exp = exponent;         // Copy the exponent for manipulation.
-
-    while (exp > BigNumber("0")) {
-        if (exp % BigNumber("2") == BigNumber("1")) {  // If exponent is odd.
-            result = (result * base) % modulus;       // Multiply and take modulo.
-        }
-        base = (base * base) % modulus;              // Square the base and take modulo.
-        exp = exp / BigNumber("2");                  // Divide the exponent by 2.
-    }
-
-    return result;
-}
-
-/* Multiplies the BigNumber by 10^power. */
-void BigNumber::MultiplyByPowerOf10(int power) {
-    if (power < 0) {
-        throw std::invalid_argument("BigNumber::MultiplyByPowerOf10: Power must be non-negative.");
-    }
-
-    // Append `power` number of zeros to the digit vector.
-    digits_.insert(digits_.begin(), power, 0);
 }
 
 /* Overloads the multiplication operator for BigNumber. */
@@ -448,11 +455,4 @@ BigNumber BigNumber::operator%(const BigNumber& other) const {
     }
 
     return dividend;
-}
-
-/* Returns the absolute value of this BigNumber. */
-BigNumber BigNumber::Abs() const {
-    BigNumber result = *this;       // Create a copy of the current number.
-    result.is_negative_ = false;   // Set the sign to positive.
-    return result;                 // Return the absolute value.
 }

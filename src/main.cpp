@@ -32,15 +32,15 @@ int main() {
 
         // Step 3: Convert the message to a BigNumber
         BigNumber big_message = RSA::StringToBigNumber(message);
-        std::cout << "Message as BigNumber: " << big_message.ToString() << "\n";
+        std::cout << "Message as BigNumber: " << big_message.to_string() << "\n";
 
         // Step 4: Encrypt the message using the public key
         BigNumber encrypted_message = RSA::Encrypt(big_message, key_pair.public_key);
-        std::cout << "Encrypted Message: " << encrypted_message.ToString() << "\n";
+        std::cout << "Encrypted Message: " << encrypted_message.to_string() << "\n";
 
         // Step 5: Decrypt the message using the private key
         BigNumber decrypted_message = RSA::Decrypt(encrypted_message, key_pair.private_key);
-        std::cout << "Decrypted BigNumber: " << decrypted_message.ToString() << "\n";
+        std::cout << "Decrypted BigNumber: " << decrypted_message.to_string() << "\n";
 
         // Step 6: Convert the decrypted BigNumber back to a string
         std::string decrypted_text = RSA::BigNumberToString(decrypted_message);

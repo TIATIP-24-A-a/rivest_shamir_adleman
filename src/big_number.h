@@ -34,7 +34,7 @@ public:
      * Returns:
      *   A string representing the number (e.g., "123456789").
      */
-    std::string ToString() const;
+    std::string to_string() const;
 
     /* Appends a single digit to the BigNumber.
      *
@@ -94,7 +94,7 @@ public:
      * Throws:
      *   std::overflow_error if the BigNumber is too large to fit in an int.
      */
-    int ToInt() const;
+    int to_int() const;
 
     /* Divides this BigNumber by another and returns the quotient.
      *

@@ -159,7 +159,7 @@ namespace RSA {
             BigNumber ascii_value = remaining.Modulo(divisor);
 
             /* Convert the ASCII value to a character. */
-            char character = static_cast<char>(ascii_value.ToInt());
+            char character = static_cast<char>(ascii_value.to_int());
 
             /* Prepend the character to the result string. */
             result.insert(result.begin(), character);
