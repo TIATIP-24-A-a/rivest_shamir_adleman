@@ -285,7 +285,7 @@ BigNumber BigNumber::Abs() const {
     return result;                 // Return the absolute value.
 }
 
-int BigNumber::to_int() const {
+int BigNumber::ToInt() const {
     static const BigNumber MAX_INT(INT_MAX);
 
     if (digits_.size() > 10 || *this > MAX_INT) {
@@ -304,7 +304,7 @@ int BigNumber::to_int() const {
 }
 
 /* Converts BigNumber to its string representation. */
-std::string BigNumber::to_string() const {
+std::string BigNumber::ToString() const {
     std::string result;
     result.reserve(digits_.size() + (is_negative_ ? 1 : 0));
 
