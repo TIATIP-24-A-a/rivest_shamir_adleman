@@ -5,15 +5,13 @@
 #include <iostream>
 #include <exception>
 
-/* Tests whether the IsPrime function correctly identifies a prime number. */
-void TestIsPrime() {
+void TestMillerRabinKnownPrimes() {
     try {
-        assert(PrimeUtils::IsPrime(17) == true); /* 17 is a prime number. */
-        std::cout << "TestIsPrime passed!" << std::endl;
+        assert(PrimeUtils::IsPrime(BigNumber("17")) == true);
+        assert(PrimeUtils::IsPrime(BigNumber("61")) == true);
+        std::cout << "TestMillerRabinKnownPrimes passed!" << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "TestIsPrime failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestIsPrime failed with an unknown exception!" << std::endl;
+        std::cerr << "TestMillerRabinKnownPrimes failed with exception: " << e.what() << std::endl;
     }
 }
 
@@ -33,7 +31,7 @@ void TestGeneratePrime() {
 }
 
 int main() {
-    TestIsPrime();
+    TestMillerRabinKnownPrimes();
     TestGeneratePrime();
     return 0;
 }
