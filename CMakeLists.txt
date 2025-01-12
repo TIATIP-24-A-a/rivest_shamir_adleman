@@ -38,6 +38,12 @@ add_executable(big_number_tests
         src/big_number.cpp
 )
 
+# Test executable
+add_executable(secure_random_tests
+        test/secure_random_test.cpp
+        src/secure_random.cpp
+)
+
 # Enable testing
 enable_testing()
 add_test(NAME RSAUnitTests COMMAND rsa_tests)
