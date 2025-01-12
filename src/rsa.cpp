@@ -66,63 +66,103 @@ namespace RSA {
 
 /* Encrypts a message using the RSA public key.
  *
+ * Encrypts the given BigNumber message using the RSA public key.
+ * The encryption formula is:
+ *     ciphertext = (message^e) % n
+ *
  * Args:
- *   message: The message to encrypt.
- *   public_key: The RSA public key.
+ *   message: The BigNumber message to encrypt.
+ *   public_key: The RSA public key containing modulus (n) and exponent (e).
  * Returns:
- *   The encrypted message (ciphertext).
+ *   The encrypted message as a BigNumber.
  */
-    int Encrypt(int message, const PublicKey& public_key) {
-        return ModularExponentiation(message, public_key.e, public_key.n);
+    BigNumber Encrypt(const BigNumber& message, const PublicKey& public_key) {
+        BigNumber base = message;
+        BigNumber exp(public_key.e);
+        BigNumber mod(public_key.n);
+
+        return base.ModularExponentiation(exp, mod);
     }
 
 /* Decrypts a ciphertext using the RSA private key.
  *
+ * Decrypts the given BigNumber ciphertext using the RSA private key.
+ * The decryption formula is:
+ *     plaintext = (ciphertext^d) % n
+ *
  * Args:
- *   ciphertext: The encrypted message to decrypt.
- *   private_key: The RSA private key.
+ *   ciphertext: The BigNumber ciphertext to decrypt.
+ *   private_key: The RSA private key containing modulus (n) and exponent (d).
  * Returns:
- *   The decrypted message (plaintext).
+ *   The decrypted message as a BigNumber.
  */
-    int Decrypt(int ciphertext, const PrivateKey& private_key) {
-        return ModularExponentiation(ciphertext, private_key.d, private_key.n);
+    BigNumber Decrypt(const BigNumber& ciphertext, const PrivateKey& private_key) {
+        BigNumber base = ciphertext;
+        BigNumber exp(private_key.d);
+        BigNumber mod(private_key.n);
+
+        return base.ModularExponentiation(exp, mod);
     }
 
-/* Converts a string to an integer representation by concatenating ASCII values.
+/* Converts a string to a BigNumber representation.
+ *
+ * Each character in the string is converted to its ASCII value and concatenated.
+ * The resulting BigNumber represents the entire string as a large number.
  *
  * Args:
  *   message: The string message to convert.
  * Returns:
- *   The integer representation of the string.
+ *   A BigNumber representing the ASCII values of the string.
  */
-    std::string StringToInt(const std::string& message) {
-        std::string result;
-        for (char c : message) {
-            result += std::to_string(static_cast<int>(c)); /* Convert each character to ASCII and concatenate. */
+    BigNumber StringToBigNumber(const std::string& message) {
+        BigNumber result("0");  // Initialize the result as zero.
+        BigNumber multiplier("1");  // Start with a multiplier of 1.
+
+        for (auto it = message.rbegin(); it != message.rend(); ++it) {
+            /* Convert character to its ASCII value as a BigNumber. */
+            BigNumber ascii_value(static_cast<int>(*it));
+
+            /* Add ASCII value multiplied by the current multiplier to the result. */
+            result = result.Add(ascii_value.Multiply(multiplier));
+
+            /* Update the multiplier to the next power of 1000. */
+            multiplier = multiplier.Multiply(BigNumber("1000"));
         }
-        return result; /* Return the concatenated ASCII values as a string. */
+
+        return result;  // Return the BigNumber representation.
     }
 
-/* Converts a concatenated ASCII string representation back to the original string.
+/* Converts a BigNumber back to the original string representation.
+ *
+ * The BigNumber is interpreted as concatenated ASCII values.
+ * Each ASCII value is converted back into its corresponding character to reconstruct the string.
  *
  * Args:
- *   ascii_representation: The concatenated ASCII values as a string.
+ *   big_number: The BigNumber representing the ASCII values of the string.
  * Returns:
  *   The original string message.
  */
-    std::string IntToString(const std::string& ascii_representation) {
+    std::string BigNumberToString(const BigNumber& big_number) {
+        BigNumber remaining = big_number;  // Create a copy to process.
         std::string result;
-        for (size_t i = 0; i < ascii_representation.length(); i += 3) {
-            /* Extract a substring of 3 characters (one ASCII value). */
-            std::string ascii_str = ascii_representation.substr(i, 3);
 
-            /* Convert the substring to a character. */
-            char c = static_cast<char>(std::stoi(ascii_str));
+        const BigNumber divisor("1000");  // Divisor to extract ASCII values.
 
-            /* Append the character to the result string. */
-            result.push_back(c);
+        while (remaining > BigNumber("0")) {
+            /* Extract the last 3-digit ASCII value using modulo operation. */
+            BigNumber ascii_value = remaining.Modulo(divisor);
+
+            /* Convert the ASCII value to a character. */
+            char character = static_cast<char>(ascii_value.ToInt());
+
+            /* Prepend the character to the result string. */
+            result.insert(result.begin(), character);
+
+            /* Remove the extracted ASCII value from the number. */
+            remaining = remaining.Divide(divisor);
         }
-        return result;
+
+        return result;  // Return the reconstructed string.
     }
 
 }  // namespace RSA
