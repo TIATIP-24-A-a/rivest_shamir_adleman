@@ -1,6 +1,5 @@
 #include "prime_utils.h"
 #include <cmath>
-#include <stdexcept>
 
 namespace PrimeUtils
 {
