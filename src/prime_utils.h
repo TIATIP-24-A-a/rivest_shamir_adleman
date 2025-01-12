@@ -7,6 +7,7 @@
 namespace PrimeUtils {
     bool IsPrime(const BigNumber& number);
     BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
+    BigNumber GeneratePrimeWithBitLength(int bitLength);
 }
 
 #endif  // PRIME_UTILS_H_

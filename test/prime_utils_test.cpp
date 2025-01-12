@@ -47,6 +47,22 @@ void TestGeneratePrimeInRange() {
     }
 }
 
+void TestGeneratePrimeWithBitLength() {
+    try {
+        int bitLength = 32;  // Start small for testing
+        BigNumber min = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength - 1)), BigNumber("1"));
+        BigNumber max = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength)), BigNumber("1")) - BigNumber("1");
+
+        BigNumber prime = PrimeUtils::GeneratePrimeWithBitLength(bitLength);
+        assert(prime >= min);
+        assert(prime <= max);
+        assert(PrimeUtils::IsPrime(prime) == true);
+        std::cout << "TestGeneratePrimeWithBitLength passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestGeneratePrimeWithBitLength failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestMillerRabinKnownPrimes();
     TestMillerRabinKnownComposites();
