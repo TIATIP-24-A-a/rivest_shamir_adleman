@@ -1,4 +1,4 @@
-#include "secure_random.h"
+#include "../src/secure_random.h"
 #include <iostream>
 #include <vector>
 #include <cassert>
