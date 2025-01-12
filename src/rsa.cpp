@@ -76,7 +76,13 @@ namespace RSA {
  * Returns:
  *   The encrypted message as a BigNumber.
  */
-    BigNumber Encrypt(const BigNumber& message, const PublicKey& public_key) {
+    BigNumber RSA::Encrypt(const BigNumber& message, const PublicKey& public_key) {
+        // Current implementation might be using too large numbers
+        // Consider adding size checks:
+        if (message >= BigNumber(std::to_string(public_key.n))) {
+            throw std::invalid_argument("Message is too large for the given key size");
+        }
+
         BigNumber base = message;
         BigNumber exp(public_key.e);
         BigNumber mod(public_key.n);
