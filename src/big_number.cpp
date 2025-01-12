@@ -202,13 +202,6 @@ BigNumber BigNumber::SubtractRaw(const BigNumber& other) const {
     return temp;
 }
 
-/* Returns the negation of this BigNumber. */
-BigNumber BigNumber::Negate() const {
-    BigNumber result = *this;
-    result.is_negative_ = !is_negative_;  // Flip the sign.
-    return result;
-}
-
 /* Checks if this BigNumber is less than another. */
 bool BigNumber::operator<(const BigNumber& other) const {
     // Compare signs first

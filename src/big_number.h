@@ -69,13 +69,6 @@ public:
      */
     BigNumber Subtract(const BigNumber& other) const;
 
-    /* Returns a new BigNumber that is the negation of this number.
-     *
-     * Returns:
-     *   A BigNumber with the same magnitude but opposite sign.
-     */
-    BigNumber Negate() const;
-
     /* Multiplies this BigNumber by another BigNumber.
      *
      * Args:
