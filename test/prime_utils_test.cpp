@@ -49,7 +49,7 @@ void TestGeneratePrimeInRange() {
 
 void TestGeneratePrimeWithBitLength() {
     try {
-        int bitLength = 32;  // Start small for testing
+        int bitLength = 512;
         BigNumber min = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength - 1)), BigNumber("1"));
         BigNumber max = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength)), BigNumber("1")) - BigNumber("1");
 
@@ -60,6 +60,18 @@ void TestGeneratePrimeWithBitLength() {
         std::cout << "TestGeneratePrimeWithBitLength passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestGeneratePrimeWithBitLength failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestGenerateRSASafePrime() {
+    try {
+        BigNumber prime = PrimeUtils::GenerateRSASafePrime(512);  // Small bit length for testing
+        assert(PrimeUtils::IsPrime(prime) == true);
+        // Test p-1 has large prime factor
+        assert(PrimeUtils::IsPrime((prime - BigNumber("1")) / BigNumber("2")) == true);
+        std::cout << "TestGenerateRSASafePrime passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestGenerateRSASafePrime failed with exception: " << e.what() << std::endl;
     }
 }
 
