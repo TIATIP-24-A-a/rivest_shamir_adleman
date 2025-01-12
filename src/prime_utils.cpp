@@ -55,7 +55,7 @@ namespace PrimeUtils
 
         SecureRandom random;
         while (true) {
-            BigNumber candidate(random.GetRange(min.ToInt(), max.ToInt()));
+            BigNumber candidate = random.GetBigNumberRange(min, max);
             if (IsPrime(candidate)) {
                 return candidate;
             }
