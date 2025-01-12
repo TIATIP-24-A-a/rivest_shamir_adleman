@@ -102,37 +102,29 @@ void BigNumber::MultiplyBy10() {
     digits_.insert(digits_.begin(), 0);  // Shift all digits left by inserting 0 at the beginning.
 }
 
-/* Adds two BigNumbers. */
+/* Catch-all method that checks what operation to actually perform when adding two BigNumbers. */
 BigNumber BigNumber::Add(const BigNumber& other) const {
-    // Handle signs
-    if (is_negative_ && !other.is_negative_) {
-        return other.Subtract(*this);  /* -A + B = B - A. */
-    } else if (!is_negative_ && other.is_negative_) {
-        return Subtract(other);  /* A + (-B) = A - B. */
+    if (is_negative_ == other.is_negative_) {
+        BigNumber result = AddRaw(other);
+        result.is_negative_ = is_negative_;
+        result.Normalize();
+        return result;
     }
 
-    // Determine the sign of the result.
-    bool result_negative = is_negative_ && other.is_negative_;
-
-    std::vector<int> result_digits;
-    int carry = 0;
-
-    size_t max_size = std::max(digits_.size(), other.digits_.size());
-    for (size_t i = 0; i < max_size || carry; ++i) {
-        int digit1 = (i < digits_.size()) ? digits_[i] : 0;
-        int digit2 = (i < other.digits_.size()) ? other.digits_[i] : 0;
-
-        int sum = digit1 + digit2 + carry;
-        result_digits.push_back(sum % 10);  /* Take the remainder (ones place). */
-        carry = sum / 10;  /* Carry over the tens place. */
+    // Compare absolute values to determine which to subtract from which
+    if (this->Abs() >= other.Abs()) {
+        // |this| >= |other|: subtract other from this, keep this sign
+        BigNumber result = SubtractRaw(other);
+        result.is_negative_ = is_negative_;
+        result.Normalize();
+        return result;
+    } else {
+        // |this| < |other|: subtract this from other, take other's sign
+        BigNumber result = other.SubtractRaw(*this);
+        result.is_negative_ = other.is_negative_;
+        result.Normalize();
+        return result;
     }
-
-    BigNumber result;
-    result.digits_ = result_digits;
-    result.is_negative_ = result_negative;
-    result.Normalize();  /* Remove leading zeros if any. */
-
-    return result;
 }
 
 /* Adds two BigNumbers with no checks. */
