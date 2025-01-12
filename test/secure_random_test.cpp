@@ -41,8 +41,25 @@ void TestSecureRandomGetRange() {
     }
 }
 
+void TestSecureRandomBigNumberRange() {
+    try {
+        SecureRandom random;
+        BigNumber min("1000000");
+        BigNumber max("2000000");
+
+        for (int i = 0; i < 10; i++) {
+            BigNumber result = random.GetBigNumberRange(min, max);
+            assert(result >= min && result <= max);
+        }
+        std::cout << "TestSecureRandomBigNumberRange passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestSecureRandomBigNumberRange failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestSecureRandomGetRange();
     TestSecureRandomGetBytes();
+    TestSecureRandomBigNumberRange();
     return 0;
 }
