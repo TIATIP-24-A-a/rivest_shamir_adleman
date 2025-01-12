@@ -37,5 +37,6 @@ void TestMillerRabinCarmichaelNumber() {
 int main() {
     TestMillerRabinKnownPrimes();
     TestMillerRabinKnownComposites();
+    TestMillerRabinCarmichaelNumber();
     return 0;
 }

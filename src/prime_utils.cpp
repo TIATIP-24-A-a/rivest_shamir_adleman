@@ -17,9 +17,10 @@ namespace PrimeUtils
             r++;
         }
 
-        // For now, we'll test with a fixed set of bases for these small numbers
-        // This is enough to correctly identify 17 and 61 as prime
-        std::vector<BigNumber> bases = {BigNumber("2"), BigNumber("3"), BigNumber("5")};
+        std::vector<BigNumber> bases = {
+            BigNumber("2"), BigNumber("3"), BigNumber("5"),
+            BigNumber("7"), BigNumber("11"), BigNumber("13")
+        };
 
         for (const BigNumber& a : bases)
         {
