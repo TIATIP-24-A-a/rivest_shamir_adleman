@@ -144,6 +144,15 @@ public:
      */
     bool operator==(const BigNumber& other) const;
 
+    /* Compares if two BigNumbers are not equal.
+     *
+     * Args:
+     *   other: The BigNumber to compare with.
+     * Returns:
+     *   True if both BigNumbers have the same value and sign; false otherwise.
+     */
+    bool operator!=(const BigNumber& other) const;
+
     /* Compares if this BigNumber is greater than another.
      *
      * Args:
