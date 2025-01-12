@@ -39,3 +39,35 @@ uint64_t SecureRandom::GetRange(uint64_t min, uint64_t max) {
     GetBytes(reinterpret_cast<uint8_t*>(&result), sizeof(result));
     return min + (result % range);
 }
+
+BigNumber SecureRandom::GetBigNumberRange(const BigNumber& min, const BigNumber& max) {
+    if (min > max) {
+        throw std::invalid_argument("min must be <= max");
+    }
+
+    // Calculate number of bytes needed
+    BigNumber range = max - min + BigNumber("1");
+    size_t bytes_needed = (range.ToString().length() + 2) / 3 + 1;
+
+    std::vector<uint8_t> buffer(bytes_needed);
+    BigNumber result;
+
+    do {
+        GetBytes(buffer.data(), bytes_needed);
+
+        // Convert bytes to BigNumber
+        result = BigNumber("0");
+        for (size_t i = 0; i < bytes_needed; i++) {
+            result.MultiplyBy10();
+            result.MultiplyBy10();
+            result.MultiplyBy10();
+            result = result + BigNumber(std::to_string(buffer[i]));
+        }
+
+        result = result % range;  // Map to our range
+        result = result + min;
+
+    } while (result > max);  // Ensure we're within bounds
+
+    return result;
+}
