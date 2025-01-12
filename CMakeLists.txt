@@ -25,6 +25,13 @@ add_executable(rsa_tests
 )
 
 # Test executable
+add_executable(prime_tests
+        test/prime_utils_test.cpp
+        src/prime_utils.cpp
+        src/big_number.cpp
+)
+
+# Test executable
 add_executable(big_number_tests
         test/big_number_test.cpp
         src/big_number.cpp
