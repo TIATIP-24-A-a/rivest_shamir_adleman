@@ -182,7 +182,7 @@ public:
      *   The product of the two BigNumbers.
      */
 
-    BigNumber operator*(const BigNumber& other) const;
+    BigNumber operator*(const BigNumber& other) const { return Multiply(other); }
 
     /* Overloads the division operator for BigNumber.
      *
@@ -195,7 +195,7 @@ public:
      * Throws:
      *   std::invalid_argument if the divisor is zero.
      */
-    BigNumber operator/(const BigNumber& other) const;
+    BigNumber operator/(const BigNumber& other) const { return Divide(other); }
 
     /* Overloads the modulo operator for BigNumber.
      *
@@ -208,7 +208,7 @@ public:
      * Throws:
      *   std::invalid_argument if the divisor is zero.
      */
-    BigNumber operator%(const BigNumber& other) const;
+    BigNumber operator%(const BigNumber& other) const { return Modulo(other); }
 
 private:
     std::vector<int> digits_; // Digits stored in reverse order for easier arithmetic.
