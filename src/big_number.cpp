@@ -364,6 +364,5 @@ bool BigNumber::operator>(const BigNumber& other) const {
 }
 
 bool BigNumber::operator>=(const BigNumber& other) const {
-    // A number is greater than or equal if it is either greater than or equal to the other number.
-    return (*this > other) || (*this == other);
+    return !(*this < other);
 }
