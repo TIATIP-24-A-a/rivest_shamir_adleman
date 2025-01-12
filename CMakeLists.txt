@@ -44,6 +44,7 @@ add_executable(big_number_tests
 add_executable(secure_random_tests
         test/secure_random_test.cpp
         src/secure_random.cpp
+        src/big_number.cpp
 )
 
 # Enable testing

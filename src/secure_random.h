@@ -11,7 +11,7 @@ public:
 
     // Get random Big Number in range
     BigNumber GetBigNumberRange(const BigNumber& min, const BigNumber& max);
-private:
+
     // Get random bytes into the provided buffer
     void GetBytes(uint8_t* buffer, size_t size);
 };
