@@ -1,5 +1,0 @@
-C:/code/clion/rsa/cmake-build-debug/CMakeFiles/rsa_program.dir
-C:/code/clion/rsa/cmake-build-debug/CMakeFiles/rsa_tests.dir
-C:/code/clion/rsa/cmake-build-debug/CMakeFiles/test.dir
-C:/code/clion/rsa/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/code/clion/rsa/cmake-build-debug/CMakeFiles/rebuild_cache.dir
