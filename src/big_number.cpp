@@ -305,13 +305,15 @@ int BigNumber::to_int() const {
 
 /* Converts BigNumber to its string representation. */
 std::string BigNumber::to_string() const {
-    if (digits_.empty()) {
-        return "0";
+    std::string result;
+    result.reserve(digits_.size() + (is_negative_ ? 1 : 0));
+
+    if (is_negative_) {
+        result += '-';
     }
 
-    std::string result = is_negative_ ? "-" : "";
     for (auto it = digits_.rbegin(); it != digits_.rend(); ++it) {
-        result += std::to_string(*it);
+        result += '0' + *it;
     }
 
     return result;
