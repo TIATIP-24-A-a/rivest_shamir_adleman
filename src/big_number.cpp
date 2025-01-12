@@ -151,55 +151,29 @@ BigNumber BigNumber::AddRaw(const BigNumber& other) const {
     return temp;
 }
 
-/* Subtracts another BigNumber. */
+/* Catch-all method that checks what operation to actually perform when subtracting from another BigNumber. */
 BigNumber BigNumber::Subtract(const BigNumber& other) const {
-    // Handle signs
-    if (is_negative_ && !other.is_negative_) {
-        BigNumber result = Add(other);  // -A - B = -(A + B)
-        result.is_negative_ = true;
+    if (is_negative_ != other.is_negative_) {
+        BigNumber result = AddRaw(other);
+        result.is_negative_ = is_negative_;
+        result.Normalize();
         return result;
-    } else if (!is_negative_ && other.is_negative_) {
-        return Add(other);  // A - (-B) = A + B
-    } else if (is_negative_ && other.is_negative_) {
-        return other.Negate().Subtract(this->Negate());  // -A - (-B) = B - A
     }
 
-    // Handle same-sign subtraction
-    bool result_negative = false;
-    const BigNumber* larger = this;
-    const BigNumber* smaller = &other;
-
-    // Determine which number is larger in absolute value
-    if (*this < other) {
-        result_negative = true;  // Result will be negative
-        larger = &other;
-        smaller = this;
+    // Compare absolute values to determine which to subtract from which
+    if (this->Abs() >= other.Abs()) {
+        // |this| >= |other|: subtract other from this, keep this sign
+        BigNumber result = SubtractRaw(other);
+        result.is_negative_ = is_negative_;
+        result.Normalize();
+        return result;
+    } else {
+        // |this| < |other|: subtract this from other, flip sign
+        BigNumber result = other.SubtractRaw(*this);
+        result.is_negative_ = !other.is_negative_;
+        result.Normalize();
+        return result;
     }
-
-    std::vector<int> result_digits;
-    int borrow = 0;
-
-    for (size_t i = 0; i < larger->digits_.size(); ++i) {
-        int digit1 = larger->digits_[i];
-        int digit2 = (i < smaller->digits_.size()) ? smaller->digits_[i] : 0;
-
-        int diff = digit1 - digit2 - borrow;
-        if (diff < 0) {
-            diff += 10;  // Borrow from the next digit
-            borrow = 1;
-        } else {
-            borrow = 0;
-        }
-
-        result_digits.push_back(diff);
-    }
-
-    BigNumber result;
-    result.digits_ = result_digits;
-    result.is_negative_ = result_negative;
-    result.Normalize();  // Remove leading zeros if any
-
-    return result;
 }
 
 /* Subtracts another BigNumber without performing additional checks. */
