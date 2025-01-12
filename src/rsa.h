@@ -1,6 +1,7 @@
 #ifndef RSA_H_
 #define RSA_H_
 #include <string>
+#include "big_number.h"
 
 namespace RSA {
 
@@ -24,40 +25,44 @@ namespace RSA {
     /* Encrypts a message using the RSA public key.
      *
      * Args:
-     *   message: The message to encrypt.
+     *   message: The BigNumber message to encrypt.
      *   public_key: The RSA public key.
      * Returns:
-     *   The encrypted message (ciphertext).
+     *   The encrypted message as a BigNumber.
      */
-    int Encrypt(int message, const PublicKey& public_key);
+    BigNumber Encrypt(const BigNumber& message, const PublicKey& public_key);
 
     /* Decrypts a ciphertext using the RSA private key.
      *
      * Args:
-     *   ciphertext: The encrypted message to decrypt.
+     *   ciphertext: The encrypted BigNumber message to decrypt.
      *   private_key: The RSA private key.
      * Returns:
-     *   The decrypted message (plaintext).
+     *   The decrypted message as a BigNumber.
      */
-    int Decrypt(int ciphertext, const PrivateKey& private_key);
+    BigNumber Decrypt(const BigNumber& ciphertext, const PrivateKey& private_key);
 
-    /* Converts a string to an integer representation.
+    /* Converts a string to a BigNumber representation.
+     *
+     * Each character of the string is converted to its ASCII value and concatenated.
      *
      * Args:
      *   message: The string message to convert.
      * Returns:
-     *   The integer representation of the string.
+     *   A BigNumber representing the ASCII values of the string.
      */
-    std::string StringToInt(const std::string& message);
+    BigNumber StringToBigNumber(const std::string& message);
 
-    /* Converts a concatenated ASCII string representation back to the original string.
+    /* Converts a BigNumber back to the original string representation.
+     *
+     * The BigNumber is interpreted as concatenated ASCII values, which are converted back to characters.
      *
      * Args:
-     *   ascii_representation: The concatenated ASCII values as a string.
+     *   big_number: The BigNumber representing the ASCII values of the string.
      * Returns:
      *   The original string message.
      */
-    std::string IntToString(const std::string& ascii_representation);
+    std::string BigNumberToString(const BigNumber& big_number);
 
 }  // namespace RSA
 
