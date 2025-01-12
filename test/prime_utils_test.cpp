@@ -80,5 +80,6 @@ int main() {
     TestMillerRabinKnownComposites();
     TestMillerRabinCarmichaelNumber();
     TestGeneratePrimeInRange();
+    TestGenerateRSASafePrime();
     return 0;
 }

@@ -72,4 +72,27 @@ namespace PrimeUtils
 
         return GeneratePrime(min, max);
     }
+
+    bool IsRSASafe(const BigNumber& prime) {
+        // Check if (p-1)/2 is prime (strong prime condition)
+        return IsPrime((prime - BigNumber("1")) / BigNumber("2"));
+    }
+
+    BigNumber GenerateRSASafePrime(int bitLength) {
+        if (bitLength < 512) {  // Enforce minimum security
+            throw std::invalid_argument("Bit length too small for RSA");
+        }
+
+        BigNumber min = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength - 1)), BigNumber("1"));
+        BigNumber max = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength)), BigNumber("1")) - BigNumber("1");
+
+        SecureRandom random;
+        while (true) {
+            BigNumber q = GeneratePrime(min / BigNumber("2"), max / BigNumber("2"));
+            BigNumber p = q * BigNumber("2") + BigNumber("1");
+            if (IsPrime(p) && p <= max) {
+                return p;
+            }
+        }
+    }
 } // namespace PrimeUtils
