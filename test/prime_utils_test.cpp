@@ -34,9 +34,23 @@ void TestMillerRabinCarmichaelNumber() {
     }
 }
 
+void TestGeneratePrimeInRange() {
+    try {
+        BigNumber min("1000");
+        BigNumber max("2000");
+        BigNumber prime = PrimeUtils::GeneratePrime(min, max);
+        assert(prime >= min && prime <= max);
+        assert(PrimeUtils::IsPrime(prime) == true);
+        std::cout << "TestGeneratePrimeInRange passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestGeneratePrimeInRange failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestMillerRabinKnownPrimes();
     TestMillerRabinKnownComposites();
     TestMillerRabinCarmichaelNumber();
+    TestGeneratePrimeInRange();
     return 0;
 }
