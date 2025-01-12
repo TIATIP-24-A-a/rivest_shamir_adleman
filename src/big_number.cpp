@@ -204,27 +204,22 @@ BigNumber BigNumber::SubtractRaw(const BigNumber& other) const {
 
 /* Multiplies this BigNumber by another BigNumber. */
 BigNumber BigNumber::Multiply(const BigNumber& other) const {
-    BigNumber result("0");  // Initialize result to zero.
+    BigNumber result;
+    result.digits_.resize(digits_.size() + other.digits_.size(), 0);  // Pre-allocate space
 
-    // Perform multiplication using the standard algorithm.
-    for (size_t i = 0; i < other.digits_.size(); ++i) {
-        BigNumber temp_result;
-        temp_result.digits_.resize(i, 0);  // Shift left by `i` positions.
-
+    // Multiply each digit
+    for (size_t i = 0; i < other.digits_.size(); i++) {
         int carry = 0;
-        for (size_t j = 0; j < digits_.size() || carry; ++j) {
-            int digit1 = (j < digits_.size()) ? digits_[j] : 0;
-            int product = digit1 * other.digits_[i] + carry;
-            temp_result.digits_.push_back(product % 10);  // Store remainder.
-            carry = product / 10;  // Calculate carry.
+        for (size_t j = 0; j < digits_.size(); j++) {
+            int product = result.digits_[i + j] + digits_[j] * other.digits_[i] + carry;
+            result.digits_[i + j] = product % 10;
+            carry = product / 10;
         }
-
-        result = result.Add(temp_result);  // Accumulate the partial result.
+        if (carry) result.digits_[i + digits_.size()] = carry;
     }
 
-    // Adjust the sign of the result.
     result.is_negative_ = is_negative_ != other.is_negative_;
-    result.Normalize();  // Remove leading zeros.
+    result.Normalize();
     return result;
 }
 
