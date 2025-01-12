@@ -61,4 +61,15 @@ namespace PrimeUtils
             }
         }
     }
+
+    BigNumber GeneratePrimeWithBitLength(int bitLength) {
+        if (bitLength < 8) {  // Arbitrary minimum for safety
+            throw std::invalid_argument("Bit length too small");
+        }
+
+        BigNumber min = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength - 1)), BigNumber("1"));
+        BigNumber max = BigNumber("2").ModularExponentiation(BigNumber(std::to_string(bitLength)), BigNumber("1")) - BigNumber("1");
+
+        return GeneratePrime(min, max);
+    }
 } // namespace PrimeUtils
