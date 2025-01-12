@@ -350,25 +350,10 @@ bool BigNumber::operator<(const BigNumber& other) const {
 }
 
 bool BigNumber::operator==(const BigNumber& other) const {
-    // Check if the signs are different.
-    if (is_negative_ != other.is_negative_) {
+    if (is_negative_ != other.is_negative_ || digits_.size() != other.digits_.size()) {
         return false;
     }
-
-    // Check if the digit sizes are different.
-    if (digits_.size() != other.digits_.size()) {
-        return false;
-    }
-
-    // Compare each digit.
-    for (size_t i = 0; i < digits_.size(); ++i) {
-        if (digits_[i] != other.digits_[i]) {
-            return false;
-        }
-    }
-
-    // If all checks passed, the numbers are equal.
-    return true;
+    return digits_ == other.digits_;
 }
 
 bool BigNumber::operator>(const BigNumber& other) const {
