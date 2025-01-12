@@ -321,32 +321,27 @@ std::string BigNumber::to_string() const {
 
 /* Checks if this BigNumber is less than another. */
 bool BigNumber::operator<(const BigNumber& other) const {
-    // Compare signs first
+    // Different signs: negative < positive
     if (is_negative_ != other.is_negative_) {
-        return is_negative_;  // Negative numbers are always less than positive ones
+        return is_negative_;
     }
 
-    // Compare absolute magnitudes
+    // For same signs, compare digits
     if (digits_.size() != other.digits_.size()) {
-        // For positive numbers: fewer digits means smaller
-        // For negative numbers: fewer digits means larger
         return is_negative_ ?
                (digits_.size() > other.digits_.size()) :
                (digits_.size() < other.digits_.size());
     }
 
-    // Same number of digits, compare from most significant digit
+    // Same length, compare digits from most significant
     for (int i = digits_.size() - 1; i >= 0; --i) {
         if (digits_[i] != other.digits_[i]) {
-            // For positive numbers: smaller digit means smaller number
-            // For negative numbers: smaller digit means larger number
             return is_negative_ ?
                    (digits_[i] > other.digits_[i]) :
                    (digits_[i] < other.digits_[i]);
         }
     }
-
-    return false;  // Numbers are equal
+    return false;
 }
 
 bool BigNumber::operator==(const BigNumber& other) const {
