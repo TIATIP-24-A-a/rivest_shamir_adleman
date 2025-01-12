@@ -228,28 +228,28 @@ BigNumber BigNumber::Multiply(const BigNumber& other) const {
     return result;
 }
 
+/* Divides this BigNumber by another BigNumber. */
 BigNumber BigNumber::Divide(const BigNumber& other) const {
     if (other == BigNumber("0")) {
-        throw std::invalid_argument("Division by zero is not allowed.");
+        throw std::invalid_argument("Division by zero");
     }
 
-    BigNumber quotient("0");
-    BigNumber remainder("0");
+    BigNumber quotient;
+    BigNumber remainder;
 
-    for (size_t i = digits_.size(); i-- > 0;) {
+    for (int i = digits_.size() - 1; i >= 0; i--) {
         remainder.MultiplyBy10();
-        remainder = remainder.Add(BigNumber(digits_[i]));
+        remainder.digits_[0] = digits_[i];  // Add new digit directly
 
-        int digit_quotient = 0;
-        while (remainder >= other) {
+        int q = 0;
+        while (remainder.Abs() >= other.Abs()) {
             remainder = remainder.Subtract(other);
-            ++digit_quotient;
+            q++;
         }
-
-        quotient.digits_.push_back(digit_quotient);
+        quotient.digits_.insert(quotient.digits_.begin(), q);
     }
 
-    std::reverse(quotient.digits_.begin(), quotient.digits_.end());
+    quotient.is_negative_ = is_negative_ != other.is_negative_;
     quotient.Normalize();
     return quotient;
 }
