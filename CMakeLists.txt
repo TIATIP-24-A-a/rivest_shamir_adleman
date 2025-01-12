@@ -31,6 +31,7 @@ add_executable(prime_tests
         test/prime_utils_test.cpp
         src/prime_utils.cpp
         src/big_number.cpp
+        src/secure_random.cpp
 )
 
 # Test executable
