@@ -230,6 +230,15 @@ private:
     */
     BigNumber AddRaw(const BigNumber& other) const;
 
+    /**
+    * Performs raw subtraction of two BigNumbers without sign handling.
+    * Assumes this number is greater than or equal to other and both are positive.
+    *
+    * @param other The BigNumber to subtract from this one
+    * @return A new BigNumber containing the difference of digits
+    */
+    BigNumber SubtractRaw(const BigNumber& other) const;
+
     /* Removes leading zeros and normalizes the number.
      * Ensures that zero is always represented as a single digit.
      */

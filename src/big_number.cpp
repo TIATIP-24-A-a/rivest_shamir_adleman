@@ -210,6 +210,32 @@ BigNumber BigNumber::Subtract(const BigNumber& other) const {
     return result;
 }
 
+/* Subtracts another BigNumber without performing additional checks. */
+BigNumber BigNumber::SubtractRaw(const BigNumber& other) const {
+    std::vector<int> result;
+    int borrow = 0;
+
+    // Subtract digits one by one, handling borrow
+    for (size_t i = 0; i < digits_.size(); ++i) {
+        int diff = digits_[i] - borrow;
+        if (i < other.digits_.size()) {
+            diff -= other.digits_[i];
+        }
+
+        if (diff < 0) {
+            diff += 10;    // Borrow from next digit
+            borrow = 1;
+        } else {
+            borrow = 0;
+        }
+        result.push_back(diff);
+    }
+
+    BigNumber temp;
+    temp.digits_ = result;
+    return temp;
+}
+
 /* Returns the negation of this BigNumber. */
 BigNumber BigNumber::Negate() const {
     BigNumber result = *this;
