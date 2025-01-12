@@ -10,6 +10,23 @@
 #include <sys/random.h>
 #endif
 
+// Add this definition - it was missing
+void SecureRandom::GetBytes(uint8_t* buffer, size_t size) {
+#if defined(_WIN32)
+    if (!RtlGenRandom(buffer, (ULONG)size)) {
+        throw std::runtime_error("Failed to generate random bytes");
+    }
+#else
+    size_t pos = 0;
+    while (pos < size) {
+        ssize_t result = getrandom(buffer + pos, size - pos, 0);
+        if (result < 0) {
+            throw std::runtime_error("Failed to generate random bytes");
+        }
+        pos += result;
+    }
+#endif
+}
 
 uint64_t SecureRandom::GetRange(uint64_t min, uint64_t max) {
     if (min > max) {

@@ -43,5 +43,6 @@ void TestSecureRandomGetRange() {
 
 int main() {
     TestSecureRandomGetRange();
+    TestSecureRandomGetBytes();
     return 0;
 }
