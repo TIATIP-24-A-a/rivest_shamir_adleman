@@ -189,6 +189,30 @@ public:
      */
     bool operator>=(const BigNumber& other) const;
 
+    /* Overloads the addition operator for BigNumber.
+     *
+     * Adds two BigNumbers and returns the result.
+     *
+     * Args:
+     *   other: The BigNumber to multiply with.
+     * Returns:
+     *   The product of the two BigNumbers.
+     */
+
+    BigNumber operator+(const BigNumber& other) const { return Add(other); }
+
+    /* Overloads the subtraction operator for BigNumber.
+     *
+     * Subtracts two BigNumbers and returns the result.
+     *
+     * Args:
+     *   other: The BigNumber to multiply with.
+     * Returns:
+     *   The product of the two BigNumbers.
+     */
+
+    BigNumber operator-(const BigNumber& other) const { return Subtract(other); }
+
     /* Overloads the multiplication operator for BigNumber.
      *
      * Multiplies two BigNumbers and returns the result.
