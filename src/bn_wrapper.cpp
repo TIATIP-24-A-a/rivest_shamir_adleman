@@ -158,3 +158,11 @@ BN_ptr BN_ptr::gcd(const BIGNUM* rhs) const {
     BN_CTX_free(ctx);
     return result;
 }
+
+BN_ptr BN_ptr::mod_inverse(const BIGNUM* m) const {
+    BN_ptr result;
+    BN_CTX* ctx = get_ctx();
+    check_error(BN_mod_inverse(result.get(), bn, m, ctx) != nullptr);
+    BN_CTX_free(ctx);
+    return result;
+}
