@@ -244,6 +244,11 @@ public:
      */
     BN_ptr copy() const;
 
+    /* Converts the BIGNUM to its string representation.
+     *
+     * Returns:
+     *   A string representing the value of the BIGNUM.
+     */
     std::string to_string() const;
 
 private:
