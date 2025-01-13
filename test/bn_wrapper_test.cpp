@@ -130,6 +130,18 @@ void TestBNPtrSubtraction() {
     }
 }
 
+void TestBNPtrMultiplication() {
+    try {
+        BN_ptr a, b;
+        a.set_word(50);
+        b.set_word(30);
+        BN_ptr result = a.mul(b.get());
+        assert(result.get_word() == 1500);
+        std::cout << "TestBNPtrMultiplication passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrMultiplication failed with exception: " << e.what() << std::endl;
+    }
+}
 
 int main() {
     TestBNPtrBasicCreation();
@@ -141,5 +153,6 @@ int main() {
     TestBNPtrPrimality();
     TestBNPtrAddition();
     TestBNPtrSubtraction();
+    TestBNPtrMultiplication();
     return 0;
 }

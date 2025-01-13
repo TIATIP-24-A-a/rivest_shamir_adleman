@@ -30,6 +30,7 @@ public:
 
     BN_ptr add(const BIGNUM* rhs) const;
     BN_ptr sub(const BIGNUM* rhs) const;
+    BN_ptr mul(const BIGNUM* rhs) const;
 
 private:
     BIGNUM* bn;
