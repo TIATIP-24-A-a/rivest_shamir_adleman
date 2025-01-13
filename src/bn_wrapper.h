@@ -229,6 +229,12 @@ public:
      *   True if the safe prime was generated successfully, false otherwise.
      */
     bool generate_safe_prime(int bits);
+
+    /* Retrieves the OpenSSL constant value one.
+     *
+     * Returns:
+     *   A pointer to the BIGNUM constant value one.
+     */
     static const BIGNUM* value_one() { return BN_value_one(); }
 
     BN_ptr copy() const;
