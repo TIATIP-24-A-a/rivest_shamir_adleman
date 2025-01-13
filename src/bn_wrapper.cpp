@@ -18,3 +18,16 @@ BIGNUM* BN_ptr::get() {
 const BIGNUM* BN_ptr::get() const {
     return bn;
 }
+
+BN_ptr::BN_ptr(BN_ptr&& other) noexcept : bn(other.bn) {
+    other.bn = nullptr;
+}
+
+BN_ptr& BN_ptr::operator=(BN_ptr&& other) noexcept {
+    if (this != &other) {
+        if (bn) BN_free(bn);
+        bn = other.bn;
+        other.bn = nullptr;
+    }
+    return *this;
+}
