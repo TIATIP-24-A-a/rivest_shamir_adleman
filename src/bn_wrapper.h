@@ -262,5 +262,11 @@ private:
      *   std::runtime_error if the result indicates an error.
      */
     static void check_error(int result);
+
+    /* Provides a thread-safe OpenSSL context.
+     *
+     * Returns:
+     *   A pointer to a BN_CTX object.
+     */
     static BN_CTX* get_ctx();
 };
