@@ -1,4 +1,3 @@
-// include/bn_wrapper.h
 #pragma once
 #include <string>
 #include <openssl/bn.h>  // Changed from types.h
