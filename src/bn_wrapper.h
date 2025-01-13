@@ -237,6 +237,11 @@ public:
      */
     static const BIGNUM* value_one() { return BN_value_one(); }
 
+    /* Creates a copy of the BIGNUM.
+     *
+     * Returns:
+     *   A BN_ptr containing a copy of the current BIGNUM.
+     */
     BN_ptr copy() const;
 
     std::string to_string() const;
