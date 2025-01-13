@@ -108,3 +108,9 @@ BN_ptr BN_ptr::sub(const BIGNUM* rhs) const {
     check_error(BN_sub(result.get(), bn, rhs));
     return result;
 }
+
+BN_ptr BN_ptr::mul(const BIGNUM* rhs) const {
+    BN_ptr result;
+    check_error(BN_mul(result.get(), bn, rhs, get_ctx()));
+    return result;
+}
