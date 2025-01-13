@@ -253,6 +253,14 @@ public:
 
 private:
     BIGNUM* bn;
+
+    /* Checks for errors in OpenSSL operations.
+     *
+     * Args:
+     *   result: The result code of an OpenSSL operation.
+     * Throws:
+     *   std::runtime_error if the result indicates an error.
+     */
     static void check_error(int result);
     static BN_CTX* get_ctx();
 };
