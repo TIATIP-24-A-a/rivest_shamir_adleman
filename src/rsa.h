@@ -86,6 +86,14 @@ namespace RSA_APP {
      *   A string representation of the formatted BigNumber.
      */
     std::string format_big_number(const BN_ptr& number);
+
+    /* Prints the RSA public and private keys to the console.
+     *
+     * Displays the RSA public and private keys in a formatted and human-readable manner.
+     *
+     * Args:
+     *   key_pair: The RSA KeyPair containing the public and private keys.
+     */
     void print_rsa_keys(const KeyPair& key_pair);
 
 }  // namespace RSA_APP
