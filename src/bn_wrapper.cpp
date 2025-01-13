@@ -150,3 +150,11 @@ bool BN_ptr::generate_prime(int bits) {
     check_error(BN_generate_prime_ex(bn, bits, 0, nullptr, nullptr, nullptr));
     return true;
 }
+
+BN_ptr BN_ptr::gcd(const BIGNUM* rhs) const {
+    BN_ptr result;
+    BN_CTX* ctx = get_ctx();
+    check_error(BN_gcd(result.get(), bn, rhs, ctx));
+    BN_CTX_free(ctx);
+    return result;
+}
