@@ -6,61 +6,37 @@
 
 namespace RSA_APP {
 
-/* Helper function for modular exponentiation.
- *
- * Efficiently computes (base^exponent) % modulus using the
- * method of exponentiation by squaring.
- *
- * Args:
- *   base: The base number.
- *   exponent: The exponent.
- *   modulus: The modulus.
- * Returns:
- *   The result of (base^exponent) % modulus.
- */
-    int ModularExponentiation(int base, int exponent, int modulus) {
-        int result = 1;
-        base = base % modulus;
-        while (exponent > 0) {
-            if (exponent % 2 == 1) {  // If the exponent is odd
-                result = (result * base) % modulus;
-            }
-            exponent = exponent >> 1;  // Divide the exponent by 2
-            base = (base * base) % modulus;  // Square the base
-        }
-        return result;
-    }
+    KeyPair generate_key_pair(int bits) {
+        // Standard RSA public exponent
+        BN_ptr e;
+        e.set_word(65537);  // 2^16 + 1, a common choice for RSA
 
-    KeyPair GenerateKeyPair(int min, int max) {
-        // Generate the first prime number (p).
-        int p = PrimeUtils::GeneratePrime(min, max);
+        // Generate p and q
+        BN_ptr p, q;
+        p.generate_prime(bits/2);
+        do {
+            q.generate_prime(bits/2);
+        } while (BN_cmp(p.get(), q.get()) == 0);  // Ensure p and q are different
 
-        // Generate the second prime number (q), ensuring it is distinct from p.
-        int q = PrimeUtils::GeneratePrime(min, max);
-        while (q == p) {
-            q = PrimeUtils::GeneratePrime(min, max);
+        // Calculate n = p * q
+        BN_ptr n = p.mul(q.get());
+
+        // Calculate totient = (p-1)(q-1)
+        BN_ptr p_minus_1 = p.sub(BN_value_one());
+        BN_ptr q_minus_1 = q.sub(BN_value_one());
+        BN_ptr totient = p_minus_1.mul(q_minus_1.get());
+
+        // Check if e and totient are coprime
+        if (e.gcd(totient.get()).get_word() != 1) {
+            throw std::runtime_error("Public exponent not coprime with totient");
         }
 
-        // Compute modulus (n) and Euler's totient (phi_n).
-        int n = p * q;
-        int phi_n = (p - 1) * (q - 1);
+        // Calculate private exponent d = e^(-1) mod totient
+        BN_ptr d = e.mod_inverse(totient.get());
 
-        // Choose a public exponent (e) such that gcd(e, phi_n) = 1.
-        int e = 3;  // Start with a small odd number.
-        while (std::gcd(e, phi_n) != 1) {
-            e += 2;  // Increment by 2 to ensure e remains odd.
-        }
-
-        // Compute the private exponent (d) as the modular inverse of e mod phi_n.
-        int d = 1;  // Start searching for d.
-        while ((e * d) % phi_n != 1) {
-            d++;
-        }
-
-        // Construct and return the RSA key pair.
-        return {
-                {n, e},  // PublicKey: {modulus, public exponent}
-                {n, d}   // PrivateKey: {modulus, private exponent}
+        return KeyPair{
+            PublicKey{std::move(n), std::move(e)},
+            PrivateKey{n, std::move(d)}  // n is copied here since we need it in both keys
         };
     }
 
@@ -76,18 +52,14 @@ namespace RSA_APP {
  * Returns:
  *   The encrypted message as a BigNumber.
  */
-    BigNumber RSA::Encrypt(const BigNumber& message, const PublicKey& public_key) {
-        // Current implementation might be using too large numbers
-        // Consider adding size checks:
-        if (message >= BigNumber(std::to_string(public_key.n))) {
-            throw std::invalid_argument("Message is too large for the given key size");
+    BN_ptr encrypt(const BN_ptr& message, const PublicKey& public_key) {
+        // Check if message is smaller than modulus
+        if (BN_cmp(message.get(), public_key.n.get()) >= 0) {
+            throw std::invalid_argument("Message too large for key size");
         }
 
-        BigNumber base = message;
-        BigNumber exp(public_key.e);
-        BigNumber mod(public_key.n);
-
-        return base.ModularExponentiation(exp, mod);
+        // c = m^e mod n
+        return message.mod_exp(public_key.e.get(), public_key.n.get());
     }
 
 /* Decrypts a ciphertext using the RSA private key.
@@ -102,12 +74,14 @@ namespace RSA_APP {
  * Returns:
  *   The decrypted message as a BigNumber.
  */
-    BigNumber Decrypt(const BigNumber& ciphertext, const PrivateKey& private_key) {
-        BigNumber base = ciphertext;
-        BigNumber exp(private_key.d);
-        BigNumber mod(private_key.n);
+    BN_ptr decrypt(const BN_ptr& ciphertext, const PrivateKey& private_key) {
+        // Check if ciphertext is smaller than modulus
+        if (BN_cmp(ciphertext.get(), private_key.n.get()) >= 0) {
+            throw std::invalid_argument("Ciphertext too large for key size");
+        }
 
-        return base.ModularExponentiation(exp, mod);
+        // m = c^d mod n
+        return ciphertext.mod_exp(private_key.d.get(), private_key.n.get());
     }
 
 /* Converts a string to a BigNumber representation.
@@ -120,22 +94,21 @@ namespace RSA_APP {
  * Returns:
  *   A BigNumber representing the ASCII values of the string.
  */
-    BigNumber StringToBigNumber(const std::string& message) {
-        BigNumber result("0");  // Initialize the result as zero.
-        BigNumber multiplier("1");  // Start with a multiplier of 1.
+    BN_ptr string_to_number(const std::string& message) {
+        BN_ptr result;
+        BN_ptr base;
+        base.set_word(256);  // Use base 256 for ASCII
 
-        for (auto it = message.rbegin(); it != message.rend(); ++it) {
-            /* Convert character to its ASCII value as a BigNumber. */
-            BigNumber ascii_value(static_cast<int>(*it));
-
-            /* Add ASCII value multiplied by the current multiplier to the result. */
-            result = result.Add(ascii_value.Multiply(multiplier));
-
-            /* Update the multiplier to the next power of 1000. */
-            multiplier = multiplier.Multiply(BigNumber("1000"));
+        result.set_word(0);
+        for (unsigned char c : message) {
+            // result = result * 256 + c
+            result = result.mul(base.get());
+            BN_ptr char_value;
+            char_value.set_word(c);
+            result = result.add(char_value.get());
         }
 
-        return result;  // Return the BigNumber representation.
+        return result;
     }
 
 /* Converts a BigNumber back to the original string representation.
@@ -148,27 +121,26 @@ namespace RSA_APP {
  * Returns:
  *   The original string message.
  */
-    std::string BigNumberToString(const BigNumber& big_number) {
-        BigNumber remaining = big_number;  // Create a copy to process.
+    std::string number_to_string(const BN_ptr& number) {
         std::string result;
+        BN_ptr remaining = number;  // Make a copy
+        BN_ptr base;
+        base.set_word(256);
+        BN_ptr zero;
+        zero.set_word(0);
 
-        const BigNumber divisor("1000");  // Divisor to extract ASCII values.
+        while (BN_cmp(remaining.get(), zero.get()) > 0) {
+            BN_ptr quotient, remainder;
+            // Get remainder when divided by 256
+            remainder = remaining.mod(base.get());
+            // Update remaining = remaining / 256
+            remaining = remaining.div(base.get());
 
-        while (remaining > BigNumber("0")) {
-            /* Extract the last 3-digit ASCII value using modulo operation. */
-            BigNumber ascii_value = remaining.Modulo(divisor);
-
-            /* Convert the ASCII value to a character. */
-            char character = static_cast<char>(ascii_value.ToInt());
-
-            /* Prepend the character to the result string. */
-            result.insert(result.begin(), character);
-
-            /* Remove the extracted ASCII value from the number. */
-            remaining = remaining.Divide(divisor);
+            unsigned long char_value = remainder.get_word();
+            result.insert(result.begin(), static_cast<char>(char_value));
         }
 
-        return result;  // Return the reconstructed string.
+        return result;
     }
 
 }  // namespace RSA_APP
