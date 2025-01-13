@@ -70,6 +70,16 @@ namespace PrimeUtils {
      *   True if the BigNumber is RSA-safe, false otherwise.
      */
     bool IsRSASafe(const BigNumber& prime);
+
+    /* Checks whether a BIGNUM is prime using OpenSSL.
+     *
+     * Uses OpenSSL's cryptographic library to determine if the given BIGNUM is a prime number.
+     *
+     * Args:
+     *   n: A pointer to the BIGNUM to check for primality.
+     * Returns:
+     *   True if the BIGNUM is prime, false otherwise.
+     */
     bool IsPrimeOpenSSL(const BIGNUM* n);
 }
 
