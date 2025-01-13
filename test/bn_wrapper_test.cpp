@@ -327,6 +327,29 @@ void TestBNPtrLargePrimeLength() {
     }
 }
 
+void TestBNPtrRSAExponent() {
+    try {
+        BN_ptr p, q, e;
+        p.generate_prime(512);  // Small primes for test
+        q.generate_prime(512);
+
+        // Calculate (p-1)(q-1)
+        BN_ptr p_minus_1 = p.sub(BN_value_one());
+        BN_ptr q_minus_1 = q.sub(BN_value_one());
+        BN_ptr totient = p_minus_1.mul(q_minus_1.get());
+
+        // Common RSA public exponent
+        e.set_word(65537);
+
+        // Should be coprime
+        assert(e.gcd(totient.get()).get_word() == 1);
+
+        std::cout << "TestBNPtrRSAExponent passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrRSAExponent failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -351,5 +374,6 @@ int main() {
     TestBNPtrGenerateSafePrime();
     TestBNPtrIsRelativelyPrime();
     TestBNPtrLargePrimeLength();
+    TestBNPtrRSAExponent();
     return 0;
 }
