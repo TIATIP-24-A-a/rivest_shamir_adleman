@@ -136,3 +136,7 @@ BN_ptr BN_ptr::mod(const BIGNUM* m) const {
     BN_CTX_free(ctx);
     return result;
 }
+
+int BN_ptr::get_bit(int n) const {
+    return BN_is_bit_set(bn, n);
+}
