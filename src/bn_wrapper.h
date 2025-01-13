@@ -46,7 +46,13 @@ public:
      */
     const BIGNUM* get() const;
 
-    // Move operations
+    /* Move constructor.
+     *
+     * Transfers ownership of the BIGNUM from another BN_ptr.
+     *
+     * Args:
+     *   other: The BN_ptr to move from.
+     */
     BN_ptr(BN_ptr&& other) noexcept;
     BN_ptr& operator=(BN_ptr&& other) noexcept;
 
