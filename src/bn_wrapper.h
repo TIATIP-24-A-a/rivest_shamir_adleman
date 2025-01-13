@@ -32,6 +32,11 @@ public:
      */
     ~BN_ptr();
 
+    /* Accessor for the underlying BIGNUM pointer.
+     *
+     * Returns:
+     *   A mutable pointer to the underlying BIGNUM.
+     */
     BIGNUM* get();
     const BIGNUM* get() const;
 
