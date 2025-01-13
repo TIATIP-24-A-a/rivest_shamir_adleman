@@ -37,6 +37,7 @@ public:
     BN_ptr mod(const BIGNUM* m) const;
 
     int get_bit(int n) const;
+    int num_bits() const;
 
 private:
     BIGNUM* bn;

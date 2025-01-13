@@ -198,6 +198,39 @@ void TestBNPtrGetSetBit() {
     }
 }
 
+void TestBNPtrNumBitsForEight() {
+    try {
+        BN_ptr num;
+        num.set_word(8);    // 1000 in binary
+        assert(num.num_bits() == 4);
+        std::cout << "TestBNPtrNumBitsForEight passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrNumBitsForEight failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBNPtrNumBitsForFifteen() {
+    try {
+        BN_ptr num;
+        num.set_word(15);   // 1111 in binary
+        assert(num.num_bits() == 4);
+        std::cout << "TestBNPtrNumBitsForFifteen passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrNumBitsForFifteen failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBNPtrNumBitsForSixteen() {
+    try {
+        BN_ptr num;
+        num.set_word(16);   // 10000 in binary
+        assert(num.num_bits() == 5);
+        std::cout << "TestBNPtrNumBitsForSixteen passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrNumBitsForSixteen failed with exception: " << e.what() << std::endl;
+    }
+}
+
 
 int main() {
     TestBNPtrBasicCreation();
