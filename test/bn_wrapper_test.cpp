@@ -143,6 +143,20 @@ void TestBNPtrMultiplication() {
     }
 }
 
+void TestBNPtrDivision() {
+    try {
+        BN_ptr a, b;
+        a.set_word(100);
+        b.set_word(5);
+        BN_ptr result = a.div(b.get());
+        assert(result.get_word() == 20);
+        std::cout << "TestBNPtrDivision passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrDivision failed with exception: " << e.what() << std::endl;
+    }
+}
+
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
