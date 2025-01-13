@@ -127,6 +127,14 @@ public:
      *   A BN_ptr containing the result of the addition.
      */
     BN_ptr add(const BIGNUM* rhs) const;
+
+    /* Subtracts another BIGNUM from this BIGNUM.
+     *
+     * Args:
+     *   rhs: The BIGNUM to subtract.
+     * Returns:
+     *   A BN_ptr containing the result of the subtraction.
+     */
     BN_ptr sub(const BIGNUM* rhs) const;
     BN_ptr mul(const BIGNUM* rhs) const;
     BN_ptr div(const BIGNUM* rhs) const;
