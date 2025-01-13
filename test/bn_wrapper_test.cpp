@@ -372,6 +372,22 @@ void TestBNPtrRSAModularArithmetic() {
     }
 }
 
+void TestBNPtrRSAKeySize() {
+    try {
+        BN_ptr p, q;
+        p.generate_prime(2048);
+        q.generate_prime(2048);
+        BN_ptr n = p.mul(q.get());
+
+        // RSA-4096 modulus should be 4096 bits
+        assert(n.num_bits() >= 4095 && n.num_bits() <= 4096);
+
+        std::cout << "TestBNPtrRSAKeySize passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrRSAKeySize failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -398,5 +414,6 @@ int main() {
     TestBNPtrLargePrimeLength();
     TestBNPtrRSAExponent();
     TestBNPtrRSAModularArithmetic();
+    TestBNPtrRSAKeySize();
     return 0;
 }
