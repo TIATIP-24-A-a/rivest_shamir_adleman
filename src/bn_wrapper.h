@@ -166,6 +166,14 @@ public:
      *   A BN_ptr containing the result.
      */
     BN_ptr mod_exp(const BIGNUM* exp, const BIGNUM* m) const;
+
+    /* Computes the modulus of this BIGNUM with another.
+     *
+     * Args:
+     *   m: The modulus BIGNUM.
+     * Returns:
+     *   A BN_ptr containing the result of the modulus operation.
+     */
     BN_ptr mod(const BIGNUM* m) const;
 
     int get_bit(int n) const;
