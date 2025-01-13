@@ -31,3 +31,9 @@ BN_ptr& BN_ptr::operator=(BN_ptr&& other) noexcept {
     }
     return *this;
 }
+
+void BN_ptr::check_error(int result) {
+    if (result == 0) {
+        throw std::runtime_error("OpenSSL BIGNUM operation failed");
+    }
+}
