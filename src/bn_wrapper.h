@@ -3,6 +3,12 @@
 #include <string>
 #include <openssl/bn.h>
 
+/* A wrapper class for managing OpenSSL BIGNUM resources.
+ *
+ * The BN_ptr class simplifies the management of BIGNUM pointers,
+ * providing automatic memory management and utility functions
+ * for common big-number operations.
+ */
 class BN_ptr {
 public:
     BN_ptr();
