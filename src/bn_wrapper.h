@@ -39,6 +39,8 @@ public:
     int get_bit(int n) const;
     int num_bits() const;
 
+    bool generate_prime(int bits);
+
 private:
     BIGNUM* bn;
     static void check_error(int result);
