@@ -15,6 +15,19 @@ namespace PrimeUtils {
      *   True if the BigNumber is a prime number, false otherwise.
      */
     bool IsPrime(const BigNumber& number);
+
+    /* Generates a random prime BigNumber within a specified range.
+     *
+     * Produces a random prime BigNumber that lies within the inclusive range [min, max].
+     *
+     * Args:
+     *   min: The minimum BigNumber value of the range (inclusive).
+     *   max: The maximum BigNumber value of the range (inclusive).
+     * Returns:
+     *   A random prime BigNumber in the range [min, max].
+     * Throws:
+     *   std::runtime_error if no prime can be found within the range.
+     */
     BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
     BigNumber GeneratePrimeWithBitLength(int bitLength);
     BigNumber GenerateRSASafePrime(int bitLength);
