@@ -90,3 +90,9 @@ BN_CTX* BN_ptr::get_ctx() {
     if (!ctx) throw std::runtime_error("Failed to create BN_CTX");
     return ctx;
 }
+
+bool BN_ptr::is_prime(int checks) const {
+    int is_prime = BN_is_prime_ex(bn, checks, get_ctx(), nullptr);
+    check_error(is_prime >= 0);
+    return is_prime == 1;
+}
