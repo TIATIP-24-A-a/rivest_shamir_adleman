@@ -16,6 +16,14 @@ public:
      * Initializes a new BIGNUM instance.
      */
     BN_ptr();
+
+    /* Constructor with explicit BIGNUM initialization.
+     *
+     * Takes ownership of the provided BIGNUM pointer.
+     *
+     * Args:
+     *   bn_value: A pointer to an existing BIGNUM.
+     */
     explicit BN_ptr(BIGNUM* bn_value);
     ~BN_ptr();
 
