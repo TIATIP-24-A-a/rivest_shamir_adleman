@@ -145,6 +145,14 @@ public:
      *   A BN_ptr containing the result of the multiplication.
      */
     BN_ptr mul(const BIGNUM* rhs) const;
+
+    /* Divides this BIGNUM by another BIGNUM.
+     *
+     * Args:
+     *   rhs: The divisor BIGNUM.
+     * Returns:
+     *   A BN_ptr containing the quotient.
+     */
     BN_ptr div(const BIGNUM* rhs) const;
 
     BN_ptr mod_exp(const BIGNUM* exp, const BIGNUM* m) const;
