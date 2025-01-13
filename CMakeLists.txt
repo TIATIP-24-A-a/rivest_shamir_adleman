@@ -68,7 +68,13 @@ add_executable(secure_random_tests
 )
 target_link_libraries(secure_random_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
+# Test executable
+add_executable(bn_wrapper_tests
+        test/bn_wrapper_test.cpp
+        src/bn_wrapper.cpp
+)
+target_link_libraries(bn_wrapper_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
 # Enable testing
 enable_testing()
 add_test(NAME RSAUnitTests COMMAND rsa_tests)
-add_executable(bn_wrapper_tests test/bn_wrapper_test.cpp)
