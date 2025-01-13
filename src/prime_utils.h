@@ -56,6 +56,19 @@ namespace PrimeUtils {
      *   std::runtime_error if a suitable RSA-safe prime cannot be generated.
      */
     BigNumber GenerateRSASafePrime(int bitLength);
+
+    /* Checks whether a BigNumber is an RSA-safe prime.
+     *
+     * Verifies that the given BigNumber meets the criteria for an RSA-safe prime.
+     * An RSA-safe prime p satisfies:
+     *   - p is prime
+     *   - (p - 1) / 2 is also prime
+     *
+     * Args:
+     *   prime: The BigNumber to check for RSA-safety.
+     * Returns:
+     *   True if the BigNumber is RSA-safe, false otherwise.
+     */
     bool IsRSASafe(const BigNumber& prime);
     bool IsPrimeOpenSSL(const BIGNUM* n);
 }
