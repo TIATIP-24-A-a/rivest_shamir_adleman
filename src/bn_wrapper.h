@@ -200,6 +200,14 @@ public:
      *   True if the prime was generated successfully, false otherwise.
      */
     bool generate_prime(int bits);
+
+    /* Computes the greatest common divisor (GCD) of this BIGNUM and another.
+     *
+     * Args:
+     *   rhs: The other BIGNUM.
+     * Returns:
+     *   A BN_ptr containing the GCD.
+     */
     BN_ptr gcd(const BIGNUM* rhs) const;
     BN_ptr mod_inverse(const BIGNUM* m) const;
 
