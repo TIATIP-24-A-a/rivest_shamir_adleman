@@ -114,3 +114,9 @@ BN_ptr BN_ptr::mul(const BIGNUM* rhs) const {
     check_error(BN_mul(result.get(), bn, rhs, get_ctx()));
     return result;
 }
+
+BN_ptr BN_ptr::div(const BIGNUM* rhs) const {
+    BN_ptr result;
+    check_error(BN_div(result.get(), nullptr, bn, rhs, get_ctx()));
+    return result;
+}

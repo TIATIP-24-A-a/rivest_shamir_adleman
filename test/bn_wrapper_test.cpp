@@ -168,5 +168,6 @@ int main() {
     TestBNPtrAddition();
     TestBNPtrSubtraction();
     TestBNPtrMultiplication();
+    TestBNPtrDivision();
     return 0;
 }
