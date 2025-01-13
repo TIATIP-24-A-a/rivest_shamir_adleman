@@ -119,6 +119,13 @@ public:
      */
     bool is_prime(int checks = BN_prime_checks) const;
 
+    /* Adds another BIGNUM to this BIGNUM.
+     *
+     * Args:
+     *   rhs: The BIGNUM to add.
+     * Returns:
+     *   A BN_ptr containing the result of the addition.
+     */
     BN_ptr add(const BIGNUM* rhs) const;
     BN_ptr sub(const BIGNUM* rhs) const;
     BN_ptr mul(const BIGNUM* rhs) const;
