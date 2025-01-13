@@ -312,6 +312,21 @@ void TestBNPtrIsRelativelyPrime() {
     }
 }
 
+void TestBNPtrLargePrimeLength() {
+    try {
+        BN_ptr prime;
+        int bits = 2048;  // Test with 2048 bits
+        prime.generate_prime(bits);
+
+        // Should be exactly the requested bit length
+        assert(prime.num_bits() == bits);
+
+        std::cout << "TestBNPtrLargePrimeLength passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrLargePrimeLength failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -335,5 +350,6 @@ int main() {
     TestBNPtrModInverse();
     TestBNPtrGenerateSafePrime();
     TestBNPtrIsRelativelyPrime();
+    TestBNPtrLargePrimeLength();
     return 0;
 }
