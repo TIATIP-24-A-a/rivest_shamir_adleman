@@ -25,6 +25,11 @@ public:
      *   bn_value: A pointer to an existing BIGNUM.
      */
     explicit BN_ptr(BIGNUM* bn_value);
+
+    /* Destructor.
+     *
+     * Frees the associated BIGNUM resource.
+     */
     ~BN_ptr();
 
     BIGNUM* get();
