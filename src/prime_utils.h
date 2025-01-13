@@ -14,7 +14,8 @@ namespace PrimeUtils {
      * Returns:
      *   True if the BigNumber is a prime number, false otherwise.
      */
-    bool IsPrime(const BigNumber& number);    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
+    bool IsPrime(const BigNumber& number);
+    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
     BigNumber GeneratePrimeWithBitLength(int bitLength);
     BigNumber GenerateRSASafePrime(int bitLength);
     bool IsRSASafe(const BigNumber& prime);
