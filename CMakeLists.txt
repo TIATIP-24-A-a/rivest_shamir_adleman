@@ -28,6 +28,8 @@ add_executable(rsa_program
         src/big_number.cpp
         src/secure_random.h
         src/secure_random.cpp
+        src/bn_wrapper.cpp
+        src/bn_wrapper.h
 )
 
 # Link OpenSSL to all executables that need it
@@ -69,3 +71,4 @@ target_link_libraries(secure_random_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 # Enable testing
 enable_testing()
 add_test(NAME RSAUnitTests COMMAND rsa_tests)
+add_executable(bn_wrapper_tests test/bn_wrapper_test.cpp)
