@@ -1,3 +1,11 @@
+/*
+ *
+ *
+ * FOR EDUCATIONAL PURPOSES ONLY
+ *
+ *
+ */
+
 // src/secure_random.cpp
 #include "secure_random.h"
 #include <limits>

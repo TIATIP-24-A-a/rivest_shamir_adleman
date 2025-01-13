@@ -70,6 +70,25 @@ void TestBNPtrErrorHandling() {
     }
 }
 
+void TestBNPtrRandom() {
+    try {
+        BN_ptr num;
+        assert(num.generate_random(256));  // Generate 256-bit random number
+
+        // Generate in range
+        BN_ptr min, max;
+        min.set_word(1000);
+        max.set_word(2000);
+        BN_ptr random = BN_ptr::generate_in_range(min.get(), max.get());
+        assert(BN_cmp(random.get(), min.get()) >= 0);
+        assert(BN_cmp(random.get(), max.get()) <= 0);
+
+        std::cout << "TestBNPtrRandom passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrRandom failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();

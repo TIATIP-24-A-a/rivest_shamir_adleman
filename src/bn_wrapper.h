@@ -22,6 +22,9 @@ public:
     unsigned long get_word() const;
     void set_negative(int sign);
 
+    bool generate_random(int bits);
+    static BN_ptr generate_in_range(const BIGNUM* min, const BIGNUM* max);
+
 private:
     BIGNUM* bn;
     static void check_error(int result);
