@@ -83,6 +83,12 @@ public:
      *   The unsigned long value of the BIGNUM.
      */
     unsigned long get_word() const;
+
+    /* Sets the sign of the BIGNUM.
+     *
+     * Args:
+     *   sign: The sign to set (1 for negative, 0 for positive).
+     */
     void set_negative(int sign);
 
     bool generate_random(int bits);
