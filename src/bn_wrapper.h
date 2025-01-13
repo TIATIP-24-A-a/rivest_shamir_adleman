@@ -18,6 +18,8 @@ public:
     BN_ptr(const BN_ptr&) = delete;
     BN_ptr& operator=(const BN_ptr&) = delete;
 
+    static void check_error(int result);
+
 private:
     BIGNUM* bn;
 };

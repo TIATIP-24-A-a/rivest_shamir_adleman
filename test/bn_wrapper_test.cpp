@@ -51,10 +51,32 @@ void TestBNPtrComparison() {
     }
 }
 
+void TestBNPtrErrorHandling() {
+    try {
+        BN_ptr num;
+        BN_set_word(num.get(), ULONG_MAX);  // Set maximum value
+        BIGNUM* temp = nullptr;
+        bool caught_error = false;
+
+        try {
+            // Try to set a value that's too large
+            BN_add_word(num.get(), 1);  // Should throw
+        } catch (const std::runtime_error&) {
+            caught_error = true;
+        }
+
+        assert(caught_error && "Should have caught overflow error");
+        std::cout << "TestBNPtrErrorHandling passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrErrorHandling failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
     TestBNPtrMove();
     TestBNPtrComparison();
+    TestBNPtrErrorHandling();
     return 0;
 }
