@@ -171,6 +171,19 @@ void TestBNPtrModExp() {
     }
 }
 
+void TestBNPtrMod() {
+    try {
+        BN_ptr num, mod;
+        num.set_word(100);
+        mod.set_word(30);
+        BN_ptr result = num.mod(mod.get());
+        assert(result.get_word() == 10);  // 100 mod 30 = 10
+        std::cout << "TestBNPtrMod passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrMod failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -184,5 +197,6 @@ int main() {
     TestBNPtrMultiplication();
     TestBNPtrDivision();
     TestBNPtrModExp();
+    TestBNPtrMod();
     return 0;
 }

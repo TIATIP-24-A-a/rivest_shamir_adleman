@@ -128,3 +128,4 @@ BN_ptr BN_ptr::mod_exp(const BIGNUM* exp, const BIGNUM* m) const {
     BN_CTX_free(ctx);
     return result;
 }
+
