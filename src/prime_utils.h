@@ -2,7 +2,7 @@
 #define PRIME_UTILS_H_
 
 #include <big_number.h>
-#include <random>
+#include <openssl/bn.h>
 
 namespace PrimeUtils {
     bool IsPrime(const BigNumber& number);
@@ -10,6 +10,7 @@ namespace PrimeUtils {
     BigNumber GeneratePrimeWithBitLength(int bitLength);
     BigNumber GenerateRSASafePrime(int bitLength);
     bool IsRSASafe(const BigNumber& prime);
+    bool IsPrimeOpenSSL(const BIGNUM* n);
 }
 
 #endif  // PRIME_UTILS_H_

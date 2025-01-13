@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <exception>
+#include <openssl/bn.h>
 
 void TestMillerRabinKnownPrimes() {
     try {
@@ -75,11 +76,34 @@ void TestGenerateRSASafePrime() {
     }
 }
 
+// In the same test file
+void TestOpenSSLPrimeBasic() {
+    try {
+        BIGNUM* num = BN_new();
+        BN_set_word(num, 17);  // Test with same number as TestMillerRabinKnownPrimes
+        bool is_prime = PrimeUtils::IsPrimeOpenSSL(num);
+        assert(is_prime == true);
+        BN_free(num);
+
+        // Test a known composite
+        num = BN_new();
+        BN_set_word(num, 24);  // Test with same number as TestMillerRabinKnownComposites
+        is_prime = PrimeUtils::IsPrimeOpenSSL(num);
+        assert(is_prime == false);
+        BN_free(num);
+
+        std::cout << "TestOpenSSLPrimeBasic passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestOpenSSLPrimeBasic failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestMillerRabinKnownPrimes();
     TestMillerRabinKnownComposites();
     TestMillerRabinCarmichaelNumber();
     TestGeneratePrimeInRange();
     TestGenerateRSASafePrime();
+    TestOpenSSLPrimeBasic();
     return 0;
 }
