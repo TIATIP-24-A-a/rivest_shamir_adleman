@@ -16,7 +16,7 @@ int main() {
     try {
         // Step 1: Generate RSA keys
         std::cout << "Generating RSA keys...\n";
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2096);
+        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(4096);
 
         // Step 2: Input a message
         std::string message;
@@ -25,7 +25,7 @@ int main() {
 
         // Step 3: Convert the message to a BigNumber
         BN_ptr number_message = RSA_APP::string_to_number(message);
-        std::cout << "Message as BigNumber: " << number_message.get_word() << "\n";
+        std::cout << "Message as BigNumber: " << number_message.to_string() << "\n";
 
         // Step 4: Encrypt the message using the public key
         BN_ptr encrypted_message = RSA_APP::encrypt(number_message, key_pair.public_key);

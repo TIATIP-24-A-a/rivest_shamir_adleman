@@ -94,6 +94,20 @@ void TestRSAFullProcess() {
     }
 }
 
+void TestFormatBigNumber() {
+    try {
+        BN_ptr num;
+        num.set_word(12345);  // Example number
+        std::string formatted = format_big_number(num);
+
+        // Convert 12345 to Base64 (binary: "0x3039" → Base64: "MDM5")
+        assert(formatted == "MDM5");
+        std::cout << "TestFormatBigNumber passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestFormatBigNumber failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestRSAKeyGeneration();
     TestRSAEncryptDecrypt();
