@@ -36,10 +36,25 @@ void TestBNPtrMove() {
     }
 }
 
-// Update main():
+void TestBNPtrComparison() {
+    try {
+        BN_ptr num1, num2;
+        BN_set_word(num1.get(), 123);
+        BN_set_word(num2.get(), 123);
+        assert(BN_cmp(num1.get(), num2.get()) == 0);  // Should be equal
+
+        BN_set_word(num2.get(), 124);
+        assert(BN_cmp(num1.get(), num2.get()) < 0);  // num1 should be less
+        std::cout << "TestBNPtrComparison passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrComparison failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
     TestBNPtrMove();
+    TestBNPtrComparison();
     return 0;
 }
