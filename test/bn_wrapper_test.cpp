@@ -231,6 +231,21 @@ void TestBNPtrNumBitsForSixteen() {
     }
 }
 
+void TestBNPtrRandomPrime512() {
+    try {
+        BN_ptr prime;
+        prime.generate_random(512);
+
+        // Should be exactly 512 bits
+        assert(prime.num_bits() == 512);
+        // Should be prime
+        assert(prime.is_prime());
+
+        std::cout << "TestBNPtrRandomPrime512 passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrRandomPrime512 failed with exception: " << e.what() << std::endl;
+    }
+}
 
 int main() {
     TestBNPtrBasicCreation();
@@ -250,5 +265,6 @@ int main() {
     TestBNPtrNumBitsForEight();
     TestBNPtrNumBitsForFifteen();
     TestBNPtrNumBitsForSixteen();
+    TestBNPtrRandomPrime512();
     return 0;
 }
