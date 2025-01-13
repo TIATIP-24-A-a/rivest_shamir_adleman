@@ -298,6 +298,20 @@ void TestBNPtrGenerateSafePrime() {
     }
 }
 
+void TestBNPtrIsRelativelyPrime() {
+    try {
+        BN_ptr a, b;
+        a.set_word(9);
+        b.set_word(14);
+        // 9 and 14 are relatively prime
+        assert(a.gcd(b.get()).get_word() == 1);
+
+        std::cout << "TestBNPtrIsRelativelyPrime passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrIsRelativelyPrime failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -319,5 +333,7 @@ int main() {
     TestBNPtrGenerateRandomPrime512();
     TestBNPtrGCD();
     TestBNPtrModInverse();
+    TestBNPtrGenerateSafePrime();
+    TestBNPtrIsRelativelyPrime();
     return 0;
 }

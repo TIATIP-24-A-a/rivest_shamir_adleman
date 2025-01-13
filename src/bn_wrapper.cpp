@@ -166,3 +166,9 @@ BN_ptr BN_ptr::mod_inverse(const BIGNUM* m) const {
     BN_CTX_free(ctx);
     return result;
 }
+
+bool BN_ptr::generate_safe_prime(int bits) {
+    // Generate safe prime (where (p-1)/2 is also prime)
+    check_error(BN_generate_prime_ex(bn, bits, 1, nullptr, nullptr, nullptr));
+    return true;
+}
