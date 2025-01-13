@@ -40,6 +40,7 @@ public:
     int num_bits() const;
 
     bool generate_prime(int bits);
+    BN_ptr gcd(const BIGNUM* rhs) const;
 
 private:
     BIGNUM* bn;

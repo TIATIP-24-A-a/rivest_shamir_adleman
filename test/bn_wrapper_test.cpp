@@ -248,6 +248,20 @@ void TestBNPtrGenerateRandomPrime512() {
     }
 }
 
+void TestBNPtrGCD() {
+    try {
+        BN_ptr a, b;
+        a.set_word(48);
+        b.set_word(18);
+        BN_ptr result = a.gcd(b.get());
+        assert(result.get_word() == 6);  // GCD(48,18) = 6
+
+        std::cout << "TestBNPtrGCD passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrGCD failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -267,5 +281,6 @@ int main() {
     TestBNPtrNumBitsForFifteen();
     TestBNPtrNumBitsForSixteen();
     TestBNPtrGenerateRandomPrime512();
+    TestBNPtrGCD();
     return 0;
 }
