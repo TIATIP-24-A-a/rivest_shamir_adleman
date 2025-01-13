@@ -155,6 +155,16 @@ public:
      */
     BN_ptr div(const BIGNUM* rhs) const;
 
+    /* Performs modular exponentiation.
+     *
+     * Computes (this^exp) % m.
+     *
+     * Args:
+     *   exp: The exponent BIGNUM.
+     *   m: The modulus BIGNUM.
+     * Returns:
+     *   A BN_ptr containing the result.
+     */
     BN_ptr mod_exp(const BIGNUM* exp, const BIGNUM* m) const;
     BN_ptr mod(const BIGNUM* m) const;
 
