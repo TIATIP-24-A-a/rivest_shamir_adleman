@@ -183,3 +183,16 @@ BN_ptr BN_ptr::copy() const {
     }
     return result;
 }
+
+std::string BN_ptr::to_string() const {
+    if (!bn) {
+        throw std::runtime_error("BIGNUM is uninitialized");
+    }
+    char* hex_str = BN_bn2hex(bn);  // Convert to hex string
+    if (!hex_str) {
+        throw std::runtime_error("Failed to convert BIGNUM to string");
+    }
+    std::string result(hex_str);  // Copy the hex string to std::string
+    OPENSSL_free(hex_str);        // Free memory allocated by OpenSSL
+    return result;
+}
