@@ -74,6 +74,17 @@ namespace RSA_APP {
      *   A Base64-encoded string.
      */
     std::string base64_encode(const std::string& input);
+
+    /* Formats a BigNumber into a human-readable string representation.
+     *
+     * Converts the BigNumber into a string with appropriate formatting
+     * for display or output.
+     *
+     * Args:
+     *   number: The BigNumber to be formatted.
+     * Returns:
+     *   A string representation of the formatted BigNumber.
+     */
     std::string format_big_number(const BN_ptr& number);
     void print_rsa_keys(const KeyPair& key_pair);
 
