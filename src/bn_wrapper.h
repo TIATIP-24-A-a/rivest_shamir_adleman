@@ -136,6 +136,14 @@ public:
      *   A BN_ptr containing the result of the subtraction.
      */
     BN_ptr sub(const BIGNUM* rhs) const;
+
+    /* Multiplies this BIGNUM with another BIGNUM.
+     *
+     * Args:
+     *   rhs: The BIGNUM to multiply with.
+     * Returns:
+     *   A BN_ptr containing the result of the multiplication.
+     */
     BN_ptr mul(const BIGNUM* rhs) const;
     BN_ptr div(const BIGNUM* rhs) const;
 
