@@ -33,6 +33,8 @@ public:
     BN_ptr mul(const BIGNUM* rhs) const;
     BN_ptr div(const BIGNUM* rhs) const;
 
+    BN_ptr mod_exp(const BIGNUM* exp, const BIGNUM* m) const;
+
 private:
     BIGNUM* bn;
     static void check_error(int result);

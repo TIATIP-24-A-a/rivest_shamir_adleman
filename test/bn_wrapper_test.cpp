@@ -156,6 +156,20 @@ void TestBNPtrDivision() {
     }
 }
 
+void TestBNPtrModExp() {
+    try {
+        BN_ptr base, exponent, modulus;
+        base.set_word(4);
+        exponent.set_word(13);
+        modulus.set_word(497);
+        // 4^13 mod 497 = 445
+        BN_ptr result = base.mod_exp(exponent.get(), modulus.get());
+        assert(result.get_word() == 445);
+        std::cout << "TestBNPtrModExp passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrModExp failed with exception: " << e.what() << std::endl;
+    }
+}
 
 int main() {
     TestBNPtrBasicCreation();
