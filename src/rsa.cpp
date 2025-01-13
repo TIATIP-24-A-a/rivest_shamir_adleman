@@ -148,4 +148,16 @@ namespace RSA_APP {
         return result;
     }
 
+    std::string format_big_number(const BN_ptr& number) {
+        unsigned char* bin_data = nullptr;
+        int bin_length = BN_num_bytes(number.get());
+        bin_data = new unsigned char[bin_length];
+        BN_bn2bin(number.get(), bin_data);  // Convert BIGNUM to binary
+
+        std::string binary_string(reinterpret_cast<char*>(bin_data), bin_length);
+        delete[] bin_data;
+
+        return base64_encode(binary_string);
+    }
+
 }  // namespace RSA_APP
