@@ -18,6 +18,9 @@ int main() {
         std::cout << "Generating RSA keys...\n";
         RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(4096);
 
+        std::cout << "\nGenerated RSA Keys:\n";
+        print_rsa_keys(key_pair);
+
         // Step 2: Input a message
         std::string message;
         std::cout << "\nEnter a message to encrypt: ";
