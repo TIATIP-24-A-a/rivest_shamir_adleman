@@ -5,6 +5,7 @@
 class BN_ptr {
 public:
     BN_ptr();
+    explicit BN_ptr(BIGNUM* bn_value);
     ~BN_ptr();
 
     BIGNUM* get();
@@ -28,4 +29,5 @@ public:
 private:
     BIGNUM* bn;
     static void check_error(int result);
+    static BN_CTX* get_ctx();
 };

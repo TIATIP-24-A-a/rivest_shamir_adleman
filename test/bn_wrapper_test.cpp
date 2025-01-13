@@ -95,5 +95,6 @@ int main() {
     TestBNPtrMove();
     TestBNPtrComparison();
     TestBNPtrErrorHandling();
+    TestBNPtrRandom();
     return 0;
 }
