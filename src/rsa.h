@@ -66,6 +66,7 @@ namespace RSA_APP {
 
     std::string base64_encode(const std::string& input);
     std::string format_big_number(const BN_ptr& number);
+    void print_rsa_keys(const KeyPair& key_pair);
 
 }  // namespace RSA_APP
 

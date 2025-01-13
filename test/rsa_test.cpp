@@ -119,6 +119,31 @@ void TestBase64Encode() {
     }
 }
 
+void TestPrintRSAKeys() {
+    try {
+        // Generate a key pair
+        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(512);  // Use smaller size for testing
+
+        // Redirect output to a string
+        std::ostringstream output;
+        std::streambuf* old_cout_buf = std::cout.rdbuf(output.rdbuf());
+        print_rsa_keys(key_pair);
+        std::cout.rdbuf(old_cout_buf);  // Restore standard output
+
+        std::string result = output.str();
+
+        // Check the output format
+        assert(result.find("-----BEGIN PUBLIC KEY-----") != std::string::npos);
+        assert(result.find("-----END PUBLIC KEY-----") != std::string::npos);
+        assert(result.find("-----BEGIN PRIVATE KEY-----") != std::string::npos);
+        assert(result.find("-----END PRIVATE KEY-----") != std::string::npos);
+
+        std::cout << "TestPrintRSAKeys passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestPrintRSAKeys failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestRSAKeyGeneration();
     TestRSAEncryptDecrypt();
