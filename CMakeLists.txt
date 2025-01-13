@@ -38,9 +38,8 @@ target_link_libraries(rsa_program PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 # Test executable
 add_executable(rsa_tests
         test/rsa_test.cpp
-        src/prime_utils.cpp
         src/rsa.cpp
-        src/big_number.cpp
+        src/bn_wrapper.cpp
 )
 target_link_libraries(rsa_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 

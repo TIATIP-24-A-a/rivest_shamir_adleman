@@ -174,6 +174,9 @@ bool BN_ptr::generate_safe_prime(int bits) {
 }
 
 BN_ptr BN_ptr::copy() const {
+    if (!bn) {
+        throw std::runtime_error("Source BN_ptr is uninitialized (bn is null)");
+    }
     BN_ptr result;
     if (BN_copy(result.get(), bn) == nullptr) {
         throw std::runtime_error("BN_copy failed");
