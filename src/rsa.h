@@ -1,18 +1,18 @@
 #ifndef RSA_H_
 #define RSA_H_
 #include <string>
-#include "big_number.h"
+#include "bn_wrapper.h"
 
 namespace RSA_APP {
 
     struct PublicKey {
-        int n;  // Modulus
-        int e;  // Public exponent
+        BN_ptr n;  // Modulus
+        BN_ptr e;  // Public exponent
     };
 
     struct PrivateKey {
-        int n;  // Modulus
-        int d;  // Private exponent
+        BN_ptr n;  // Modulus
+        BN_ptr d;  // Private exponent
     };
 
     struct KeyPair {
@@ -30,7 +30,7 @@ namespace RSA_APP {
      * Returns:
      *   The encrypted message as a BigNumber.
      */
-    BigNumber Encrypt(const BigNumber& message, const PublicKey& public_key);
+    BN_ptr encrypt(const BN_ptr& message, const PublicKey& public_key);
 
     /* Decrypts a ciphertext using the RSA private key.
      *
@@ -40,7 +40,7 @@ namespace RSA_APP {
      * Returns:
      *   The decrypted message as a BigNumber.
      */
-    BigNumber Decrypt(const BigNumber& ciphertext, const PrivateKey& private_key);
+    BN_ptr decrypt(const BN_ptr& ciphertext, const PrivateKey& private_key);
 
     /* Converts a string to a BigNumber representation.
      *
@@ -51,7 +51,7 @@ namespace RSA_APP {
      * Returns:
      *   A BigNumber representing the ASCII values of the string.
      */
-    BigNumber StringToBigNumber(const std::string& message);
+    BN_ptr string_to_number(const std::string& message);
 
     /* Converts a BigNumber back to the original string representation.
      *
@@ -62,7 +62,7 @@ namespace RSA_APP {
      * Returns:
      *   The original string message.
      */
-    std::string BigNumberToString(const BigNumber& big_number);
+    std::string number_to_string(const BN_ptr& number);
 
 }  // namespace RSA_APP
 
