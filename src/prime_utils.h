@@ -5,8 +5,16 @@
 #include <openssl/bn.h>
 
 namespace PrimeUtils {
-    bool IsPrime(const BigNumber& number);
-    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
+    /* Checks whether a BigNumber is a prime number.
+     *
+     * Determines if the given BigNumber is a prime using trial division up to the square root of the number.
+     *
+     * Args:
+     *   number: The BigNumber to check for primality.
+     * Returns:
+     *   True if the BigNumber is a prime number, false otherwise.
+     */
+    bool IsPrime(const BigNumber& number);    BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
     BigNumber GeneratePrimeWithBitLength(int bitLength);
     BigNumber GenerateRSASafePrime(int bitLength);
     bool IsRSASafe(const BigNumber& prime);
