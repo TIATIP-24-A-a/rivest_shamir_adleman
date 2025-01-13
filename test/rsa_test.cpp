@@ -5,108 +5,99 @@
 #include <iostream>
 #include <exception>
 
-/* Tests whether the IsPrime function correctly identifies a prime number. */
-void TestIsPrime() {
+void TestRSAKeyGeneration() {
     try {
-        assert(PrimeUtils::IsPrime(17) == true); /* 17 is a prime number. */
-        std::cout << "TestIsPrime passed!" << std::endl;
+        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
+
+        // Verify key sizes
+        assert(key_pair.public_key.n.num_bits() == 2048);
+
+        // Verify e is typically 65537
+        assert(key_pair.public_key.e.get_word() == 65537);
+
+        // Verify n is the same in both keys
+        assert(BN_cmp(key_pair.public_key.n.get(), key_pair.private_key.n.get()) == 0);
+
+        std::cout << "TestRSAKeyGeneration passed!" << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "TestIsPrime failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestIsPrime failed with an unknown exception!" << std::endl;
+        std::cerr << "TestRSAKeyGeneration failed with exception: " << e.what() << std::endl;
     }
 }
 
-/* Tests whether the GeneratePrime function generates a valid prime number
- * within a specified range.
- */
-void TestGeneratePrime() {
+void TestRSAEncryptDecrypt() {
     try {
-        int prime = PrimeUtils::GeneratePrime(10, 50);
-        assert(prime >= 10 && prime <= 50); /* Prime should be within range. */
-        std::cout << "TestGeneratePrime passed!" << std::endl;
+        // Generate a key pair
+        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
+
+        // Create test message
+        BN_ptr message;
+        message.set_word(42);
+
+        // Encrypt
+        BN_ptr ciphertext = RSA_APP::encrypt(message, key_pair.public_key);
+
+        // Decrypt
+        BN_ptr decrypted = RSA_APP::decrypt(ciphertext, key_pair.private_key);
+
+        // Verify
+        assert(BN_cmp(message.get(), decrypted.get()) == 0);
+
+        std::cout << "TestRSAEncryptDecrypt passed!" << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "TestGeneratePrime failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestGeneratePrime failed with an unknown exception!" << std::endl;
+        std::cerr << "TestRSAEncryptDecrypt failed with exception: " << e.what() << std::endl;
     }
 }
 
-/* Tests whether the RSA key pair is generated correctly. */
-void TestGenerateKeyPair() {
+void TestRSAStringConversion() {
     try {
-        RSA::KeyPair key_pair = RSA::GenerateKeyPair(50, 100); /* Small range for testing. */
-        assert(key_pair.public_key.n > 0);                    /* n must be positive. */
-        std::cout << "TestGenerateKeyPair passed!" << std::endl;
+        std::string original = "Hello, RSA!";
+
+        // Convert string to number
+        BN_ptr number = RSA_APP::string_to_number(original);
+
+        // Convert back to string
+        std::string result = RSA_APP::number_to_string(number);
+
+        assert(original == result);
+
+        std::cout << "TestRSAStringConversion passed!" << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "TestGenerateKeyPair failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestGenerateKeyPair failed with an unknown exception!" << std::endl;
+        std::cerr << "TestRSAStringConversion failed with exception: " << e.what() << std::endl;
     }
 }
 
-/* Tests encryption and decryption using RSA keys.
- *
- * Ensures that a message encrypted using the public key can be
- * successfully decrypted back to the original message using the private key.
- */
-void TestEncryptDecrypt() {
+void TestRSAFullProcess() {
     try {
-        // Generate RSA key pair
-        RSA::KeyPair key_pair = RSA::GenerateKeyPair(50, 100);
+        // Generate keys
+        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
 
-        // Define the message as a BigNumber
-        BigNumber message("42");  // Message to encrypt and decrypt
+        // Original message
+        std::string original = "Secret message";
 
-        // Encrypt the message using the public key
-        BigNumber encrypted = RSA::Encrypt(message, key_pair.public_key);
+        // Convert to number
+        BN_ptr message = RSA_APP::string_to_number(original);
 
-        // Decrypt the encrypted message using the private key
-        BigNumber decrypted = RSA::Decrypt(encrypted, key_pair.private_key);
+        // Encrypt
+        BN_ptr ciphertext = RSA_APP::encrypt(message, key_pair.public_key);
 
-        // Verify that the decrypted message matches the original message
-        assert(decrypted.ToString() == message.ToString());
+        // Decrypt
+        BN_ptr decrypted = RSA_APP::decrypt(ciphertext, key_pair.private_key);
 
-        std::cout << "TestEncryptDecrypt passed!" << std::endl;
+        // Convert back to string
+        std::string result = RSA_APP::number_to_string(decrypted);
+
+        assert(original == result);
+
+        std::cout << "TestRSAFullProcess passed!" << std::endl;
     } catch (const std::exception& e) {
-        std::cerr << "TestEncryptDecrypt failed with exception: " << e.what() << std::endl;
-    } catch (...) {
-        std::cerr << "TestEncryptDecrypt failed with an unknown exception!" << std::endl;
-    }
-}
-
-/* Tests the StringToBigNumber function. */
-void TestStringToBigNumber() {
-    try {
-        std::string message = "fortnite";
-        BigNumber result = RSA::StringToBigNumber(message);
-        std::string expected = "102111114116110105116101";
-        assert(result.ToString() == expected);
-        std::cout << "TestStringToBigNumber passed!" << std::endl;
-    } catch (...) {
-        std::cerr << "TestStringToBigNumber failed!" << std::endl;
-    }
-}
-
-/* Tests the BigNumberToString function. */
-void TestBigNumberToString() {
-    try {
-        BigNumber input("102111114116110105116101");
-        std::string result = RSA::BigNumberToString(input);
-        std::string expected = "fortnite";
-        assert(result == expected);
-        std::cout << "TestBigNumberToString passed!" << std::endl;
-    } catch (...) {
-        std::cerr << "TestBigNumberToString failed!" << std::endl;
+        std::cerr << "TestRSAFullProcess failed with exception: " << e.what() << std::endl;
     }
 }
 
 int main() {
-    TestIsPrime();
-    TestGeneratePrime();
-    TestGenerateKeyPair();
-    TestEncryptDecrypt();
-    TestStringToBigNumber();
-    TestBigNumberToString();
+    TestRSAEncryptDecrypt();
+    TestRSAFullProcess();
+    TestRSAKeyGeneration();
+    TestRSAStringConversion();
     return 0;
 }

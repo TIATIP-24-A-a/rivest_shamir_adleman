@@ -20,7 +20,7 @@ namespace RSA_APP {
         PrivateKey private_key;
     };
 
-    KeyPair GenerateKeyPair(int min, int max);
+    KeyPair generate_key_pair(int bits);
 
     /* Encrypts a message using the RSA public key.
      *
