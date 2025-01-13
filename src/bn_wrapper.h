@@ -110,6 +110,13 @@ public:
      */
     static BN_ptr generate_in_range(const BIGNUM* min, const BIGNUM* max);
 
+    /* Checks whether the BIGNUM is a prime number.
+     *
+     * Args:
+     *   checks: The number of primality tests to perform (default: BN_prime_checks).
+     * Returns:
+     *   True if the BIGNUM is prime, false otherwise.
+     */
     bool is_prime(int checks = BN_prime_checks) const;
 
     BN_ptr add(const BIGNUM* rhs) const;
