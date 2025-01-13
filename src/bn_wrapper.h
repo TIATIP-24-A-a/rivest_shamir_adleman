@@ -91,6 +91,13 @@ public:
      */
     void set_negative(int sign);
 
+    /* Generates a random BIGNUM with the specified number of bits.
+     *
+     * Args:
+     *   bits: The number of bits for the random BIGNUM.
+     * Returns:
+     *   True if the random number was generated successfully, false otherwise.
+     */
     bool generate_random(int bits);
     static BN_ptr generate_in_range(const BIGNUM* min, const BIGNUM* max);
 
