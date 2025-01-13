@@ -350,6 +350,28 @@ void TestBNPtrRSAExponent() {
     }
 }
 
+void TestBNPtrRSAModularArithmetic() {
+    try {
+        // Small numbers for test verification
+        BN_ptr message, e, d, n;
+        message.set_word(42);  // Message
+        e.set_word(17);       // Public exponent
+        n.set_word(3233);     // Modulus (61 * 53)
+        d.set_word(413);      // Private exponent
+
+        // Encrypt: c = m^e mod n
+        BN_ptr cipher = message.mod_exp(e.get(), n.get());
+        // Decrypt: m = c^d mod n
+        BN_ptr decrypted = cipher.mod_exp(d.get(), n.get());
+
+        assert(decrypted.get_word() == 42);
+
+        std::cout << "TestBNPtrRSAModularArithmetic passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrRSAModularArithmetic failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -375,5 +397,6 @@ int main() {
     TestBNPtrIsRelativelyPrime();
     TestBNPtrLargePrimeLength();
     TestBNPtrRSAExponent();
+    TestBNPtrRSAModularArithmetic();
     return 0;
 }
