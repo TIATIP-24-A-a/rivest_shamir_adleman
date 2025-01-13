@@ -1,3 +1,10 @@
+/*
+ *
+ * FOR EDUCATIONAL PURPOSES ONLY
+ *
+ *
+ */
+
 #include "big_number.h"
 #include <algorithm>  // For std::reverse
 #include <stdexcept>  // For std::invalid_argument
