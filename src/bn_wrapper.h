@@ -192,6 +192,13 @@ public:
      */
     int num_bits() const;
 
+    /* Generates a random prime BIGNUM with a specified number of bits.
+     *
+     * Args:
+     *   bits: The bit length of the prime.
+     * Returns:
+     *   True if the prime was generated successfully, false otherwise.
+     */
     bool generate_prime(int bits);
     BN_ptr gcd(const BIGNUM* rhs) const;
     BN_ptr mod_inverse(const BIGNUM* m) const;
