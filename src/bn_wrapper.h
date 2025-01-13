@@ -29,6 +29,7 @@ public:
     bool is_prime(int checks = BN_prime_checks) const;
 
     BN_ptr add(const BIGNUM* rhs) const;
+    BN_ptr sub(const BIGNUM* rhs) const;
 
 private:
     BIGNUM* bn;

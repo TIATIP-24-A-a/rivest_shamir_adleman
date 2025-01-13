@@ -117,6 +117,20 @@ void TestBNPtrAddition() {
     }
 }
 
+void TestBNPtrSubtraction() {
+    try {
+        BN_ptr a, b;
+        a.set_word(50);
+        b.set_word(30);
+        BN_ptr result = a.sub(b.get());
+        assert(result.get_word() == 20);
+        std::cout << "TestBNPtrSubtraction passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrSubtraction failed with exception: " << e.what() << std::endl;
+    }
+}
+
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -124,5 +138,8 @@ int main() {
     TestBNPtrComparison();
     TestBNPtrErrorHandling();
     TestBNPtrRandom();
+    TestBNPtrPrimality();
+    TestBNPtrAddition();
+    TestBNPtrSubtraction();
     return 0;
 }
