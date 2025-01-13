@@ -144,3 +144,9 @@ int BN_ptr::get_bit(int n) const {
 int BN_ptr::num_bits() const {
     return BN_num_bits(bn);
 }
+
+bool BN_ptr::generate_prime(int bits) {
+    // Use OpenSSL's built-in prime generation
+    check_error(BN_generate_prime_ex(bn, bits, 0, nullptr, nullptr, nullptr));
+    return true;
+}
