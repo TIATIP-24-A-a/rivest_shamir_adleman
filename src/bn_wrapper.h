@@ -176,6 +176,13 @@ public:
      */
     BN_ptr mod(const BIGNUM* m) const;
 
+    /* Retrieves the value of a specific bit.
+     *
+     * Args:
+     *   n: The bit index (0-based).
+     * Returns:
+     *   The value of the bit (0 or 1).
+     */
     int get_bit(int n) const;
     int num_bits() const;
 
