@@ -17,7 +17,16 @@ public:
      */
     uint64_t GetRange(uint64_t min, uint64_t max);
 
-    // Get random Big Number in range
+    /* Generates a random BigNumber within a specified range.
+     *
+     * Produces a random BigNumber that lies within the inclusive range [min, max].
+     *
+     * Args:
+     *   min: The minimum BigNumber value of the range (inclusive).
+     *   max: The maximum BigNumber value of the range (inclusive).
+     * Returns:
+     *   A random BigNumber in the range [min, max].
+     */
     BigNumber GetBigNumberRange(const BigNumber& min, const BigNumber& max);
 
     // Get random bytes into the provided buffer
