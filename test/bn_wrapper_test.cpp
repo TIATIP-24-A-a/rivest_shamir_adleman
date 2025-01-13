@@ -183,5 +183,6 @@ int main() {
     TestBNPtrSubtraction();
     TestBNPtrMultiplication();
     TestBNPtrDivision();
+    TestBNPtrModExp();
     return 0;
 }

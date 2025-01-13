@@ -120,3 +120,11 @@ BN_ptr BN_ptr::div(const BIGNUM* rhs) const {
     check_error(BN_div(result.get(), nullptr, bn, rhs, get_ctx()));
     return result;
 }
+
+BN_ptr BN_ptr::mod_exp(const BIGNUM* exp, const BIGNUM* m) const {
+    BN_ptr result;
+    BN_CTX* ctx = get_ctx();
+    check_error(BN_mod_exp(result.get(), bn, exp, m, ctx));
+    BN_CTX_free(ctx);
+    return result;
+}
