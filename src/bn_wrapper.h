@@ -54,6 +54,16 @@ public:
      *   other: The BN_ptr to move from.
      */
     BN_ptr(BN_ptr&& other) noexcept;
+
+    /* Move assignment operator.
+     *
+     * Transfers ownership of the BIGNUM from another BN_ptr.
+     *
+     * Args:
+     *   other: The BN_ptr to move from.
+     * Returns:
+     *   A reference to the updated BN_ptr.
+     */
     BN_ptr& operator=(BN_ptr&& other) noexcept;
 
     // Delete copy operations
