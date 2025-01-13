@@ -184,6 +184,21 @@ void TestBNPtrMod() {
     }
 }
 
+void TestBNPtrGetSetBit() {
+    try {
+        BN_ptr num;
+        num.set_word(8);  // 1000 in binary
+        assert(num.get_bit(3) == 1);  // Fourth bit should be set
+        assert(num.get_bit(2) == 0);  // Third bit should not be set
+        assert(num.get_bit(1) == 0);  // Second bit should not be set
+        assert(num.get_bit(0) == 0);  // First bit should not be set
+        std::cout << "TestBNPtrGetSetBit passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrGetSetBit failed with exception: " << e.what() << std::endl;
+    }
+}
+
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -198,5 +213,6 @@ int main() {
     TestBNPtrDivision();
     TestBNPtrModExp();
     TestBNPtrMod();
+    TestBNPtrGetSetBit();
     return 0;
 }

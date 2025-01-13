@@ -36,6 +36,8 @@ public:
     BN_ptr mod_exp(const BIGNUM* exp, const BIGNUM* m) const;
     BN_ptr mod(const BIGNUM* m) const;
 
+    int get_bit(int n) const;
+
 private:
     BIGNUM* bn;
     static void check_error(int result);
