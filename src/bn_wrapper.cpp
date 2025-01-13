@@ -129,3 +129,10 @@ BN_ptr BN_ptr::mod_exp(const BIGNUM* exp, const BIGNUM* m) const {
     return result;
 }
 
+BN_ptr BN_ptr::mod(const BIGNUM* m) const {
+    BN_ptr result;
+    BN_CTX* ctx = get_ctx();
+    check_error(BN_mod(result.get(), bn, m, ctx));
+    BN_CTX_free(ctx);
+    return result;
+}
