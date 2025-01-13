@@ -28,6 +28,8 @@ public:
 
     bool is_prime(int checks = BN_prime_checks) const;
 
+    BN_ptr add(const BIGNUM* rhs) const;
+
 private:
     BIGNUM* bn;
     static void check_error(int result);

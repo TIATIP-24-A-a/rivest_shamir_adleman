@@ -104,6 +104,19 @@ void TestBNPtrPrimality() {
     }
 }
 
+void TestBNPtrAddition() {
+    try {
+        BN_ptr a, b;
+        a.set_word(50);
+        b.set_word(30);
+        BN_ptr result = a.add(b.get());
+        assert(result.get_word() == 80);
+        std::cout << "TestBNPtrAddition passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrAddition failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
