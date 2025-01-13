@@ -221,6 +221,13 @@ public:
      */
     BN_ptr mod_inverse(const BIGNUM* m) const;
 
+    /* Generates a random safe prime with a specified number of bits.
+     *
+     * Args:
+     *   bits: The bit length of the safe prime.
+     * Returns:
+     *   True if the safe prime was generated successfully, false otherwise.
+     */
     bool generate_safe_prime(int bits);
     static const BIGNUM* value_one() { return BN_value_one(); }
 
