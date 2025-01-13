@@ -64,6 +64,15 @@ namespace RSA_APP {
      */
     std::string number_to_string(const BN_ptr& number);
 
+    /* Encodes a string in Base64 format.
+     *
+     * Converts the input string into its Base64 representation.
+     *
+     * Args:
+     *   input: The string to be encoded in Base64.
+     * Returns:
+     *   A Base64-encoded string.
+     */
     std::string base64_encode(const std::string& input);
     std::string format_big_number(const BN_ptr& number);
     void print_rsa_keys(const KeyPair& key_pair);
