@@ -1,3 +1,11 @@
+/*
+ *
+ *
+ * FOR EDUCATIONAL PURPOSES ONLY
+ *
+ *
+ *
+ */
 #include "prime_utils.h"
 #include <cmath>
 
