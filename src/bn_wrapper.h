@@ -76,6 +76,12 @@ public:
      *   value: The unsigned long value to set.
      */
     void set_word(unsigned long value);
+
+    /* Retrieves the value of the BIGNUM.
+     *
+     * Returns:
+     *   The unsigned long value of the BIGNUM.
+     */
     unsigned long get_word() const;
     void set_negative(int sign);
 
