@@ -6,6 +6,7 @@
 #include <openssl/bio.h>
 #include <openssl/evp.h>
 #include <iomanip>
+#include <iostream>
 
 namespace RSA_APP {
 
@@ -178,6 +179,16 @@ namespace RSA_APP {
         std::string result(encoded_data, len);
         BIO_free_all(bio);
         return result;
+    }
+
+    void print_rsa_keys(const RSA_APP::KeyPair& key_pair) {
+        std::cout << "-----BEGIN PUBLIC KEY-----\n";
+        std::string public_key = format_big_number(key_pair.public_key.n) + format_big_number(key_pair.public_key.e);
+        std::cout << public_key << "\n-----END PUBLIC KEY-----\n";
+
+        std::cout << "-----BEGIN PRIVATE KEY-----\n";
+        std::string private_key = format_big_number(key_pair.private_key.n) + format_big_number(key_pair.private_key.d);
+        std::cout << private_key << "\n-----END PRIVATE KEY-----\n";
     }
 
 }  // namespace RSA_APP

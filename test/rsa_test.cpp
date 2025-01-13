@@ -4,6 +4,7 @@
 #include <cassert>
 #include <iostream>
 #include <exception>
+#include <sstream>
 
 void TestRSAKeyGeneration() {
     try {
@@ -151,5 +152,6 @@ int main() {
     TestRSAFullProcess();
     TestBase64Encode();
     TestFormatBigNumber();
+    TestPrintRSAKeys();
     return 0;
 }
