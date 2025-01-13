@@ -95,9 +95,9 @@ void TestRSAFullProcess() {
 }
 
 int main() {
-    TestRSAEncryptDecrypt();
-    TestRSAFullProcess();
     TestRSAKeyGeneration();
+    TestRSAEncryptDecrypt();
     TestRSAStringConversion();
+    TestRSAFullProcess();
     return 0;
 }

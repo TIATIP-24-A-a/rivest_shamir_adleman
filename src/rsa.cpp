@@ -13,10 +13,15 @@ namespace RSA_APP {
 
         // Generate p and q
         BN_ptr p, q;
-        p.generate_prime(bits/2);
+        p.generate_prime(bits / 2);
         do {
-            q.generate_prime(bits/2);
-        } while (BN_cmp(p.get(), q.get()) == 0);  // Ensure p and q are different
+            q.generate_prime(bits / 2);
+        } while (BN_cmp(p.get(), q.get()) == 0);
+
+        // Ensure p and q have the highest bit set
+        if (!p.get_bit(bits / 2 - 1) || !q.get_bit(bits / 2 - 1)) {
+            throw std::runtime_error("Generated primes do not have the required bit length");
+        }
 
         // Calculate n = p * q
         BN_ptr n = p.mul(q.get());
@@ -35,8 +40,8 @@ namespace RSA_APP {
         BN_ptr d = e.mod_inverse(totient.get());
 
         return KeyPair{
-            PublicKey{std::move(n), std::move(e)},
-            PrivateKey{n.copy(), std::move(d)}
+            PublicKey{n.copy(), std::move(e)}, // Copy n for PublicKey
+            PrivateKey{std::move(n), std::move(d)} // Move n for PrivateKey
         };
     }
 
