@@ -43,6 +43,9 @@ public:
     BN_ptr gcd(const BIGNUM* rhs) const;
     BN_ptr mod_inverse(const BIGNUM* m) const;
 
+    bool generate_safe_prime(int bits);
+    static const BIGNUM* value_one() { return BN_value_one(); }
+
 private:
     BIGNUM* bn;
     static void check_error(int result);

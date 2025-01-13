@@ -277,6 +277,27 @@ void TestBNPtrModInverse() {
     }
 }
 
+void TestBNPtrGenerateSafePrime() {
+    try {
+        BN_ptr prime;
+        prime.generate_safe_prime(512);  // Smaller size for test
+
+        // Should be prime
+        assert(prime.is_prime());
+
+        // (p-1)/2 should also be prime
+        BN_ptr p_minus_1 = prime.sub(BN_value_one());
+        BN_ptr two;
+        two.set_word(2);
+        BN_ptr q = p_minus_1.div(two.get());
+        assert(q.is_prime());
+
+        std::cout << "TestBNPtrGenerateSafePrime passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrGenerateSafePrime failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
