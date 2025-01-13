@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <openssl/bn.h>  // Changed from types.h
+#include <openssl/bn.h>
 
 class BN_ptr {
 public:
