@@ -70,6 +70,11 @@ public:
     BN_ptr(const BN_ptr&) = delete;
     BN_ptr& operator=(const BN_ptr&) = delete;
 
+    /* Sets the value of the BIGNUM.
+     *
+     * Args:
+     *   value: The unsigned long value to set.
+     */
     void set_word(unsigned long value);
     unsigned long get_word() const;
     void set_negative(int sign);
