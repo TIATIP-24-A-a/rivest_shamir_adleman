@@ -209,6 +209,16 @@ public:
      *   A BN_ptr containing the GCD.
      */
     BN_ptr gcd(const BIGNUM* rhs) const;
+
+    /* Computes the modular inverse of this BIGNUM modulo another.
+     *
+     * Args:
+     *   m: The modulus BIGNUM.
+     * Returns:
+     *   A BN_ptr containing the modular inverse.
+     * Throws:
+     *   std::runtime_error if no modular inverse exists.
+     */
     BN_ptr mod_inverse(const BIGNUM* m) const;
 
     bool generate_safe_prime(int bits);
