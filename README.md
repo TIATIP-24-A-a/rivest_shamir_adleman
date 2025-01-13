@@ -23,6 +23,11 @@ Likely it's in ```C:\Users\<YourUser>\vcpkg```
    - Variable value: Your vcpkg path (e.g. `C:\Users\<YourUser>\vcpkg`)
 ```
 
+### 4. Set new Path variable that points to OpenSSL binaries
+Likely it's in this folder but it depends where your vcpkg is: ```C:\Users\<YourUser>\vcpkg\installed\x64-windows\bin\```
+
+Add this folder to your PATH
+
 ### 4. Restart your IDE (Optional)
 
 ## Overview

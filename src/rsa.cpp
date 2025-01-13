@@ -4,7 +4,7 @@
 #include <numeric>
 #include <sstream>
 
-namespace RSA {
+namespace RSA_APP {
 
 /* Helper function for modular exponentiation.
  *
@@ -171,4 +171,4 @@ namespace RSA {
         return result;  // Return the reconstructed string.
     }
 
-}  // namespace RSA
+}  // namespace RSA_APP

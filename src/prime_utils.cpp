@@ -67,10 +67,11 @@ namespace PrimeUtils
             throw std::invalid_argument("Bit length too small");
         }
 
-        // Instead of using "ModularExponentiation(..., BigNumber("1"))",
-        // use a normal power-of-two function. For example:
-        BigNumber min = BigNumber("1") << (bitLength - 1);  // 2^(bitLength-1)
-        BigNumber max = (BigNumber("1") << bitLength) - BigNumber("1"); // 2^bitLength - 1
+        BigNumber two("2");
+        // min = 2^(bitLength - 1)
+        BigNumber min = two.Pow(bitLength - 1);
+        // max = 2^bitLength - 1
+        BigNumber max = two.Pow(bitLength).Subtract(BigNumber("1"));
 
         return GeneratePrime(min, max);
     }
@@ -96,5 +97,12 @@ namespace PrimeUtils
                 return p;
             }
         }
+    }
+
+    bool PrimeUtils::IsPrimeOpenSSL(const BIGNUM* n) {
+        BN_CTX* ctx = BN_CTX_new();
+        int result = BN_is_prime_ex(const_cast<BIGNUM*>(n), BN_prime_checks, ctx, nullptr);
+        BN_CTX_free(ctx);
+        return result == 1;
     }
 } // namespace PrimeUtils

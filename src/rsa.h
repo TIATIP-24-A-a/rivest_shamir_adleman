@@ -3,7 +3,7 @@
 #include <string>
 #include "big_number.h"
 
-namespace RSA {
+namespace RSA_APP {
 
     struct PublicKey {
         int n;  // Modulus
@@ -64,6 +64,6 @@ namespace RSA {
      */
     std::string BigNumberToString(const BigNumber& big_number);
 
-}  // namespace RSA
+}  // namespace RSA_APP
 
 #endif  // RSA_H_
