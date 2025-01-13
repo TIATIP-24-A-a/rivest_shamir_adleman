@@ -89,6 +89,21 @@ void TestBNPtrRandom() {
     }
 }
 
+void TestBNPtrPrimality() {
+    try {
+        BN_ptr num;
+        num.set_word(17);  // Known prime
+        assert(num.is_prime());
+
+        num.set_word(24);  // Known composite
+        assert(!num.is_prime());
+
+        std::cout << "TestBNPtrPrimality passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrPrimality failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();

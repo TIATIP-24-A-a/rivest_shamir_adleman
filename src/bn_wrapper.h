@@ -26,6 +26,8 @@ public:
     bool generate_random(int bits);
     static BN_ptr generate_in_range(const BIGNUM* min, const BIGNUM* max);
 
+    bool is_prime(int checks = BN_prime_checks) const;
+
 private:
     BIGNUM* bn;
     static void check_error(int result);
