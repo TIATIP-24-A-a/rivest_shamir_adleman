@@ -1,5 +1,30 @@
 # Rivest-Shamir-Adleman (RSA) Implementation
 
+## How to make it run
+
+### 1. Install dependencies and package manager
+```bash
+git clone https://github.com/microsoft/vcpkg
+cd vcpkg
+./bootstrap-vcpkg.bat
+./vcpkg integrate install
+./vcpkg install openssl:x64-windows
+```
+
+### 2. Copy the path where you cloned vcpkg
+Likely it's in ```C:\Users\<YourUser>\vcpkg```
+
+### 3. Set the VCPKG_ROOT environment variable:
+
+```
+   - Search "Environment Variables" in Windows search
+   - Under "User variables" click "New"
+   - Variable name: `VCPKG_ROOT`
+   - Variable value: Your vcpkg path (e.g. `C:\Users\<YourUser>\vcpkg`)
+```
+
+### 4. Restart your IDE (Optional)
+
 ## Overview
 
 This project is a complete implementation of the RSA encryption algorithm from scratch, without relying on external libraries. The goal is to understand and demonstrate how RSA works, while optimizing for clean, efficient, and modular code.
