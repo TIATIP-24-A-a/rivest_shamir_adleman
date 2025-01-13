@@ -36,7 +36,7 @@ namespace RSA_APP {
 
         return KeyPair{
             PublicKey{std::move(n), std::move(e)},
-            PrivateKey{n, std::move(d)}  // n is copied here since we need it in both keys
+            PrivateKey{n.copy(), std::move(d)}
         };
     }
 
@@ -123,7 +123,7 @@ namespace RSA_APP {
  */
     std::string number_to_string(const BN_ptr& number) {
         std::string result;
-        BN_ptr remaining = number;  // Make a copy
+        BN_ptr remaining = number.copy();
         BN_ptr base;
         base.set_word(256);
         BN_ptr zero;
