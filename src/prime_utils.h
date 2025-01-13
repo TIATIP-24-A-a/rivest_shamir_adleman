@@ -42,6 +42,19 @@ namespace PrimeUtils {
      *   std::runtime_error if a suitable prime cannot be generated.
      */
     BigNumber GeneratePrimeWithBitLength(int bitLength);
+
+    /* Generates a random RSA-safe prime with a specified bit length.
+     *
+     * Produces a random prime number suitable for RSA encryption, ensuring the generated number meets
+     * the criteria for an RSA-safe prime (p is prime, and (p - 1) / 2 is also prime).
+     *
+     * Args:
+     *   bitLength: The desired bit length of the generated RSA-safe prime.
+     * Returns:
+     *   A random RSA-safe prime BigNumber with the specified bit length.
+     * Throws:
+     *   std::runtime_error if a suitable RSA-safe prime cannot be generated.
+     */
     BigNumber GenerateRSASafePrime(int bitLength);
     bool IsRSASafe(const BigNumber& prime);
     bool IsPrimeOpenSSL(const BIGNUM* n);
