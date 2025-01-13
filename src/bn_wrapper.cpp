@@ -172,3 +172,11 @@ bool BN_ptr::generate_safe_prime(int bits) {
     check_error(BN_generate_prime_ex(bn, bits, 1, nullptr, nullptr, nullptr));
     return true;
 }
+
+BN_ptr BN_ptr::copy() const {
+    BN_ptr result;
+    if (BN_copy(result.get(), bn) == nullptr) {
+        throw std::runtime_error("BN_copy failed");
+    }
+    return result;
+}
