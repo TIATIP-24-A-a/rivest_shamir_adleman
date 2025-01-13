@@ -1,7 +1,6 @@
 #include "../src/bn_wrapper.h"
 #include <iostream>
 #include <cassert>
-#include <openssl/bn.h>
 
 void TestBNPtrBasicCreation() {
     try {
@@ -57,10 +56,9 @@ void TestBNPtrErrorHandling() {
         bool caught_error = false;
 
         try {
-            BN_set_word(num.get(), 0);
-            // Try a failing operation - trying to get a negative number as word
-            BN_set_negative(num.get(), 1);  // Make number negative
-            BN_get_word(num.get());  // This should fail with negative numbers
+            num.set_word(1);    // Nonzero
+            num.set_negative(1);
+            num.get_word();     // Should throw now
         } catch (const std::runtime_error&) {
             caught_error = true;
         }

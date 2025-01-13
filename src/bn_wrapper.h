@@ -1,6 +1,6 @@
 // include/bn_wrapper.h
 #pragma once
-#include <openssl/types.h>
+#include <openssl/bn.h>  // Changed from types.h
 
 class BN_ptr {
 public:
