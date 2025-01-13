@@ -140,3 +140,7 @@ BN_ptr BN_ptr::mod(const BIGNUM* m) const {
 int BN_ptr::get_bit(int n) const {
     return BN_is_bit_set(bn, n);
 }
+
+int BN_ptr::num_bits() const {
+    return BN_num_bits(bn);
+}

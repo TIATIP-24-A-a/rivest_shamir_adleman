@@ -247,5 +247,8 @@ int main() {
     TestBNPtrModExp();
     TestBNPtrMod();
     TestBNPtrGetSetBit();
+    TestBNPtrNumBitsForEight();
+    TestBNPtrNumBitsForFifteen();
+    TestBNPtrNumBitsForSixteen();
     return 0;
 }
