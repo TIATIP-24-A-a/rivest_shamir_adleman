@@ -29,11 +29,11 @@ int main() {
 
         // Step 4: Encrypt the message using the public key
         BN_ptr encrypted_message = RSA_APP::encrypt(number_message, key_pair.public_key);
-        std::cout << "Encrypted Message: " << encrypted_message.get() << "\n";
+        std::cout << "Encrypted Message: " << encrypted_message.to_string() << "\n";
 
         // Step 5: Decrypt the message using the private key
         BN_ptr decrypted_message = RSA_APP::decrypt(encrypted_message, key_pair.private_key);
-        std::cout << "Decrypted BigNumber: " << decrypted_message.get() << "\n";
+        std::cout << "Decrypted BigNumber: " << decrypted_message.to_string() << "\n";
 
         // Step 6: Convert the decrypted BigNumber back to a string
         std::string decrypted_text = RSA_APP::number_to_string(decrypted_message);
