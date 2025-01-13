@@ -1,5 +1,6 @@
 // include/bn_wrapper.h
 #pragma once
+#include <string>
 #include <openssl/bn.h>  // Changed from types.h
 
 class BN_ptr {
@@ -47,6 +48,8 @@ public:
     static const BIGNUM* value_one() { return BN_value_one(); }
 
     BN_ptr copy() const;
+
+    std::string to_string() const;
 
 private:
     BIGNUM* bn;

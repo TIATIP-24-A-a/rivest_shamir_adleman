@@ -406,6 +406,18 @@ void TestBNPtrCopy() {
     }
 }
 
+void TestBNPtrToString() {
+    try {
+        BN_ptr num;
+        num.set_word(0x123ABC);  // Set a test value
+        std::string result = to_string(num);  // Call the to_string method
+        assert(result == "123ABC");  // Hexadecimal representation of 0x123ABC
+        std::cout << "TestBNPtrToString passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrToString failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -434,5 +446,6 @@ int main() {
     TestBNPtrRSAModularArithmetic();
     TestBNPtrRSAKeySize();
     TestBNPtrCopy();
+    TestBNPtrToString();
     return 0;
 }
