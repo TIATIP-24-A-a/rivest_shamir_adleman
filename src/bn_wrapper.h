@@ -41,6 +41,7 @@ public:
 
     bool generate_prime(int bits);
     BN_ptr gcd(const BIGNUM* rhs) const;
+    BN_ptr mod_inverse(const BIGNUM* m) const;
 
 private:
     BIGNUM* bn;

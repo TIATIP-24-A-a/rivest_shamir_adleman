@@ -262,6 +262,21 @@ void TestBNPtrGCD() {
     }
 }
 
+void TestBNPtrModInverse() {
+    try {
+        BN_ptr a, m;
+        a.set_word(5);
+        m.set_word(11);
+        BN_ptr result = a.mod_inverse(m.get());
+        // 5 * 9 ≡ 1 (mod 11)
+        assert(result.get_word() == 9);
+
+        std::cout << "TestBNPtrModInverse passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrModInverse failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -282,5 +297,6 @@ int main() {
     TestBNPtrNumBitsForSixteen();
     TestBNPtrGenerateRandomPrime512();
     TestBNPtrGCD();
+    TestBNPtrModInverse();
     return 0;
 }
