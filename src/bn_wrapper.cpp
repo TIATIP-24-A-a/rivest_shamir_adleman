@@ -96,3 +96,9 @@ bool BN_ptr::is_prime(int checks) const {
     check_error(is_prime >= 0);
     return is_prime == 1;
 }
+
+BN_ptr BN_ptr::add(const BIGNUM* rhs) const {
+    BN_ptr result;
+    check_error(BN_add(result.get(), bn, rhs));
+    return result;
+}
