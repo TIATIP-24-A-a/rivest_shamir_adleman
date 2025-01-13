@@ -388,6 +388,24 @@ void TestBNPtrRSAKeySize() {
     }
 }
 
+void TestBNPtrCopy() {
+    try {
+        BN_ptr original;
+        original.set_word(12345);
+
+        BN_ptr copied = original.copy();
+        assert(BN_cmp(original.get(), copied.get()) == 0);
+
+        // Modify original, copy shouldn't change
+        original.set_word(54321);
+        assert(BN_get_word(copied.get()) == 12345);
+
+        std::cout << "TestBNPtrCopy passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBNPtrCopy failed with exception: " << e.what() << std::endl;
+    }
+}
+
 int main() {
     TestBNPtrBasicCreation();
     TestBNPtrValue();
@@ -415,5 +433,6 @@ int main() {
     TestBNPtrRSAExponent();
     TestBNPtrRSAModularArithmetic();
     TestBNPtrRSAKeySize();
+    TestBNPtrCopy();
     return 0;
 }

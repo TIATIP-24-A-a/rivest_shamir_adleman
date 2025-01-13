@@ -46,6 +46,8 @@ public:
     bool generate_safe_prime(int bits);
     static const BIGNUM* value_one() { return BN_value_one(); }
 
+    BN_ptr copy() const;
+
 private:
     BIGNUM* bn;
     static void check_error(int result);
