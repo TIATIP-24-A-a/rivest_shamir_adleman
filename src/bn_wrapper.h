@@ -99,6 +99,15 @@ public:
      *   True if the random number was generated successfully, false otherwise.
      */
     bool generate_random(int bits);
+
+    /* Generates a random BIGNUM within a specified range.
+     *
+     * Args:
+     *   min: The minimum value (inclusive).
+     *   max: The maximum value (inclusive).
+     * Returns:
+     *   A BN_ptr containing the generated random BIGNUM.
+     */
     static BN_ptr generate_in_range(const BIGNUM* min, const BIGNUM* max);
 
     bool is_prime(int checks = BN_prime_checks) const;
