@@ -3,6 +3,9 @@
 #include <stdexcept>
 #include <numeric>
 #include <sstream>
+#include <openssl/bio.h>
+#include <openssl/evp.h>
+#include <iomanip>
 
 namespace RSA_APP {
 
@@ -158,6 +161,23 @@ namespace RSA_APP {
         delete[] bin_data;
 
         return base64_encode(binary_string);
+    }
+
+    std::string base64_encode(const std::string& input) {
+        BIO* bio = BIO_new(BIO_s_mem());
+        BIO* b64 = BIO_new(BIO_f_base64());
+        bio = BIO_push(b64, bio);
+
+        BIO_set_flags(bio, BIO_FLAGS_BASE64_NO_NL);  // No newlines
+        BIO_write(bio, input.data(), input.size());
+        BIO_flush(bio);
+
+        char* encoded_data;
+        long len = BIO_get_mem_data(bio, &encoded_data);
+
+        std::string result(encoded_data, len);
+        BIO_free_all(bio);
+        return result;
     }
 
 }  // namespace RSA_APP
