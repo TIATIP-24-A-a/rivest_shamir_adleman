@@ -98,13 +98,24 @@ void TestFormatBigNumber() {
     try {
         BN_ptr num;
         num.set_word(12345);  // Example number
-        std::string formatted = format_big_number(num);
+        std::string formatted = RSA_APP::format_big_number(num);
 
         // Convert 12345 to Base64 (binary: "0x3039" → Base64: "MDM5")
         assert(formatted == "MDM5");
         std::cout << "TestFormatBigNumber passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestFormatBigNumber failed with exception: " << e.what() << std::endl;
+    }
+}
+
+void TestBase64Encode() {
+    try {
+        std::string input = "Hello, RSA!";
+        std::string encoded = base64_encode(input);
+        assert(encoded == "SGVsbG8sIFJTQSE=");  // Expected Base64 encoding
+        std::cout << "TestBase64Encode passed!" << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "TestBase64Encode failed with exception: " << e.what() << std::endl;
     }
 }
 

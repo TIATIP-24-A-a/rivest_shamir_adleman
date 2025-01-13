@@ -64,6 +64,7 @@ namespace RSA_APP {
      */
     std::string number_to_string(const BN_ptr& number);
 
+    std::string base64_encode(const std::string& input);
     std::string format_big_number(const BN_ptr& number);
 
 }  // namespace RSA_APP
