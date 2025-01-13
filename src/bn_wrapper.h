@@ -184,6 +184,12 @@ public:
      *   The value of the bit (0 or 1).
      */
     int get_bit(int n) const;
+
+    /* Computes the number of bits in the BIGNUM.
+     *
+     * Returns:
+     *   The number of significant bits in the BIGNUM.
+     */
     int num_bits() const;
 
     bool generate_prime(int bits);
