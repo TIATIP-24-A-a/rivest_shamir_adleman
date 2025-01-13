@@ -11,6 +11,10 @@
  */
 class BN_ptr {
 public:
+    /* Default constructor.
+     *
+     * Initializes a new BIGNUM instance.
+     */
     BN_ptr();
     explicit BN_ptr(BIGNUM* bn_value);
     ~BN_ptr();
