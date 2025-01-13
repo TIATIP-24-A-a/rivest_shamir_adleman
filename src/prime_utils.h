@@ -29,6 +29,18 @@ namespace PrimeUtils {
      *   std::runtime_error if no prime can be found within the range.
      */
     BigNumber GeneratePrime(const BigNumber& min, const BigNumber& max);
+
+    /* Generates a random prime BigNumber with a specified bit length.
+     *
+     * Produces a random prime BigNumber with a length equal to the specified number of bits.
+     *
+     * Args:
+     *   bitLength: The desired bit length of the generated prime.
+     * Returns:
+     *   A random prime BigNumber with the specified bit length.
+     * Throws:
+     *   std::runtime_error if a suitable prime cannot be generated.
+     */
     BigNumber GeneratePrimeWithBitLength(int bitLength);
     BigNumber GenerateRSASafePrime(int bitLength);
     bool IsRSASafe(const BigNumber& prime);
