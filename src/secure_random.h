@@ -29,6 +29,13 @@ public:
      */
     BigNumber GetBigNumberRange(const BigNumber& min, const BigNumber& max);
 
-    // Get random bytes into the provided buffer
+    /* Fills a buffer with random bytes.
+     *
+     * Populates the provided buffer with `size` random bytes.
+     *
+     * Args:
+     *   buffer: A pointer to the buffer where the random bytes will be stored.
+     *   size: The number of random bytes to generate and store in the buffer.
+     */
     void GetBytes(uint8_t* buffer, size_t size);
 };
