@@ -38,6 +38,12 @@ public:
      *   A mutable pointer to the underlying BIGNUM.
      */
     BIGNUM* get();
+
+    /* Const accessor for the underlying BIGNUM pointer.
+     *
+     * Returns:
+     *   A constant pointer to the underlying BIGNUM.
+     */
     const BIGNUM* get() const;
 
     // Move operations
