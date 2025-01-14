@@ -23,11 +23,7 @@ include_directories(src)
 # Main program executable
 add_executable(rsa_program
         src/main.cpp
-        src/prime_utils.cpp
         src/rsa.cpp
-        src/big_number.cpp
-        src/secure_random.h
-        src/secure_random.cpp
         src/bn_wrapper.cpp
         src/bn_wrapper.h
 )
@@ -42,30 +38,6 @@ add_executable(rsa_tests
         src/bn_wrapper.cpp
 )
 target_link_libraries(rsa_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-
-# Test executable
-add_executable(prime_tests
-        test/prime_utils_test.cpp
-        src/prime_utils.cpp
-        src/big_number.cpp
-        src/secure_random.cpp
-)
-target_link_libraries(prime_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-
-# Test executable
-add_executable(big_number_tests
-        test/big_number_test.cpp
-        src/big_number.cpp
-)
-target_link_libraries(big_number_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
-
-# Test executable
-add_executable(secure_random_tests
-        test/secure_random_test.cpp
-        src/secure_random.cpp
-        src/big_number.cpp
-)
-target_link_libraries(secure_random_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
 # Test executable
 add_executable(bn_wrapper_tests
