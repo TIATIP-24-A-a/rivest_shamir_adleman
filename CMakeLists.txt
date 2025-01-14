@@ -46,6 +46,14 @@ add_executable(bn_wrapper_tests
 )
 target_link_libraries(bn_wrapper_tests PRIVATE OpenSSL::SSL OpenSSL::Crypto)
 
+# Analysis executable
+add_executable(rsa_analysis
+        src/rsa_runtime_complexity_analysis.cpp
+        src/rsa.cpp
+        src/bn_wrapper.cpp
+)
+target_link_libraries(rsa_analysis PRIVATE OpenSSL::SSL OpenSSL::Crypto)
+
 # Enable testing
 enable_testing()
 add_test(NAME RSAUnitTests COMMAND rsa_tests)
