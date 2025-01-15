@@ -1,6 +1,4 @@
-#include "../src/prime_utils.h"
 #include "../src/rsa.h"
-#include "../src/big_number.h"
 #include <cassert>
 #include <iostream>
 #include <exception>
