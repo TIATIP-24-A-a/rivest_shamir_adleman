@@ -48,10 +48,6 @@ This project is a complete implementation of the RSA encryption algorithm from s
 - Entire workflow for encryption and decryption demonstrated in the `main` function.
 - Adheres to Google-style coding standards for readability and maintainability.
 
-## How to Run
-
-1. Compile the project using the provided CMake setup.
-2. Run the program to generate keys, encrypt a message, and decrypt it back.
 
 ## Purpose
 
