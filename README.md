@@ -36,7 +36,6 @@ This project is a complete implementation of the RSA encryption algorithm from s
 
 ## Features
 
-- **Custom BigNumber Class**: Handles large integers for encryption and decryption.
 - **RSA Key Generation**: Generates secure public and private key pairs.
 - **Message Encryption**: Converts strings into encrypted BigNumbers.
 - **Message Decryption**: Decrypts encrypted BigNumbers back into readable strings.
