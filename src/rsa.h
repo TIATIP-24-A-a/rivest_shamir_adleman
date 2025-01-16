@@ -22,8 +22,8 @@ namespace RSA_APP {
      *   d: The private exponent, used for decryption.
      */
     struct PrivateKey {
-        BN_ptr n;  // Modulus
-        BN_ptr d;  // Private exponent
+        BN_ptr n;
+        BN_ptr d;
     };
 
     struct KeyPair {
