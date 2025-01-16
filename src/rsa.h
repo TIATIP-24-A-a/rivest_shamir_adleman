@@ -20,6 +20,19 @@ namespace RSA_APP {
         PrivateKey private_key;
     };
 
+    /* Generates a public and private key pair for RSA encryption.
+    *
+    * This function creates an RSA key pair with the specified number of bits.
+    * The keys are generated using random prime numbers and are suitable
+    * for encryption and decryption.
+    *
+    * Args:
+    *   bits: The number of bits for the RSA modulus (n). Must be a positive integer.
+    * Returns:
+    *   A KeyPair structure containing the public and private keys.
+    * Throws:
+    *   std::runtime_error if key generation fails.
+    */
     KeyPair generate_key_pair(int bits);
 
     /* Encrypts a message using the RSA public key.
