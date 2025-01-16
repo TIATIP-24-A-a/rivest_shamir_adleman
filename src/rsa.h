@@ -15,6 +15,12 @@ namespace RSA_APP {
         BN_ptr e;
     };
 
+    /* Represents an RSA private key.
+     *
+     * Members:
+     *   n: The RSA modulus, identical to the public key modulus.
+     *   d: The private exponent, used for decryption.
+     */
     struct PrivateKey {
         BN_ptr n;  // Modulus
         BN_ptr d;  // Private exponent
