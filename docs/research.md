@@ -35,14 +35,18 @@ Da Standarddatentypen wie `int` oder `long` für RSA mit grossen Zahlen nicht au
 ## Umsetzung
 
 ### Schritte der Implementierung
+
 1. **Grundlagenimplementierung**:  
    Basierend auf der Splunk-Dokumentation wurde eine einfache RSA-Implementierung für Ganzzahlen erstellt.
 
 2. **Entwicklung von BigNumber**:  
-   Der benutzerdefinierte Datentyp wurde entwickelt, um grössere Werte zu unterstützen, einschliesslich der Implementierung und Optimierung von Operatoren.
+   Ein benutzerdefinierter Datentyp wurde entwickelt, um grössere Werte zu unterstützen, einschliesslich der Implementierung und Optimierung von Operatoren wie `+`, `-`, `*`, `/` und `%`.
 
 3. **Erweiterung auf Textverschlüsselung**:  
-   Schliesslich wurde der Algorithmus so erweitert, dass Texte verschlüsselt und entschlüsselt werden können.
+   Der Algorithmus wurde so erweitert, dass Texte in numerische Werte codiert und anschliessend verschlüsselt und entschlüsselt werden können.
+
+Am Schluss griffen wir jedoch auf **OpenSSL Best Practices** zurück, da unser eigener BigNumber-Datentyp nicht effizient genug war. Dies wird in den Erkenntnissen weiter erläutert, wo wir unsere Erfahrungen und Lernergebnisse festgehalten haben. Trotz der Herausforderungen haben wir in diesem Projekt viel gelernt.
+
 
 ---
 
