@@ -1,3 +1,6 @@
+#ifndef BN_WRAPPER_H_
+#define BN_WRAPPER_H_
+
 #pragma once
 
 #include <string>
@@ -270,3 +273,5 @@ private:
      */
     static BN_CTX* get_ctx();
 };
+
+#endif  // BN_WRAPPER_H_
