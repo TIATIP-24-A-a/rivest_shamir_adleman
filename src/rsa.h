@@ -26,6 +26,12 @@ namespace RSA_APP {
         BN_ptr d;
     };
 
+    /* Represents a pair of RSA keys.
+     *
+     * Members:
+     *   public_key: The RSA public key.
+     *   private_key: The RSA private key.
+     */
     struct KeyPair {
         PublicKey public_key;
         PrivateKey private_key;
