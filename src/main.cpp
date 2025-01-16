@@ -18,10 +18,10 @@ int main() {
     try {
         // Step 1: Generate RSA keys
         std::cout << "Generating RSA keys...\n";
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(4096);
+        rsa_app::KeyPair key_pair = rsa_app::GenerateKeyPair(4096);
 
         std::cout << "\nGenerated RSA Keys:\n";
-        print_rsa_keys(key_pair);
+        rsa_app::PrintRsaKeys(key_pair);
 
         // Step 2: Accept user input for the message to encrypt
         std::string message;
@@ -29,19 +29,19 @@ int main() {
         std::getline(std::cin, message);
 
         // Step 3: Convert the input message to a BigNumber representation
-        BN_ptr number_message = RSA_APP::string_to_number(message);
-        std::cout << "Message as BigNumber: " << number_message.to_string() << "\n";
+        BigNumber number_message = rsa_app::StringToNumber(message);
+        std::cout << "Message as BigNumber: " << number_message.ToString() << "\n";
 
         // Step 4: Encrypt the BigNumber message using the public key
-        BN_ptr encrypted_message = RSA_APP::encrypt(number_message, key_pair.public_key);
-        std::cout << "Encrypted Message: " << encrypted_message.to_string() << "\n";
+        BigNumber encrypted_message = rsa_app::Encrypt(number_message, key_pair.public_key);
+        std::cout << "Encrypted Message: " << encrypted_message.ToString() << "\n";
 
         // Step 5: Decrypt the encrypted BigNumber message using the private key
-        BN_ptr decrypted_message = RSA_APP::decrypt(encrypted_message, key_pair.private_key);
-        std::cout << "Decrypted BigNumber: " << decrypted_message.to_string() << "\n";
+        BigNumber decrypted_message = rsa_app::Decrypt(encrypted_message, key_pair.private_key);
+        std::cout << "Decrypted BigNumber: " << decrypted_message.ToString() << "\n";
 
         // Step 6: Convert the decrypted BigNumber back to the original string
-        std::string decrypted_text = RSA_APP::number_to_string(decrypted_message);
+        std::string decrypted_text = rsa_app::NumberToString(decrypted_message);
         std::cout << "Decrypted Message (original): " << decrypted_text << "\n";
 
         // Step 7: Verify that the encrypted and decrypted process was successful

@@ -6,16 +6,16 @@
 
 void TestRSAKeyGeneration() {
     try {
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
+        rsa_app::KeyPair key_pair = rsa_app::GenerateKeyPair(2048);
 
         // Verify key sizes
-        assert(key_pair.public_key.n.num_bits() == 2048);
+        assert(key_pair.public_key.n.NumBits() == 2048);
 
         // Verify e is typically 65537
-        assert(key_pair.public_key.e.get_word() == 65537);
+        assert(key_pair.public_key.e.GetWord() == 65537);
 
         // Verify n is the same in both keys
-        assert(BN_cmp(key_pair.public_key.n.get(), key_pair.private_key.n.get()) == 0);
+        assert(BN_cmp(key_pair.public_key.n.Get(), key_pair.private_key.n.Get()) == 0);
 
         std::cout << "TestRSAKeyGeneration passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -26,20 +26,20 @@ void TestRSAKeyGeneration() {
 void TestRSAEncryptDecrypt() {
     try {
         // Generate a key pair
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
+        rsa_app::KeyPair key_pair = rsa_app::GenerateKeyPair(2048);
 
         // Create test message
-        BN_ptr message;
-        message.set_word(42);
+        BigNumber message;
+        message.SetWord(42);
 
         // Encrypt
-        BN_ptr ciphertext = RSA_APP::encrypt(message, key_pair.public_key);
+        BigNumber ciphertext = rsa_app::Encrypt(message, key_pair.public_key);
 
         // Decrypt
-        BN_ptr decrypted = RSA_APP::decrypt(ciphertext, key_pair.private_key);
+        BigNumber decrypted = rsa_app::Decrypt(ciphertext, key_pair.private_key);
 
         // Verify
-        assert(BN_cmp(message.get(), decrypted.get()) == 0);
+        assert(BN_cmp(message.Get(), decrypted.Get()) == 0);
 
         std::cout << "TestRSAEncryptDecrypt passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -52,10 +52,10 @@ void TestRSAStringConversion() {
         std::string original = "Hello, RSA!";
 
         // Convert string to number
-        BN_ptr number = RSA_APP::string_to_number(original);
+        BigNumber number = rsa_app::StringToNumber(original);
 
         // Convert back to string
-        std::string result = RSA_APP::number_to_string(number);
+        std::string result = rsa_app::NumberToString(number);
 
         assert(original == result);
 
@@ -68,22 +68,22 @@ void TestRSAStringConversion() {
 void TestRSAFullProcess() {
     try {
         // Generate keys
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(2048);
+        rsa_app::KeyPair key_pair = rsa_app::GenerateKeyPair(2048);
 
         // Original message
         std::string original = "Secret message";
 
         // Convert to number
-        BN_ptr message = RSA_APP::string_to_number(original);
+        BigNumber message = rsa_app::StringToNumber(original);
 
         // Encrypt
-        BN_ptr ciphertext = RSA_APP::encrypt(message, key_pair.public_key);
+        BigNumber ciphertext = rsa_app::Encrypt(message, key_pair.public_key);
 
         // Decrypt
-        BN_ptr decrypted = RSA_APP::decrypt(ciphertext, key_pair.private_key);
+        BigNumber decrypted = rsa_app::Decrypt(ciphertext, key_pair.private_key);
 
         // Convert back to string
-        std::string result = RSA_APP::number_to_string(decrypted);
+        std::string result = rsa_app::NumberToString(decrypted);
 
         assert(original == result);
 
@@ -95,9 +95,9 @@ void TestRSAFullProcess() {
 
 void TestFormatBigNumber() {
     try {
-        BN_ptr num;
-        num.set_word(12345);  // Example number
-        std::string formatted = RSA_APP::format_big_number(num);
+        BigNumber num;
+        num.SetWord(12345);  // Example number
+        std::string formatted = rsa_app::FormatBigNumber(num);
 
         // Convert 12345 to Base64 (binary: "0x3039" → Base64: "MDM5")
         assert(formatted == "MDk=");
@@ -110,7 +110,7 @@ void TestFormatBigNumber() {
 void TestBase64Encode() {
     try {
         std::string input = "Hello, RSA!";
-        std::string encoded = RSA_APP::base64_encode(input);
+        std::string encoded = rsa_app::Base64Encode(input);
         assert(encoded == "SGVsbG8sIFJTQSE=");  // Expected Base64 encoding
         std::cout << "TestBase64Encode passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -121,12 +121,12 @@ void TestBase64Encode() {
 void TestPrintRSAKeys() {
     try {
         // Generate a key pair
-        RSA_APP::KeyPair key_pair = RSA_APP::generate_key_pair(512);  // Use smaller size for testing
+        rsa_app::KeyPair key_pair = rsa_app::GenerateKeyPair(512);  // Use smaller size for testing
 
         // Redirect output to a string
         std::ostringstream output;
         std::streambuf* old_cout_buf = std::cout.rdbuf(output.rdbuf());
-        print_rsa_keys(key_pair);
+        PrintRsaKeys(key_pair);
         std::cout.rdbuf(old_cout_buf);  // Restore standard output
 
         std::string result = output.str();

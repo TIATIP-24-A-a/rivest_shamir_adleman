@@ -1,26 +1,25 @@
-// rsa.h
-#ifndef RSA_H_
-#define RSA_H_
+#ifndef RSA_APP_RSA_H_
+#define RSA_APP_RSA_H_
 
 #include <string>
-#include "bn_wrapper.h"
+#include "bn_wrapper.h"  // Includes the BigNumber class definition.
 
-namespace RSA_APP {
+namespace rsa_app {
 
 /**
  * Represents the RSA public key.
  */
 struct PublicKey {
-  BN_ptr n;  ///< The modulus used in RSA (part of the public key).
-  BN_ptr e;  ///< The public exponent used in RSA.
+  BigNumber n;  // The modulus used in RSA (part of the public key).
+  BigNumber e;  // The public exponent used in RSA.
 };
 
 /**
  * Represents the RSA private key.
  */
 struct PrivateKey {
-  BN_ptr n;  ///< The modulus used in RSA (shared with the public key).
-  BN_ptr d;  ///< The private exponent used in RSA.
+  BigNumber n;  // The modulus used in RSA (shared with the public key).
+  BigNumber d;  // The private exponent used in RSA.
 };
 
 /**
@@ -30,22 +29,24 @@ struct PrivateKey {
  * and a private key (for decryption).
  */
 struct KeyPair {
-  PublicKey public_key;   ///< The RSA public key.
-  PrivateKey private_key; ///< The RSA private key.
+  PublicKey public_key;    // The RSA public key.
+  PrivateKey private_key;  // The RSA private key.
 };
 
 /**
  * Generates an RSA key pair with the specified bit size.
  *
- * This method generates two large prime numbers `p` and `q`,
- * calculates the modulus `n = p * q`, the totient, and derives
- * the public and private exponents. 
+ * This method generates two large prime numbers `p` and `q`, calculates the
+ * modulus `n = p * q`, the totient, and derives the public and private
+ * exponents.
  *
- * @param bits The bit size of the RSA modulus (must be a multiple of 2, minimum 512).
+ * @param bits The bit size of the RSA modulus (must be a multiple of 2,
+ *             minimum 512).
  * @return A `KeyPair` containing the generated public and private keys.
- * @throws std::runtime_error if key generation fails or invalid input is provided.
+ * @throws std::runtime_error if key generation fails or invalid input is
+ *         provided.
  */
-KeyPair generate_key_pair(int bits);
+KeyPair GenerateKeyPair(int bits);
 
 /**
  * Encrypts a message using the RSA public key.
@@ -59,7 +60,7 @@ KeyPair generate_key_pair(int bits);
  * @return The encrypted message as a BigNumber.
  * @throws std::invalid_argument if the message size exceeds the modulus.
  */
-BN_ptr encrypt(const BN_ptr& message, const PublicKey& public_key);
+BigNumber Encrypt(const BigNumber& message, const PublicKey& public_key);
 
 /**
  * Decrypts a ciphertext using the RSA private key.
@@ -73,7 +74,7 @@ BN_ptr encrypt(const BN_ptr& message, const PublicKey& public_key);
  * @return The decrypted plaintext message as a BigNumber.
  * @throws std::invalid_argument if the ciphertext size exceeds the modulus.
  */
-BN_ptr decrypt(const BN_ptr& ciphertext, const PrivateKey& private_key);
+BigNumber Decrypt(const BigNumber& ciphertext, const PrivateKey& private_key);
 
 /**
  * Converts a string into its BigNumber representation.
@@ -84,7 +85,7 @@ BN_ptr decrypt(const BN_ptr& ciphertext, const PrivateKey& private_key);
  * @param message The input string to convert.
  * @return A BigNumber representing the ASCII values of the string.
  */
-BN_ptr string_to_number(const std::string& message);
+BigNumber StringToNumber(const std::string& message);
 
 /**
  * Converts a BigNumber back to its original string representation.
@@ -95,7 +96,7 @@ BN_ptr string_to_number(const std::string& message);
  * @param number The BigNumber representing the ASCII-encoded string.
  * @return The original string corresponding to the BigNumber input.
  */
-std::string number_to_string(const BN_ptr& number);
+std::string NumberToString(const BigNumber& number);
 
 /**
  * Encodes an input string in Base64 format.
@@ -106,7 +107,7 @@ std::string number_to_string(const BN_ptr& number);
  * @param input The input string to encode.
  * @return A string containing the Base64-encoded version of the input.
  */
-std::string base64_encode(const std::string& input);
+std::string Base64Encode(const std::string& input);
 
 /**
  * Formats a BigNumber into a human-readable string representation.
@@ -117,7 +118,7 @@ std::string base64_encode(const std::string& input);
  * @param number The BigNumber to format.
  * @return A human-readable string representing the BigNumber.
  */
-std::string format_big_number(const BN_ptr& number);
+std::string FormatBigNumber(const BigNumber& number);
 
 /**
  * Prints the RSA public and private keys to the console.
@@ -127,8 +128,8 @@ std::string format_big_number(const BN_ptr& number);
  *
  * @param key_pair The RSA key pair containing public and private keys.
  */
-void print_rsa_keys(const KeyPair& key_pair);
+void PrintRsaKeys(const KeyPair& key_pair);
 
-}  // namespace RSA_APP
+}  // namespace rsa_app
 
-#endif  // RSA_H_
+#endif  // RSA_APP_RSA_H_

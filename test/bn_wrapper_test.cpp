@@ -4,8 +4,8 @@
 
 void TestBNPtrBasicCreation() {
     try {
-        BN_ptr num;
-        assert(num.get() != nullptr);
+        BigNumber num;
+        assert(num.Get() != nullptr);
         std::cout << "TestBNPtrBasicCreation passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrBasicCreation failed with exception: " << e.what() << std::endl;
@@ -13,9 +13,9 @@ void TestBNPtrBasicCreation() {
 }
 void TestBNPtrValue() {
     try {
-        BN_ptr num;
-        BN_set_word(num.get(), 123);
-        assert(BN_get_word(num.get()) == 123);
+        BigNumber num;
+        BN_set_word(num.Get(), 123);
+        assert(BN_get_word(num.Get()) == 123);
         std::cout << "TestBNPtrValue passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrValue failed with exception: " << e.what() << std::endl;
@@ -24,11 +24,11 @@ void TestBNPtrValue() {
 
 void TestBNPtrMove() {
     try {
-        BN_ptr num1;
-        BN_set_word(num1.get(), 123);
-        BN_ptr num2 = std::move(num1);
-        assert(num1.get() == nullptr);  // Should be null after move
-        assert(BN_get_word(num2.get()) == 123);  // Should have the value
+        BigNumber num1;
+        BN_set_word(num1.Get(), 123);
+        BigNumber num2 = std::move(num1);
+        assert(num1.Get() == nullptr);  // Should be null after move
+        assert(BN_get_word(num2.Get()) == 123);  // Should have the value
         std::cout << "TestBNPtrMove passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrMove failed with exception: " << e.what() << std::endl;
@@ -37,13 +37,13 @@ void TestBNPtrMove() {
 
 void TestBNPtrComparison() {
     try {
-        BN_ptr num1, num2;
-        BN_set_word(num1.get(), 123);
-        BN_set_word(num2.get(), 123);
-        assert(BN_cmp(num1.get(), num2.get()) == 0);  // Should be equal
+        BigNumber num1, num2;
+        BN_set_word(num1.Get(), 123);
+        BN_set_word(num2.Get(), 123);
+        assert(BN_cmp(num1.Get(), num2.Get()) == 0);  // Should be equal
 
-        BN_set_word(num2.get(), 124);
-        assert(BN_cmp(num1.get(), num2.get()) < 0);  // num1 should be less
+        BN_set_word(num2.Get(), 124);
+        assert(BN_cmp(num1.Get(), num2.Get()) < 0);  // num1 should be less
         std::cout << "TestBNPtrComparison passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrComparison failed with exception: " << e.what() << std::endl;
@@ -52,13 +52,13 @@ void TestBNPtrComparison() {
 
 void TestBNPtrErrorHandling() {
     try {
-        BN_ptr num;
+        BigNumber num;
         bool caught_error = false;
 
         try {
-            num.set_word(1);    // Nonzero
-            num.set_negative(1);
-            num.get_word();     // Should throw now
+            num.SetWord(1);    // Nonzero
+            num.SetNegative(1);
+            num.GetWord();     // Should throw now
         } catch (const std::runtime_error&) {
             caught_error = true;
         }
@@ -72,16 +72,16 @@ void TestBNPtrErrorHandling() {
 
 void TestBNPtrRandom() {
     try {
-        BN_ptr num;
-        assert(num.generate_random(256));  // Generate 256-bit random number
+        BigNumber num;
+        assert(num.GenerateRandom(256));  // Generate 256-bit random number
 
         // Generate in range
-        BN_ptr min, max;
-        min.set_word(1000);
-        max.set_word(2000);
-        BN_ptr random = BN_ptr::generate_in_range(min.get(), max.get());
-        assert(BN_cmp(random.get(), min.get()) >= 0);
-        assert(BN_cmp(random.get(), max.get()) <= 0);
+        BigNumber min, max;
+        min.SetWord(1000);
+        max.SetWord(2000);
+        BigNumber random = BigNumber::GenerateInRange(min.Get(), max.Get());
+        assert(BN_cmp(random.Get(), min.Get()) >= 0);
+        assert(BN_cmp(random.Get(), max.Get()) <= 0);
 
         std::cout << "TestBNPtrRandom passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -91,12 +91,12 @@ void TestBNPtrRandom() {
 
 void TestBNPtrPrimality() {
     try {
-        BN_ptr num;
-        num.set_word(17);  // Known prime
-        assert(num.is_prime());
+        BigNumber num;
+        num.SetWord(17);  // Known prime
+        assert(num.IsPrime());
 
-        num.set_word(24);  // Known composite
-        assert(!num.is_prime());
+        num.SetWord(24);  // Known composite
+        assert(!num.IsPrime());
 
         std::cout << "TestBNPtrPrimality passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -106,11 +106,11 @@ void TestBNPtrPrimality() {
 
 void TestBNPtrAddition() {
     try {
-        BN_ptr a, b;
-        a.set_word(50);
-        b.set_word(30);
-        BN_ptr result = a.add(b.get());
-        assert(result.get_word() == 80);
+        BigNumber a, b;
+        a.SetWord(50);
+        b.SetWord(30);
+        BigNumber result = a.Add(b.Get());
+        assert(result.GetWord() == 80);
         std::cout << "TestBNPtrAddition passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrAddition failed with exception: " << e.what() << std::endl;
@@ -119,11 +119,11 @@ void TestBNPtrAddition() {
 
 void TestBNPtrSubtraction() {
     try {
-        BN_ptr a, b;
-        a.set_word(50);
-        b.set_word(30);
-        BN_ptr result = a.sub(b.get());
-        assert(result.get_word() == 20);
+        BigNumber a, b;
+        a.SetWord(50);
+        b.SetWord(30);
+        BigNumber result = a.Sub(b.Get());
+        assert(result.GetWord() == 20);
         std::cout << "TestBNPtrSubtraction passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrSubtraction failed with exception: " << e.what() << std::endl;
@@ -132,11 +132,11 @@ void TestBNPtrSubtraction() {
 
 void TestBNPtrMultiplication() {
     try {
-        BN_ptr a, b;
-        a.set_word(50);
-        b.set_word(30);
-        BN_ptr result = a.mul(b.get());
-        assert(result.get_word() == 1500);
+        BigNumber a, b;
+        a.SetWord(50);
+        b.SetWord(30);
+        BigNumber result = a.Mul(b.Get());
+        assert(result.GetWord() == 1500);
         std::cout << "TestBNPtrMultiplication passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrMultiplication failed with exception: " << e.what() << std::endl;
@@ -145,11 +145,11 @@ void TestBNPtrMultiplication() {
 
 void TestBNPtrDivision() {
     try {
-        BN_ptr a, b;
-        a.set_word(100);
-        b.set_word(5);
-        BN_ptr result = a.div(b.get());
-        assert(result.get_word() == 20);
+        BigNumber a, b;
+        a.SetWord(100);
+        b.SetWord(5);
+        BigNumber result = a.Div(b.Get());
+        assert(result.GetWord() == 20);
         std::cout << "TestBNPtrDivision passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrDivision failed with exception: " << e.what() << std::endl;
@@ -158,13 +158,13 @@ void TestBNPtrDivision() {
 
 void TestBNPtrModExp() {
     try {
-        BN_ptr base, exponent, modulus;
-        base.set_word(4);
-        exponent.set_word(13);
-        modulus.set_word(497);
+        BigNumber base, exponent, modulus;
+        base.SetWord(4);
+        exponent.SetWord(13);
+        modulus.SetWord(497);
         // 4^13 mod 497 = 445
-        BN_ptr result = base.mod_exp(exponent.get(), modulus.get());
-        assert(result.get_word() == 445);
+        BigNumber result = base.ModExp(exponent.Get(), modulus.Get());
+        assert(result.GetWord() == 445);
         std::cout << "TestBNPtrModExp passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrModExp failed with exception: " << e.what() << std::endl;
@@ -173,11 +173,11 @@ void TestBNPtrModExp() {
 
 void TestBNPtrMod() {
     try {
-        BN_ptr num, mod;
-        num.set_word(100);
-        mod.set_word(30);
-        BN_ptr result = num.mod(mod.get());
-        assert(result.get_word() == 10);  // 100 mod 30 = 10
+        BigNumber num, mod;
+        num.SetWord(100);
+        mod.SetWord(30);
+        BigNumber result = num.Mod(mod.Get());
+        assert(result.GetWord() == 10);  // 100 mod 30 = 10
         std::cout << "TestBNPtrMod passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrMod failed with exception: " << e.what() << std::endl;
@@ -186,12 +186,12 @@ void TestBNPtrMod() {
 
 void TestBNPtrGetSetBit() {
     try {
-        BN_ptr num;
-        num.set_word(8);  // 1000 in binary
-        assert(num.get_bit(3) == 1);  // Fourth bit should be set
-        assert(num.get_bit(2) == 0);  // Third bit should not be set
-        assert(num.get_bit(1) == 0);  // Second bit should not be set
-        assert(num.get_bit(0) == 0);  // First bit should not be set
+        BigNumber num;
+        num.SetWord(8);  // 1000 in binary
+        assert(num.GetBit(3) == 1);  // Fourth bit should be set
+        assert(num.GetBit(2) == 0);  // Third bit should not be set
+        assert(num.GetBit(1) == 0);  // Second bit should not be set
+        assert(num.GetBit(0) == 0);  // First bit should not be set
         std::cout << "TestBNPtrGetSetBit passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrGetSetBit failed with exception: " << e.what() << std::endl;
@@ -200,9 +200,9 @@ void TestBNPtrGetSetBit() {
 
 void TestBNPtrNumBitsForEight() {
     try {
-        BN_ptr num;
-        num.set_word(8);    // 1000 in binary
-        assert(num.num_bits() == 4);
+        BigNumber num;
+        num.SetWord(8);    // 1000 in binary
+        assert(num.NumBits() == 4);
         std::cout << "TestBNPtrNumBitsForEight passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrNumBitsForEight failed with exception: " << e.what() << std::endl;
@@ -211,9 +211,9 @@ void TestBNPtrNumBitsForEight() {
 
 void TestBNPtrNumBitsForFifteen() {
     try {
-        BN_ptr num;
-        num.set_word(15);   // 1111 in binary
-        assert(num.num_bits() == 4);
+        BigNumber num;
+        num.SetWord(15);   // 1111 in binary
+        assert(num.NumBits() == 4);
         std::cout << "TestBNPtrNumBitsForFifteen passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrNumBitsForFifteen failed with exception: " << e.what() << std::endl;
@@ -222,9 +222,9 @@ void TestBNPtrNumBitsForFifteen() {
 
 void TestBNPtrNumBitsForSixteen() {
     try {
-        BN_ptr num;
-        num.set_word(16);   // 10000 in binary
-        assert(num.num_bits() == 5);
+        BigNumber num;
+        num.SetWord(16);   // 10000 in binary
+        assert(num.NumBits() == 5);
         std::cout << "TestBNPtrNumBitsForSixteen passed!" << std::endl;
     } catch (const std::exception& e) {
         std::cerr << "TestBNPtrNumBitsForSixteen failed with exception: " << e.what() << std::endl;
@@ -233,14 +233,14 @@ void TestBNPtrNumBitsForSixteen() {
 
 void TestBNPtrGenerateRandomPrime512() {
     try {
-        BN_ptr prime;
+        BigNumber prime;
         // We'll add a new method generate_prime
-        prime.generate_prime(512);
+        prime.GeneratePrime(512);
 
         // Should be exactly 512 bits
-        assert(prime.num_bits() == 512);
+        assert(prime.NumBits() == 512);
         // Should be prime
-        assert(prime.is_prime());
+        assert(prime.IsPrime());
 
         std::cout << "TestBNPtrGenerateRandomPrime512 passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -250,11 +250,11 @@ void TestBNPtrGenerateRandomPrime512() {
 
 void TestBNPtrGCD() {
     try {
-        BN_ptr a, b;
-        a.set_word(48);
-        b.set_word(18);
-        BN_ptr result = a.gcd(b.get());
-        assert(result.get_word() == 6);  // GCD(48,18) = 6
+        BigNumber a, b;
+        a.SetWord(48);
+        b.SetWord(18);
+        BigNumber result = a.Gcd(b.Get());
+        assert(result.GetWord() == 6);  // GCD(48,18) = 6
 
         std::cout << "TestBNPtrGCD passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -264,12 +264,12 @@ void TestBNPtrGCD() {
 
 void TestBNPtrModInverse() {
     try {
-        BN_ptr a, m;
-        a.set_word(5);
-        m.set_word(11);
-        BN_ptr result = a.mod_inverse(m.get());
+        BigNumber a, m;
+        a.SetWord(5);
+        m.SetWord(11);
+        BigNumber result = a.ModInverse(m.Get());
         // 5 * 9 ≡ 1 (mod 11)
-        assert(result.get_word() == 9);
+        assert(result.GetWord() == 9);
 
         std::cout << "TestBNPtrModInverse passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -279,18 +279,18 @@ void TestBNPtrModInverse() {
 
 void TestBNPtrGenerateSafePrime() {
     try {
-        BN_ptr prime;
-        prime.generate_safe_prime(512);  // Smaller size for test
+        BigNumber prime;
+        prime.GenerateSafePrime(512);  // Smaller size for test
 
         // Should be prime
-        assert(prime.is_prime());
+        assert(prime.IsPrime());
 
         // (p-1)/2 should also be prime
-        BN_ptr p_minus_1 = prime.sub(BN_value_one());
-        BN_ptr two;
-        two.set_word(2);
-        BN_ptr q = p_minus_1.div(two.get());
-        assert(q.is_prime());
+        BigNumber p_minus_1 = prime.Sub(BN_value_one());
+        BigNumber two;
+        two.SetWord(2);
+        BigNumber q = p_minus_1.Div(two.Get());
+        assert(q.IsPrime());
 
         std::cout << "TestBNPtrGenerateSafePrime passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -300,11 +300,11 @@ void TestBNPtrGenerateSafePrime() {
 
 void TestBNPtrIsRelativelyPrime() {
     try {
-        BN_ptr a, b;
-        a.set_word(9);
-        b.set_word(14);
+        BigNumber a, b;
+        a.SetWord(9);
+        b.SetWord(14);
         // 9 and 14 are relatively prime
-        assert(a.gcd(b.get()).get_word() == 1);
+        assert(a.Gcd(b.Get()).GetWord() == 1);
 
         std::cout << "TestBNPtrIsRelativelyPrime passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -314,12 +314,12 @@ void TestBNPtrIsRelativelyPrime() {
 
 void TestBNPtrLargePrimeLength() {
     try {
-        BN_ptr prime;
+        BigNumber prime;
         int bits = 2048;  // Test with 2048 bits
-        prime.generate_prime(bits);
+        prime.GeneratePrime(bits);
 
         // Should be exactly the requested bit length
-        assert(prime.num_bits() == bits);
+        assert(prime.NumBits() == bits);
 
         std::cout << "TestBNPtrLargePrimeLength passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -329,20 +329,20 @@ void TestBNPtrLargePrimeLength() {
 
 void TestBNPtrRSAExponent() {
     try {
-        BN_ptr p, q, e;
-        p.generate_prime(512);  // Small primes for test
-        q.generate_prime(512);
+        BigNumber p, q, e;
+        p.GeneratePrime(512);  // Small primes for test
+        q.GeneratePrime(512);
 
         // Calculate (p-1)(q-1)
-        BN_ptr p_minus_1 = p.sub(BN_value_one());
-        BN_ptr q_minus_1 = q.sub(BN_value_one());
-        BN_ptr totient = p_minus_1.mul(q_minus_1.get());
+        BigNumber p_minus_1 = p.Sub(BN_value_one());
+        BigNumber q_minus_1 = q.Sub(BN_value_one());
+        BigNumber totient = p_minus_1.Mul(q_minus_1.Get());
 
         // Common RSA public exponent
-        e.set_word(65537);
+        e.SetWord(65537);
 
         // Should be coprime
-        assert(e.gcd(totient.get()).get_word() == 1);
+        assert(e.Gcd(totient.Get()).GetWord() == 1);
 
         std::cout << "TestBNPtrRSAExponent passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -353,18 +353,18 @@ void TestBNPtrRSAExponent() {
 void TestBNPtrRSAModularArithmetic() {
     try {
         // Small numbers for test verification
-        BN_ptr message, e, d, n;
-        message.set_word(42);  // Message
-        e.set_word(17);       // Public exponent
-        n.set_word(3233);     // Modulus (61 * 53)
-        d.set_word(413);      // Private exponent
+        BigNumber message, e, d, n;
+        message.SetWord(42);  // Message
+        e.SetWord(17);       // Public exponent
+        n.SetWord(3233);     // Modulus (61 * 53)
+        d.SetWord(413);      // Private exponent
 
         // Encrypt: c = m^e mod n
-        BN_ptr cipher = message.mod_exp(e.get(), n.get());
+        BigNumber cipher = message.ModExp(e.Get(), n.Get());
         // Decrypt: m = c^d mod n
-        BN_ptr decrypted = cipher.mod_exp(d.get(), n.get());
+        BigNumber decrypted = cipher.ModExp(d.Get(), n.Get());
 
-        assert(decrypted.get_word() == 42);
+        assert(decrypted.GetWord() == 42);
 
         std::cout << "TestBNPtrRSAModularArithmetic passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -374,13 +374,13 @@ void TestBNPtrRSAModularArithmetic() {
 
 void TestBNPtrRSAKeySize() {
     try {
-        BN_ptr p, q;
-        p.generate_prime(2048);
-        q.generate_prime(2048);
-        BN_ptr n = p.mul(q.get());
+        BigNumber p, q;
+        p.GeneratePrime(2048);
+        q.GeneratePrime(2048);
+        BigNumber n = p.Mul(q.Get());
 
         // RSA-4096 modulus should be 4096 bits
-        assert(n.num_bits() >= 4095 && n.num_bits() <= 4096);
+        assert(n.NumBits() >= 4095 && n.NumBits() <= 4096);
 
         std::cout << "TestBNPtrRSAKeySize passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -390,15 +390,15 @@ void TestBNPtrRSAKeySize() {
 
 void TestBNPtrCopy() {
     try {
-        BN_ptr original;
-        original.set_word(12345);
+        BigNumber original;
+        original.SetWord(12345);
 
-        BN_ptr copied = original.copy();
-        assert(BN_cmp(original.get(), copied.get()) == 0);
+        BigNumber copied = original.Copy();
+        assert(BN_cmp(original.Get(), copied.Get()) == 0);
 
         // Modify original, copy shouldn't change
-        original.set_word(54321);
-        assert(BN_get_word(copied.get()) == 12345);
+        original.SetWord(54321);
+        assert(BN_get_word(copied.Get()) == 12345);
 
         std::cout << "TestBNPtrCopy passed!" << std::endl;
     } catch (const std::exception& e) {
@@ -408,9 +408,9 @@ void TestBNPtrCopy() {
 
 void TestBNPtrToString() {
     try {
-        BN_ptr num;
-        num.set_word(0x123ABC);  // Set a test value
-        std::string result = num.to_string();  // Call the to_string method
+        BigNumber num;
+        num.SetWord(0x123ABC);  // Set a test value
+        std::string result = num.ToString();  // Call the to_string method
         assert(result == "123ABC");  // Hexadecimal representation of 0x123ABC
         std::cout << "TestBNPtrToString passed!" << std::endl;
     } catch (const std::exception& e) {

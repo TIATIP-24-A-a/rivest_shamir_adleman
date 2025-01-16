@@ -5,10 +5,10 @@
 #include <sstream>
 #include <iomanip> // For JSON formatting
 #include <fstream> // For writing JSON to file
-#include "rsa.h"   // Include your RSA library here
+#include "rsa.h"   // Include your updated RSA library
 
 // Function to compute the median of a vector
-double compute_median(std::vector<double>& runtimes) {
+double ComputeMedian(std::vector<double>& runtimes) {
     std::sort(runtimes.begin(), runtimes.end());
     size_t size = runtimes.size();
     if (size % 2 == 0) {
@@ -18,9 +18,9 @@ double compute_median(std::vector<double>& runtimes) {
     }
 }
 
-// Updated RSA runtime analysis function
-void analyze_time_complexity() {
-    // Define the key sizes as powers of 2 (512 to 16,384 bits)
+// RSA runtime analysis function
+void AnalyzeTimeComplexity() {
+    // Define the key sizes as powers of 2 (from 512 to 16,384 bits)
     std::vector<int> key_sizes = {512, 1024, 2048, 4096, 8192, 16384};
 
     // Store runtime results for each key size
@@ -36,8 +36,8 @@ void analyze_time_complexity() {
             auto start = std::chrono::high_resolution_clock::now();
 
             try {
-                // Generate RSA key pair
-                auto key_pair = RSA_APP::generate_key_pair(bits);
+                // Generate RSA key pair using the updated function
+                auto key_pair = rsa_app::GenerateKeyPair(bits);
             } catch (const std::exception& e) {
                 std::cerr << "Failed to generate keys for " << bits << " bits: " << e.what() << std::endl;
                 runtimes.push_back(-1.0); // Mark a failed run
@@ -51,7 +51,7 @@ void analyze_time_complexity() {
 
         // Compute the median runtime
         if (!runtimes.empty() && *std::max_element(runtimes.begin(), runtimes.end()) > 0) {
-            medians.push_back(compute_median(runtimes));
+            medians.push_back(ComputeMedian(runtimes));
         } else {
             medians.push_back(-1.0); // Use -1.0 if all runs failed
         }
@@ -87,7 +87,7 @@ void analyze_time_complexity() {
 
 int main() {
     std::cout << "Starting RSA runtime analysis...\n";
-    analyze_time_complexity();
+    AnalyzeTimeComplexity();
     std::cout << "Analysis complete.\n";
     return 0;
 }
