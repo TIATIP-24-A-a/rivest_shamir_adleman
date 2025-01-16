@@ -4,7 +4,12 @@
 #include "bn_wrapper.h"
 
 namespace RSA_APP {
-
+    /* Represents an RSA public key.
+   *
+   * Members:
+   *   n: The RSA modulus, the product of two primes.
+   *   e: The public exponent, used for encryption.
+   */
     struct PublicKey {
         BN_ptr n;  // Modulus
         BN_ptr e;  // Public exponent
