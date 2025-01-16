@@ -1,4 +1,3 @@
-// src/bn_wrapper.cpp
 #include "bn_wrapper.h"
 #include <stdexcept>
 
@@ -44,7 +43,7 @@ unsigned long BN_ptr::get_word() const {
         throw std::runtime_error("Cannot convert negative number to word");
     }
     unsigned long result = BN_get_word(bn);
-    if (result == 0xffffffffL && !BN_is_zero(bn)) {  // OpenSSL's error indicator
+    if (result == 0xffffffffL && !BN_is_zero(bn)) {
         throw std::runtime_error("Number too large for word");
     }
     return result;
@@ -69,9 +68,8 @@ BN_ptr BN_ptr::generate_in_range(const BIGNUM* min, const BIGNUM* max) {
     BN_CTX* ctx = get_ctx();
     BIGNUM* range_bn = BN_new();
     if (!range_bn) throw std::runtime_error("BN_new failed");
-    BN_ptr range(range_bn);  // Now this will work
+    BN_ptr range(range_bn);
 
-    // Calculate range = max - min + 1
     check_error(BN_sub(range.get(), max, min));
     check_error(BN_add_word(range.get(), 1));
 
@@ -146,7 +144,6 @@ int BN_ptr::num_bits() const {
 }
 
 bool BN_ptr::generate_prime(int bits) {
-    // Use OpenSSL's built-in prime generation
     check_error(BN_generate_prime_ex(bn, bits, 0, nullptr, nullptr, nullptr));
     return true;
 }
@@ -168,7 +165,6 @@ BN_ptr BN_ptr::mod_inverse(const BIGNUM* m) const {
 }
 
 bool BN_ptr::generate_safe_prime(int bits) {
-    // Generate safe prime (where (p-1)/2 is also prime)
     check_error(BN_generate_prime_ex(bn, bits, 1, nullptr, nullptr, nullptr));
     return true;
 }
@@ -188,11 +184,11 @@ std::string BN_ptr::to_string() const {
     if (!bn) {
         throw std::runtime_error("BIGNUM is uninitialized");
     }
-    char* hex_str = BN_bn2hex(bn);  // Convert to hex string
+    char* hex_str = BN_bn2hex(bn);
     if (!hex_str) {
         throw std::runtime_error("Failed to convert BIGNUM to string");
     }
-    std::string result(hex_str);  // Copy the hex string to std::string
-    OPENSSL_free(hex_str);        // Free memory allocated by OpenSSL
+    std::string result(hex_str);
+    OPENSSL_free(hex_str);
     return result;
 }
