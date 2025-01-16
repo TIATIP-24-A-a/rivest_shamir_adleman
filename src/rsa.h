@@ -11,8 +11,8 @@ namespace RSA_APP {
    *   e: The public exponent, used for encryption.
    */
     struct PublicKey {
-        BN_ptr n;  // Modulus
-        BN_ptr e;  // Public exponent
+        BN_ptr n;
+        BN_ptr e;
     };
 
     struct PrivateKey {
